@@ -1,0 +1,1 @@
+<?php return unserialize('a:2:{i:0;O:27:"Doctrine\\ORM\\Mapping\\Entity":2:{s:15:"repositoryClass";N;s:8:"readOnly";b:0;}i:1;O:36:"Doctrine\\ORM\\Mapping\\InheritanceType":1:{s:5:"value";s:12:"SINGLE_TABLE";}}');
