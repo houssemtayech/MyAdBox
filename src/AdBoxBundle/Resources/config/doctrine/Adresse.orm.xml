@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AdBoxBundle\Entity\Adresse" table="adresse">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="latitude" type="float" column="latitude" precision="10" scale="0" nullable="false"/>
+    <field name="longitude" type="float" column="longitude" precision="10" scale="0" nullable="false"/>
+    <field name="pays" type="string" column="pays" length="50" nullable="false"/>
+    <field name="ville" type="string" column="ville" length="50" nullable="false"/>
+    <field name="region" type="string" column="region" length="50" nullable="false"/>
+    <field name="codepostal" type="integer" column="codePostal" nullable="false"/>
+    <field name="rue" type="string" column="rue" length="100" nullable="false"/>
+  </entity>
+</doctrine-mapping>

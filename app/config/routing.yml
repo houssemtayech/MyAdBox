@@ -1,0 +1,15 @@
+ad_box_event:
+    resource: "@AdBoxBundle/Controller/EventController.php"
+    type:     annotation
+
+ad_box_action:
+    resource: "@AdBoxBundle/Controller/ActionController.php"
+    type:     annotation
+
+ad_box:
+    resource: "@AdBoxBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

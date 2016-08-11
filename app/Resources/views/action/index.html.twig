@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Action list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Actiontype</th>
+                <th>Idadmin</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for action in actions %}
+            <tr>
+                <td><a href="{{ path('action_show', { 'id': action.id }) }}">{{ action.timestamp }}</a></td>
+                <td>{{ action.actionType }}</td>
+                <td>{{ action.idAdmin }}</td>
+                <td>{{ action.message }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('action_show', { 'id': action.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('action_edit', { 'id': action.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('action_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

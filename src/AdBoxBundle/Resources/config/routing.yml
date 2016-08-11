@@ -1,0 +1,3 @@
+ad_box_homepage:
+    path:     /
+    defaults: { _controller: AdBoxBundle:Default:index }
