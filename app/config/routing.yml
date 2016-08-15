@@ -1,10 +1,78 @@
+ad_box_zeus:
+    resource: "@AdBoxBundle/Controller/ZeusController.php"
+    type:     annotation
+
+ad_box_timelaps:
+    resource: "@AdBoxBundle/Controller/TimelapsController.php"
+    type:     annotation
+
+ad_box_shop_owner:
+    resource: "@AdBoxBundle/Controller/ShopOwnerController.php"
+    type:     annotation
+
+ad_box_shop:
+    resource: "@AdBoxBundle/Controller/ShopController.php"
+    type:     annotation
+
+ad_box_reservation:
+    resource: "@AdBoxBundle/Controller/ReservationController.php"
+    type:     annotation
+
+ad_box_pub:
+    resource: "@AdBoxBundle/Controller/PubController.php"
+    type:     annotation
+
+ad_box_notification:
+    resource: "@AdBoxBundle/Controller/NotificationController.php"
+    type:     annotation
+
+ad_box_media:
+    resource: "@AdBoxBundle/Controller/MediaController.php"
+    type:     annotation
+
+ad_box_event_timelaps:
+    resource: "@AdBoxBundle/Controller/EventTimelapsController.php"
+    type:     annotation
+
+ad_box_client:
+    resource: "@AdBoxBundle/Controller/ClientController.php"
+    type:     annotation
+
+ad_box_box:
+    resource: "@AdBoxBundle/Controller/BoxController.php"
+    type:     annotation
+
+ad_box_bid_client:
+    resource: "@AdBoxBundle/Controller/BidClientController.php"
+    type:     annotation
+
+ad_box_bid:
+    resource: "@AdBoxBundle/Controller/BidController.php"
+    type:     annotation
+
+ad_box_adresse:
+    resource: "@AdBoxBundle/Controller/AdresseController.php"
+    type:     annotation
+
+ad_box_admin:
+    resource: "@AdBoxBundle/Controller/AdminController.php"
+    type:     annotation
+
+ad_box_action_timelaps:
+    resource: "@AdBoxBundle/Controller/ActionTimelapsController.php"
+    type:     annotation
+
+ad_box_action_event:
+    resource: "@AdBoxBundle/Controller/ActionEventController.php"
+    type:     annotation
+
 ad_box_event:
     resource: "@AdBoxBundle/Controller/EventController.php"
     type:     annotation
 
 ad_box_action:
     resource: "@AdBoxBundle/Controller/ActionController.php"
-    type:     annotation
+    type:     /Action
 
 ad_box:
     resource: "@AdBoxBundle/Resources/config/routing.yml"

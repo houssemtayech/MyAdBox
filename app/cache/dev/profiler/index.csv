@@ -1,0 +1,10 @@
+56d6a4,127.0.0.1,GET,http://127.0.0.1:8000/,1471258205,,200
+ccd1e9,127.0.0.1,GET,http://127.0.0.1:8000/Action,1471258226,30c26d,200
+30c26d,127.0.0.1,GET,http://127.0.0.1:8000/Action,1471258226,,404
+fbfc19,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/,1471258241,,200
+bd6f1c,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/Action,1471258249,9a434c,200
+9a434c,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/Action,1471258249,,404
+30dcd8,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/Action,1471258293,7412b1,200
+7412b1,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/Action,1471258293,,500
+e87351,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/action/index.html.twig,1471258380,fa63f6,200
+fa63f6,127.0.0.1,GET,http://127.0.0.1:8000/app_dev.php/action/index.html.twig,1471258380,,500

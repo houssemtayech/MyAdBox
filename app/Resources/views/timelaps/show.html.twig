@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Timelaps</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Priorite</th>
+                <td>{{ timelap.priorite }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{% if timelap.etat %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ timelap.prix }}</td>
+            </tr>
+            <tr>
+                <th>Datestart</th>
+                <td>{% if timelap.dateStart %}{{ timelap.dateStart|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dateend</th>
+                <td>{% if timelap.dateEnd %}{{ timelap.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ timelap.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('timelaps_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('timelaps_edit', { 'id': timelap.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

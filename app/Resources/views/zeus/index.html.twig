@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Zeus list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for zeus in zeuses %}
+            <tr>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('zeus_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

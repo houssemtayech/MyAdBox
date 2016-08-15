@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Zeus</h1>
+
+    <table>
+        <tbody>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('zeus_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('zeus_edit', { 'id': zeus.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bid</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Starttime</th>
+                <td>{% if bid.startTime %}{{ bid.startTime|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Endtime</th>
+                <td>{% if bid.endTime %}{{ bid.endTime|date('H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('bid_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('bid_edit', { 'id': bid.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

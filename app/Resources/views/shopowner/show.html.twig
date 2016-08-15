@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ShopOwner</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ shopOwner.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ shopOwner.solde }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('shopowner_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('shopowner_edit', { 'id': shopOwner.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

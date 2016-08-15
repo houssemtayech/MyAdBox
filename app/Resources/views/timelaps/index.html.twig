@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Timelaps list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Priorite</th>
+                <th>Etat</th>
+                <th>Prix</th>
+                <th>Datestart</th>
+                <th>Dateend</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for timelap in timelaps %}
+            <tr>
+                <td><a href="{{ path('timelaps_show', { 'id': timelap.id }) }}">{{ timelap.priorite }}</a></td>
+                <td>{% if timelap.etat %}Yes{% else %}No{% endif %}</td>
+                <td>{{ timelap.prix }}</td>
+                <td>{% if timelap.dateStart %}{{ timelap.dateStart|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if timelap.dateEnd %}{{ timelap.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ timelap.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('timelaps_show', { 'id': timelap.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('timelaps_edit', { 'id': timelap.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('timelaps_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

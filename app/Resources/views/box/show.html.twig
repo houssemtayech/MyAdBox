@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Box</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Boxid</th>
+                <td>{{ box.boxid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('box_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('box_edit', { 'id': box.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

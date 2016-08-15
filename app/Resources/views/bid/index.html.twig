@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bid list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Starttime</th>
+                <th>Endtime</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bid in bids %}
+            <tr>
+                <td><a href="{{ path('bid_show', { 'id': bid.id }) }}">{{ bid.startTime }}</a></td>
+                <td>{% if bid.endTime %}{{ bid.endTime|date('H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('bid_show', { 'id': bid.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('bid_edit', { 'id': bid.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('bid_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
