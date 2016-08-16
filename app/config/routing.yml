@@ -72,7 +72,7 @@ ad_box_event:
 
 ad_box_action:
     resource: "@AdBoxBundle/Controller/ActionController.php"
-    type:     /Action
+    type:     annotation
 
 ad_box:
     resource: "@AdBoxBundle/Resources/config/routing.yml"

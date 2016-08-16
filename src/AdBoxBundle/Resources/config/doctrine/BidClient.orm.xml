@@ -8,14 +8,14 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <many-to-one field="idClient" target-entity="Client">
-      <join-columns>
-        <join-column name="id_client" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
     <many-to-one field="idBid" target-entity="Bid">
       <join-columns>
         <join-column name="id_bid" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idClient" target-entity="Client">
+      <join-columns>
+        <join-column name="id_client" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

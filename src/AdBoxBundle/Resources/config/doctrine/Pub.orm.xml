@@ -11,14 +11,14 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <many-to-one field="idTimelaps" target-entity="Timelaps">
-      <join-columns>
-        <join-column name="id_timelaps" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
     <many-to-one field="idShop" target-entity="Shop">
       <join-columns>
         <join-column name="id_shop" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idTimelaps" target-entity="Timelaps">
+      <join-columns>
+        <join-column name="id_timelaps" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="idMedia" target-entity="Media">

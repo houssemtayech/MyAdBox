@@ -4,8 +4,8 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="latitude" type="float" column="latitude" precision="10" scale="0" nullable="false"/>
-    <field name="longitude" type="float" column="longitude" precision="10" scale="0" nullable="false"/>
+    <field name="latitude" type="float" column="latitude" precision="10" scale="0" nullable="true"/>
+    <field name="longitude" type="float" column="longitude" precision="10" scale="0" nullable="true"/>
     <field name="pays" type="string" column="pays" length="50" nullable="false"/>
     <field name="ville" type="string" column="ville" length="50" nullable="false"/>
     <field name="region" type="string" column="region" length="50" nullable="false"/>

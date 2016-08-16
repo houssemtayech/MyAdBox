@@ -1,0 +1,74 @@
+<?php
+
+namespace AdBoxBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Adresse
+ *
+ * @ORM\Table(name="adresse")
+ * @ORM\Entity
+ */
+class Adresse
+{
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=50, nullable=false)
+     */
+    private $pays;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", length=50, nullable=false)
+     */
+    private $ville;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="region", type="string", length=50, nullable=false)
+     */
+    private $region;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="codePostal", type="integer", nullable=false)
+     */
+    private $codepostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rue", type="string", length=100, nullable=false)
+     */
+    private $rue;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
