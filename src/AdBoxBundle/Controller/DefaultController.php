@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('AdBoxBundle:Default:index.html.twig');
+        return $this->render('AdBoxBundle:Admin:index.html.twig');
     }
 }

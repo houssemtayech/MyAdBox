@@ -6,6 +6,8 @@
     <field name="userType" type="string" column="user_type" length="50" nullable="false"/>
     <field name="message" type="string" column="message" length="100" nullable="false"/>
     <field name="type" type="string" column="type" length="10" nullable="false"/>
+    <field name="timestamp" type="datetime" column="timestamp" nullable="false"/>
+    <field name="isRead" type="boolean" column="etat" nullable="false"/>
     <one-to-one field="id" target-entity="Client">
       <join-columns>
         <join-column name="id" referenced-column-name="id"/>

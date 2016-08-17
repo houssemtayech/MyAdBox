@@ -52,9 +52,37 @@ class Notification
      */
     private $id;
 
+/**
+    * @var \DateTime
+    *
+    * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+    */
+   private $timestamp;
+   
+   function getTimestamp() {
+       return $this->timestamp;
+   }
 
+   function setTimestamp(\DateTime $timestamp) {
+       $this->timestamp = $timestamp;
+   }
+   
+       /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isRead", type="boolean", nullable=false)
+     */
+    private $isRead;
+    
+    function getIsRead() {
+        return $this->isRead;
+    }
 
-    /**
+    function setIsRead($isRead) {
+        $this->isRead = $isRead;
+    }
+
+        /**
      * Set idUser
      *
      * @param integer $idUser
