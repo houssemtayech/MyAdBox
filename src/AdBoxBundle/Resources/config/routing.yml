@@ -1,3 +1,24 @@
 ad_box_homepage:
     path:     /
     defaults: { _controller: AdBoxBundle:Default:index }
+    
+index_page:
+    path:     /index
+    defaults: { _controller: AdBoxBundle:Admin:index }
+    
+login_page:
+    path:     /login
+    defaults: { _controller: AdBoxBundle:Admin:login }
+
+register_page:
+    path:     /register
+    defaults: { _controller: AdBoxBundle:Admin:register }
+    
+media_page:
+    path:     /media
+    defaults: { _controller: AdBoxBundle:Admin:media }
+    
+    
+calendar_page:
+    path:     /calendar
+    defaults: { _controller: AdBoxBundle:Admin:calendar}
