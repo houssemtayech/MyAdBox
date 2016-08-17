@@ -28,9 +28,14 @@ class AdminController extends Controller
 
         $admins = $em->getRepository('AdBoxBundle:Admin')->findAll();
 
-        return $this->render('admin/index.html.twig', array(
+        return $this->render('AdBoxBundle:Admin:index.html.twig', array(
             'admins' => $admins,
         ));
+    }
+    function CalendarAction (){
+        
+        return $this-> render('AdBoxBundle:Admin:calendar.html.twig');
+          
     }
 
     /**

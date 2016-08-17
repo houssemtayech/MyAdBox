@@ -10,4 +10,14 @@ class DefaultController extends Controller
     {
         return $this->render('AdBoxBundle:Admin:index.html.twig');
     }
+    public function loginAction()
+    {
+       return $this->render('AdBoxBundle:Admin:login.html.twig');
+
+    }
+      public function registerAction()
+    {
+       return $this->render('AdBoxBundle:Admin:register.html.twig');
+
+    }
 }

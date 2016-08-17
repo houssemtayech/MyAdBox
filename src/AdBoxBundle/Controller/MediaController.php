@@ -28,7 +28,7 @@ class MediaController extends Controller
 
         $media = $em->getRepository('AdBoxBundle:Media')->findAll();
 
-        return $this->render('media/index.html.twig', array(
+        return $this->render('AdBoxBundle:Admin:media.html.twig', array(
             'media' => $media,
         ));
     }

@@ -8,15 +8,15 @@ index_page:
     
 login_page:
     path:     /login
-    defaults: { _controller: AdBoxBundle:Admin:login }
+    defaults: { _controller: AdBoxBundle:Default:login }
 
 register_page:
     path:     /register
-    defaults: { _controller: AdBoxBundle:Admin:register }
+    defaults: { _controller: AdBoxBundle:Default:register }
     
 media_page:
     path:     /media
-    defaults: { _controller: AdBoxBundle:Admin:media }
+    defaults: { _controller: AdBoxBundle:Media:media }
     
     
 calendar_page:
