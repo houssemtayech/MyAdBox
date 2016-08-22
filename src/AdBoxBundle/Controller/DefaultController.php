@@ -3,6 +3,7 @@
 namespace AdBoxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
@@ -16,14 +17,19 @@ use FOS\UserBundle\Model\UserInterface;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('AdBoxBundle:Admin:index.html.twig');
+  
+    public function indexAction() {
+        $session = new Session();
+        $session->set('type', 'Client');
+        return $this->render('AdBoxBundle:Default:home.html.twig');
     }
-    public function loginAction()
-    {
-       return $this->render('AdBoxBundle:Admin:login.html.twig');
 
+    public function loginAction() {
+        return $this->render('AdBoxBundle:Admin:login.html.twig');
+    }
+
+    public function registerAction() {
+        return $this->render('AdBoxBundle:Admin:register.html.twig');
     }
 //      public function registerAction()
 //    {
@@ -298,4 +304,18 @@ class DefaultController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function profileAction() {
+        $session = new Session();
+        $user_type= $session->get('type');
+        if ($user_type=="Admin")
+        return $this->render('AdBoxBundle:Admin:profile.html.twig');
+        else if ($user_type=="User")
+        return $this->render('AdBoxBundle:Client:profile.html.twig');
+        else if ($user_type=="Client")
+        return $this->render('AdBoxBundle:ShopOwner:profile.html.twig');
+        else
+        return $this->render('AdBoxBundle:Admin:login.html.twig');
+    }
+
 }

@@ -34,11 +34,17 @@ registerShopOwner_page:
     path:     /registerShopOwner
     defaults: { _controller: AdBoxBundle:Default:registerShopOwner }
     
+    
 media_page:
     path:     /media
     defaults: { _controller: AdBoxBundle:Media:media }
     
-    
 calendar_page:
     path:     /calendar
     defaults: { _controller: AdBoxBundle:Admin:calendar}
+    
+profile_page:
+    path:     /profile
+    defaults: { _controller: AdBoxBundle:Default:profile}
+    
+
