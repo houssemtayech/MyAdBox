@@ -21,6 +21,12 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zend\\Stdlib\\' => 12,
+            'Zend\\EventManager\\' => 18,
+            'Zend\\Code\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Util\\' => 22,
@@ -44,6 +50,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
             'Sensio\\Bundle\\FrameworkExtraBundle\\' => 35,
             'Sensio\\Bundle\\DistributionBundle\\' => 33,
         ),
+        'R' => 
+        array (
+            'Rollerworks\\Component\\SfContainerInjector\\' => 42,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
@@ -51,6 +61,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'I' => 
         array (
             'Incenteev\\ParameterHandler\\' => 27,
+        ),
+        'F' => 
+        array (
+            'FOS\\UserBundle\\' => 15,
         ),
         'D' => 
         array (
@@ -61,6 +75,18 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zend\\Stdlib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
+        ),
+        'Zend\\EventManager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-eventmanager/src',
+        ),
+        'Zend\\Code\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
+        ),
         'Symfony\\Polyfill\\Util\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-util',
@@ -141,6 +167,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         array (
             0 => __DIR__ . '/..' . '/sensio/distribution-bundle',
         ),
+        'Rollerworks\\Component\\SfContainerInjector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rollerworks/sf-container-injector',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -148,6 +178,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'Incenteev\\ParameterHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
+        ),
+        'FOS\\UserBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
         ),
         'Doctrine\\Common\\Cache\\' => 
         array (
@@ -187,6 +221,14 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
             'Psr\\Log\\' => 
             array (
                 0 => __DIR__ . '/..' . '/psr/log',
+            ),
+            'ProxyManager\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
+            ),
+            'PUGX\\MultiUserBundle' => 
+            array (
+                0 => __DIR__ . '/..' . '/pugx/multi-user-bundle',
             ),
         ),
         'D' => 

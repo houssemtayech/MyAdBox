@@ -84,26 +84,32 @@
         <h3 class="font-size-24">Sign In</h3>
        
 
-        <form method="post" action="http://getbootstrapadmin.com/remark/material/center/pages/login-v2.html" autocomplete="off">
-          <div class="form-group form-material floating">
-            <input type="email" class="form-control empty" id="inputEmail" name="email">
-            <label class="floating-label" for="inputEmail">Email</label>
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <div class="form-group form-material floating">
+            <input type="text" id="username" class="form-control empty" name="_username" value="{{ last_username }}" required="required" />
+            <label class="floating-label"  for="username">{{ 'Username'|trans }}</label>
           </div>
           <div class="form-group form-material floating">
-            <input type="password" class="form-control empty" id="inputPassword" name="password">
-            <label class="floating-label" for="inputPassword">Password</label>
+            <input type="password" class="form-control empty"  id="password" name="_password" required="required" />           
+            <label class="floating-label" for="password">{{ 'Password'|trans }}</label>
           </div>
           <div class="form-group clearfix">
             <div class="checkbox-custom checkbox-inline checkbox-primary pull-left">
-              <input type="checkbox" id="remember" name="checkbox">
-              <label for="inputCheckbox">Remember me</label>
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'Remember_me'|trans }}</label>
             </div>
             <a class="pull-right" href="forgot-password.html">Forgot password?</a>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-        </form>
+           <input type="submit" class="btn btn-primary btn-block" id="_submit" name="_submit" value="{{ 'Sign in'|trans }}" />
 
-        <p>No account? <a href="{{path('register_page')}}">Sign Up</a></p>
+        </form>
+        
+     
+
+        
+
+        <p>No account? <a href="{{path('registerClient_page')}}">Sign Up</a></p>
 
         <footer class="page-copyright">
          

@@ -8,11 +8,31 @@ index_page:
     
 login_page:
     path:     /login
-    defaults: { _controller: AdBoxBundle:Default:login }
+    defaults: { _controller: AdBoxBundle:Security:login }
 
-register_page:
-    path:     /register
-    defaults: { _controller: AdBoxBundle:Default:register }
+registerUserOne_page:
+    path:     /registerUserOne
+    defaults: { _controller: AdBoxBundle:Default:registerUserOne }
+
+registerUserTwo_page:
+    path:     /registerUserTwo
+    defaults: { _controller: AdBoxBundle:Default:registerUserTwo }
+    
+registerClient_page:
+    path:     /registerClient
+    defaults: { _controller: AdBoxBundle:Default:registerClient }
+    
+registerAdmin_page:
+    path:     /registerAdmin
+    defaults: { _controller: AdBoxBundle:Default:registerAdmin }
+    
+registerZeus_page:
+    path:     /registerZeus
+    defaults: { _controller: AdBoxBundle:Default:registerZeus }
+    
+registerShopOwner_page:
+    path:     /registerShopOwner
+    defaults: { _controller: AdBoxBundle:Default:registerShopOwner }
     
 media_page:
     path:     /media

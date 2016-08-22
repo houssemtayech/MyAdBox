@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib/src'),
+    'Zend\\EventManager\\' => array($vendorDir . '/zendframework/zend-eventmanager/src'),
+    'Zend\\Code\\' => array($vendorDir . '/zendframework/zend-code/src'),
     'Symfony\\Polyfill\\Util\\' => array($vendorDir . '/symfony/polyfill-util'),
     'Symfony\\Polyfill\\Php70\\' => array($vendorDir . '/symfony/polyfill-php70'),
     'Symfony\\Polyfill\\Php56\\' => array($vendorDir . '/symfony/polyfill-php56'),
@@ -26,8 +29,10 @@ return array(
     'Sensio\\Bundle\\GeneratorBundle\\' => array($vendorDir . '/sensio/generator-bundle'),
     'Sensio\\Bundle\\FrameworkExtraBundle\\' => array($vendorDir . '/sensio/framework-extra-bundle'),
     'Sensio\\Bundle\\DistributionBundle\\' => array($vendorDir . '/sensio/distribution-bundle'),
+    'Rollerworks\\Component\\SfContainerInjector\\' => array($vendorDir . '/rollerworks/sf-container-injector'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Incenteev\\ParameterHandler\\' => array($vendorDir . '/incenteev/composer-parameter-handler'),
+    'FOS\\UserBundle\\' => array($vendorDir . '/friendsofsymfony/user-bundle'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'Doctrine\\Bundle\\DoctrineCacheBundle\\' => array($vendorDir . '/doctrine/doctrine-cache-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),

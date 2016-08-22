@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="admin")
  * @ORM\Entity
  */
-class Admin
+class Admin extends User
 {
     /**
      * @var string
@@ -31,9 +31,9 @@ class Admin
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
 
 

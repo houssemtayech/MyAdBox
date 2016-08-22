@@ -3,14 +3,17 @@
 namespace AdBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
+
+
 
 /**
  * Client
- *
+ * 
  * @ORM\Table(name="client", indexes={@ORM\Index(name="id_adress", columns={"id_adress"})})
  * @ORM\Entity
  */
-class Client
+class Client extends User
 {
     /**
      * @var float
@@ -24,9 +27,9 @@ class Client
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \AdBoxBundle\Entity\Adresse

@@ -10,19 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="zeus")
  * @ORM\Entity
  */
-class Zeus
+class Zeus extends User
 {
     /**
      * @var \AdBoxBundle\Entity\Admin
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\Admin")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id", referencedColumnName="id")
      * })
      */
-    private $id;
+    protected $id;
 
 
 

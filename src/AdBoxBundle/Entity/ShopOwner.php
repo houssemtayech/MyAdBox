@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="shop_owner")
  * @ORM\Entity
  */
-class ShopOwner
+class ShopOwner extends User
 {
     /**
      * @var string
@@ -30,13 +30,13 @@ class ShopOwner
      * @var \AdBoxBundle\Entity\Adresse
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\Adresse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id", referencedColumnName="id")
      * })
      */
-    private $id;
+    protected $id;
 
 
 

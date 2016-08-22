@@ -1,0 +1,31 @@
+{
+    "name": "rollerworks/sf-container-injector",
+    "type": "library",
+    "description": "Symfony Dependency Container Injector library",
+    "keywords": ["rollerworks", "Dependency Container"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastiaan Stok",
+            "email": "s.stok@rollercapes.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/dependency-injection": "~2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rollerworks\\Component\\SfContainerInjector\\": ""
+        }
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

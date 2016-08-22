@@ -65,3 +65,90 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+    
+fos_user:
+    db_driver: orm 
+    firewall_name: main
+    user_class: AdBoxBundle\Entity\User
+    service:
+        user_manager: pugx_user_manager
+        
+pugx_multi_user:
+  users:
+    user_one:
+        entity: 
+          class: AdBoxBundle\Entity\UserOne
+#          factory: 
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationUserOneFormType
+            name: fos_user_registration_form
+            validation_groups:  [Registration, Default]
+          template: FOSUserBundle:Registration:registerOne.html.twig
+        profile:
+          form:
+            type: FOS\UserBundle\Form\Type\ProfileUserOneFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default] 
+    user_two:
+        entity: 
+          class: AdBoxBundle\Entity\UserTwo
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationUserTwoFormType
+          template: FOSUserBundle:Registration:registerTwo.html.twig
+        profile:
+          form: 
+            type: FOS\UserBundle\Form\Type\ProfileUserTwoFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    client:
+        entity: 
+          class: AdBoxBundle\Entity\Client
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationClientFormType
+          template: FOSUserBundle:Registration:registerTwo.html.twig
+        profile:
+          form: 
+            type: FOS\UserBundle\Form\Type\ProfileClientFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    admin:
+        entity: 
+          class: AdBoxBundle\Entity\Admin
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationClientFormType
+          template: FOSUserBundle:Registration:registerTwo.html.twig
+        profile:
+          form: 
+            type: FOS\UserBundle\Form\Type\ProfileClientFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    zeus:
+        entity: 
+          class: AdBoxBundle\Entity\Zeus
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationClientFormType
+          template: FOSUserBundle:Registration:registerTwo.html.twig
+        profile:
+          form: 
+            type: FOS\UserBundle\Form\Type\ProfileClientFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    shopowner:
+        entity: 
+          class: AdBoxBundle\Entity\ShopOwner
+        registration:
+          form: 
+            type: FOS\UserBundle\Form\Type\RegistrationClientFormType
+          template: FOSUserBundle:Registration:registerTwo.html.twig
+        profile:
+          form: 
+            type: FOS\UserBundle\Form\Type\ProfileClientFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+
+
