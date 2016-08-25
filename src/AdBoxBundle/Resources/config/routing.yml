@@ -48,3 +48,31 @@ profile_page:
     defaults: { _controller: AdBoxBundle:Default:profile}
     
 
+list_admins:
+    path:     /listAdmins
+    defaults: { _controller: AdBoxBundle:Admin:listAllAdmin }
+    
+find_admins:
+    path:     /findAdmin/{id}
+    defaults: { _controller: AdBoxBundle:Admin:findAdmins }
+
+edit_admins:
+    path:     /editAdmin/{id}
+    defaults: { _controller: AdBoxBundle:Admin:editAdmin }
+
+edit_clients:
+    path:     /editClient/{id}
+    defaults: { _controller: AdBoxBundle:Client:editClient }
+    
+list_clients:
+    path:     /listClients
+    defaults: { _controller: AdBoxBundle:Client:listAllClient }
+    
+list_ShopOwners:
+    path:     /listShopOwners
+    defaults: { _controller: AdBoxBundle:ShopOwner:listAllShopOwner }
+    
+edit_ShopOwners:
+    path:     /editShopOwner/{id}
+    defaults: { _controller: AdBoxBundle:ShopOwner:editShopOwner }
+

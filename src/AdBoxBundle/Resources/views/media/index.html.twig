@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Media list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Url</th>
+                <th>Type</th>
+                <th>Duree</th>
+                <th>Resolution</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for medium in media %}
+            <tr>
+                <td><a href="{{ path('media_show', { 'id': medium.id }) }}">{{ medium.url }}</a></td>
+                <td>{{ medium.type }}</td>
+                <td>{{ medium.duree }}</td>
+                <td>{{ medium.resolution }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('media_show', { 'id': medium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('media_edit', { 'id': medium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('media_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1386,3 +1386,7 @@ bd6319,::1,GET,http://localhost/AdBoxi/MyAdBox/web/app_dev.php/assets/images/log
 250bfa,::1,GET,http://localhost/AdBoxi/MyAdBox/web/app_dev.php/registerClient,1471869113,,200
 ebe4ca,::1,GET,http://localhost/AdBoxi/MyAdBox/web/app_dev.php/assets/images/logo-purple.png,1471869120,19d905,200
 19d905,::1,GET,http://localhost/AdBoxi/MyAdBox/web/app_dev.php/assets/images/logo-purple.png,1471869120,,404
+17614d,::1,GET,http://localhost/adBox2/web/app_dev.php/listAdmins,1472124304,566820,200
+566820,::1,GET,http://localhost/adBox2/web/app_dev.php/listAdmins,1472124304,,404
+5d95a7,::1,GET,http://localhost/adBox2/web/app_dev.php/listAdmins,1472124474,,200
+0b4ef4,::1,GET,http://localhost/adBox2/web/app_dev.php/editAdmin/5,1472124481,,200

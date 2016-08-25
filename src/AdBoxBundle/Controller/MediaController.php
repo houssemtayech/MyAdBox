@@ -47,6 +47,7 @@ class MediaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $medium->upload();
             $em->persist($medium);
             $em->flush();
 

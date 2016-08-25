@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Client;
 use AdBoxBundle\Form\ClientType;
+use AdBoxBundle\Form\EditClientForm;
 
 /**
  * Client controller.
@@ -136,5 +137,36 @@ class ClientController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    public function listAllClientAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $roles = "ROLE_CLIENT";
+        $query = $em -> createQuery('select A from AdBoxBundle:User A where A.roles like :roles ')
+                ->setParameter ('roles','%'. $roles .'%');
+       // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
+        $users = $query ->getResult();
+        
+        return $this->render('AdBoxBundle:cLIENT:allClients.html.twig', array(
+            'users' => $users,
+        ));
+    }
+    
+    public function editClientAction($id) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $Client = $em->getRepository('AdBoxBundle:Client')->find($id);
+        $form = $this->createform(new EditClientForm(), $Client);
+        //assigner les données saisies par l'user à l'objet modele
+        $request = $this->getRequest();
+        if ($request->getMethod() == "POST") {
+
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em = $this->container->get('Doctrine')->getEntityManager();
+                $em->persist($Client);
+                $em->flush();
+                return $this->render('AdBoxBundle:Client:succes.html.twig', array('msg' => 'Mise à jour affectuée avec succès'));
+            }
+        } return $this->render('AdBoxBundle:Client:editClient.html.twig', array('Form' => $form->createView()));
     }
 }

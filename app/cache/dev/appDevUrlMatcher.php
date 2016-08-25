@@ -978,9 +978,9 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 }
 
-                if (0 === strpos($pathinfo, '/admin')) {
+                if (0 === strpos($pathinfo, '/adminTest')) {
                     // admin_index
-                    if (rtrim($pathinfo, '/') === '/admin') {
+                    if (rtrim($pathinfo, '/') === '/adminTest') {
                         if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                             $allow = array_merge($allow, array('GET', 'HEAD'));
                             goto not_admin_index;
@@ -995,7 +995,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     not_admin_index:
 
                     // admin_new
-                    if ($pathinfo === '/admin/new') {
+                    if ($pathinfo === '/adminTest/new') {
                         if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
                             $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
                             goto not_admin_new;
@@ -1006,7 +1006,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     not_admin_new:
 
                     // admin_show
-                    if (preg_match('#^/admin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    if (preg_match('#^/adminTest/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                         if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                             $allow = array_merge($allow, array('GET', 'HEAD'));
                             goto not_admin_show;
@@ -1017,7 +1017,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     not_admin_show:
 
                     // admin_edit
-                    if (preg_match('#^/admin/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    if (preg_match('#^/adminTest/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
                         if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
                             $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
                             goto not_admin_edit;
@@ -1028,7 +1028,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     not_admin_edit:
 
                     // admin_delete
-                    if (preg_match('#^/admin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    if (preg_match('#^/adminTest/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                         if ($this->context->getMethod() != 'DELETE') {
                             $allow[] = 'DELETE';
                             goto not_admin_delete;
@@ -1363,6 +1363,47 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         // profile_page
         if ($pathinfo === '/profile') {
             return array (  '_controller' => 'AdBoxBundle\\Controller\\DefaultController::profileAction',  '_route' => 'profile_page',);
+        }
+
+        // list_admins
+        if ($pathinfo === '/listAdmins') {
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\AdminController::listAllAdminAction',  '_route' => 'list_admins',);
+        }
+
+        // find_admins
+        if (0 === strpos($pathinfo, '/findAdmin') && preg_match('#^/findAdmin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'find_admins')), array (  '_controller' => 'AdBoxBundle\\Controller\\AdminController::findAdminsAction',));
+        }
+
+        if (0 === strpos($pathinfo, '/edit')) {
+            // edit_admins
+            if (0 === strpos($pathinfo, '/editAdmin') && preg_match('#^/editAdmin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_admins')), array (  '_controller' => 'AdBoxBundle\\Controller\\AdminController::editAdminAction',));
+            }
+
+            // edit_clients
+            if (0 === strpos($pathinfo, '/editClient') && preg_match('#^/editClient/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_clients')), array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::editClientAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/list')) {
+            // list_clients
+            if ($pathinfo === '/listClients') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::listAllClientAction',  '_route' => 'list_clients',);
+            }
+
+            // list_ShopOwners
+            if ($pathinfo === '/listShopOwners') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopOwnerController::listAllShopOwnerAction',  '_route' => 'list_ShopOwners',);
+            }
+
+        }
+
+        // edit_ShopOwners
+        if (0 === strpos($pathinfo, '/editShopOwner') && preg_match('#^/editShopOwner/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_ShopOwners')), array (  '_controller' => 'AdBoxBundle\\Controller\\ShopOwnerController::editShopOwnerAction',));
         }
 
         // homepage

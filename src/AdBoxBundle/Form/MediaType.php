@@ -17,6 +17,11 @@ class MediaType extends AbstractType
         $builder
             ->add('url')
             ->add('type')
+            ->add('file')
+            ->add('createdAt', 'genemu_jquerydate', array(
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd',
+            ))
             ->add('duree')
             ->add('resolution')
             ->add('id')
@@ -32,4 +37,5 @@ class MediaType extends AbstractType
             'data_class' => 'AdBoxBundle\Entity\Media'
         ));
     }
+  
 }

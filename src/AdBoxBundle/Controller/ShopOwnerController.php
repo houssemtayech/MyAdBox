@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\ShopOwner;
 use AdBoxBundle\Form\ShopOwnerType;
+use AdBoxBundle\Form\EditShopOwnerForm;
 
 /**
  * ShopOwner controller.
@@ -136,5 +137,36 @@ class ShopOwnerController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+        public function listAllShopOwnerAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $roles = "ROLE_ShopOwner";
+        $query = $em -> createQuery('select A from AdBoxBundle:User A where A.roles like :roles ')
+                ->setParameter ('roles','%'. $roles .'%');
+       // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
+        $users = $query ->getResult();
+        
+        return $this->render('AdBoxBundle:ShopOwner:allShopOwners.html.twig', array(
+            'users' => $users,
+        ));
+    }
+    
+    public function editShopOwnerAction($id) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $ShopOwner = $em->getRepository('AdBoxBundle:ShopOwner')->find($id);
+        $form = $this->createform(new EditShopOwnerForm(), $ShopOwner);
+        //assigner les données saisies par l'user à l'objet modele
+        $request = $this->getRequest();
+        if ($request->getMethod() == "POST") {
+
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em = $this->container->get('Doctrine')->getEntityManager();
+                $em->persist($ShopOwner);
+                $em->flush();
+                return $this->render('AdBoxBundle:ShopOwner:succes.html.twig', array('msg' => 'Mise à jour affectuée avec succès'));
+            }
+        } return $this->render('AdBoxBundle:ShopOwner:editShopOwner.html.twig', array('Form' => $form->createView()));
     }
 }

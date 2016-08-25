@@ -1,0 +1,51 @@
+<h1>Mise à jour Du ShopOwner </h1> 
+<form action="" method="POST"> 
+    <table> 
+            <tr> 
+            <td>                             
+                {{form_label(Form.cin,'cin: ')}}  
+            </td> 
+            <td>
+                {{form_widget(Form.cin)}} 
+            </td> 
+            </tr> 
+            <tr> 
+                <td>
+                    {{form_label(Form.firstName,'firstName: ')}} 
+                </td> 
+                <td> 
+                    {{form_widget(Form.firstName)}} 
+                </td> 
+            </tr> 
+            <tr> 
+                <td>
+                    {{form_label(Form.lastName,'lastName: ')}} 
+                </td> 
+                <td>
+                    {{form_widget(Form.lastName)}} 
+                </td> 
+            </tr> 
+            <tr> 
+                <td>
+                    {{form_label(Form.eMail,'eMail: ')}} 
+                </td> 
+                <td>
+                    {{form_widget(Form.eMail)}} 
+                </td> 
+            </tr> 
+            <tr> 
+                <td>
+                    {{form_label(Form.locked,'Locked: ')}} 
+                </td> 
+                <td>
+                    {{form_widget(Form.locked)}} 
+                </td> 
+            </tr> 
+            
+            
+            
+            {{ form_rest(Form) }}  
+    </table>
+    <table> <tr> <td> <input type="submit" value="Enregistrer"/> </td> </tr> 
+    </table>
+</form>   

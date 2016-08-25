@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Client list</h1>
+
+    <table>
+        <thead>
+            <tr>   
+                <th>Id</th>   
+                <th>firstname</th>
+                <th>lastname</th>
+                <th>username</th>
+                <th>mail</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>   
+                <td>{{ user.id }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                
+                <td>
+                   <li>
+            <a href="{{ path('edit_clients', { 'id': user.id }) }}">Show</a>
+        </li>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+           
+        </li>
+    </ul>
+{% endblock %}

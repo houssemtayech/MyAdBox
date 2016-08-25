@@ -4,11 +4,13 @@ namespace AdBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Admin
  *
  * @ORM\Table(name="admin")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Admin extends User
 {
@@ -19,12 +21,6 @@ class Admin extends User
      */
     private $groupe;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="CIN", type="integer", nullable=false)
-     */
-    private $cin;
 
     /**
      * @var integer
@@ -43,6 +39,7 @@ class Admin extends User
      * @param string $groupe
      * @return Admin
      */
+   
     public function setGroupe($groupe)
     {
         $this->groupe = $groupe;
@@ -60,28 +57,8 @@ class Admin extends User
         return $this->groupe;
     }
 
-    /**
-     * Set cin
-     *
-     * @param integer $cin
-     * @return Admin
-     */
-    public function setCin($cin)
-    {
-        $this->cin = $cin;
 
-        return $this;
-    }
 
-    /**
-     * Get cin
-     *
-     * @return integer 
-     */
-    public function getCin()
-    {
-        return $this->cin;
-    }
 
     /**
      * Get id
@@ -91,5 +68,12 @@ class Admin extends User
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(){
+        $this->addRole('ROLE_ADMIN');
     }
 }

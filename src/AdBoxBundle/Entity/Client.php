@@ -11,6 +11,7 @@ use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
  * Client
  * 
  * @ORM\Table(name="client", indexes={@ORM\Index(name="id_adress", columns={"id_adress"})})
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity
  */
 class Client extends User
@@ -97,5 +98,11 @@ class Client extends User
     public function getIdAdress()
     {
         return $this->idAdress;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(){
+        $this->addRole('ROLE_CLIENT');
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ShopOwner
  *
  * @ORM\Table(name="shop_owner")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity
  */
 class ShopOwner extends User
@@ -107,5 +108,12 @@ class ShopOwner extends User
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(){
+        $this->addRole('ROLE_SHOPOWNER');
     }
 }

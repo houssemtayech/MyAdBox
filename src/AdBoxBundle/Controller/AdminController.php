@@ -8,11 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Admin;
 use AdBoxBundle\Form\AdminType;
-
+use AdBoxBundle\Form\EditAdminForm;
 /**
  * Admin controller.
  *
- * @Route("/admin")
+ * @Route("/adminTest")
  */
 class AdminController extends Controller
 {
@@ -141,5 +141,37 @@ class AdminController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    
+    public function listAllAdminAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $roles = "ROLE_ADMIN";
+        $query = $em -> createQuery('select A from AdBoxBundle:User A where A.roles like :roles ')
+                ->setParameter ('roles','%'. $roles .'%');
+       // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
+        $users = $query ->getResult();
+        
+        return $this->render('AdBoxBundle:Admin:allAdmins.html.twig', array(
+            'users' => $users,
+        ));
+    }
+    
+    public function editAdminAction($id) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $Admin = $em->getRepository('AdBoxBundle:Admin')->find($id);
+        $form = $this->createform(new EditAdminForm(), $Admin);
+        //assigner les données saisies par l'user à l'objet modele
+        $request = $this->getRequest();
+        if ($request->getMethod() == "POST") {
+
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em = $this->container->get('Doctrine')->getEntityManager();
+                $em->persist($Admin);
+                $em->flush();
+                return $this->render('AdBoxBundle:Admin:succes.html.twig', array('msg' => 'Mise à jour affectuée avec succès'));
+            }
+        } return $this->render('AdBoxBundle:Admin:editAdmin.html.twig', array('Form' => $form->createView()));
     }
 }
