@@ -1,0 +1,221 @@
+
+<div class="tab-content">
+        <div class="tab-pane animation-fade active" id="All_Ads" role="tabpanel">
+            <ul class="list-group">
+                {% for ad in ads %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="avatar avatar-away">
+                                    {% if ad[0].getIdMedia().getType() == "image" %}
+                                        <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                    {% endif %}
+                                    {% if ad[0].getIdMedia().getType() == "video" %}
+                                        <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                {#{ ad['0'].getIdShop().getName() }#}
+                                {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                    <small>
+                                        <i class="icon md-calendar-alt" aria-hidden="true"></i>
+
+                                        {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                        -
+                                        {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                    </small>
+                                </h4>
+                                <p>
+                                    <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                    {{ ad.name }}
+                                </p>
+                                <p>
+                                    <i class="icon md-money" aria-hidden="true"></i>
+                                    {{ ad['0'].getIdTimelaps().getPrix() }}
+                                    TND
+                                </p>
+
+                            </div>
+                            <div class="media-right">
+                                <button type="button" class="btn btn-success btn-sm">
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!-- allAds pagination panel -->
+            <nav>
+                <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+            </nav>
+        </div>
+
+        <div class="tab-pane animation-fade" id="Today" role="tabpanel">
+            <ul class="list-group">
+                {% for ad in ads %}
+                    {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))==(date()|date('Y-m-d')))%}
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar avatar-away">
+                                        {% if ad[0].getIdMedia().getType() == "image" %}
+                                            <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                        {% endif %}
+                                        {% if ad[0].getIdMedia().getType() == "video" %}
+                                            <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                        <small>
+                                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+
+                                            {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                            -
+                                            {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                        </small>
+                                    </h4>
+                                    <p>
+                                        <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                        {{ ad.name }}
+                                    </p>
+                                    <p>
+                                        <i class="icon md-money" aria-hidden="true"></i>
+                                        {{ ad['0'].getIdTimelaps().getPrix() }}
+                                        TND
+                                    </p>
+
+                                </div>
+                                <div class="media-right">
+                                    <button type="button" class="btn btn-success btn-sm">
+                                        Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <nav>
+                <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+            </nav>
+        </div>
+        <div class="tab-pane animation-fade" id="Coming" role="tabpanel">
+            <ul class="list-group">
+                {% for ad in ads %}
+                    {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))>(date()|date('Y-m-d')))%}
+
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar avatar-away">
+                                        {% if ad[0].getIdMedia().getType() == "image" %}
+                                            <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                        {% endif %}
+                                        {% if ad[0].getIdMedia().getType() == "video" %}
+                                            <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                        <small>
+                                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+
+                                            {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                            -
+                                            {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                        </small>
+                                    </h4>
+                                    <p>
+                                        <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                        {{ ad.name }}
+                                    </p>
+                                    <p>
+                                        <i class="icon md-money" aria-hidden="true"></i>
+                                        {{ ad['0'].getIdTimelaps().getPrix() }}
+                                        TND
+                                    </p>
+
+                                </div>
+                                <div class="media-right">
+                                    <button type="button" class="btn btn-success btn-sm">
+                                        Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <nav>
+                <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+            </nav>
+        </div>
+
+        <div class="tab-pane animation-fade" id="History" role="tabpanel">
+            <ul class="list-group">
+                {% for ad in ads %}
+                    {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))<(date()|date('Y-m-d')))%}
+
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar avatar-away">
+                                        {% if ad[0].getIdMedia().getType() == "image" %}
+                                            <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                        {% endif %}
+                                        {% if ad[0].getIdMedia().getType() == "video" %}
+                                            <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {#{ ad['0'].getIdShop().getName() }#}
+                                        {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                        <small>
+                                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+
+                                            {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                            -
+                                            {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                        </small>
+                                    </h4>
+                                    <p>
+                                        <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                        {{ ad.name }}
+                                    </p>
+                                    <p>
+                                        <i class="icon md-money" aria-hidden="true"></i>
+                                        {{ ad['0'].getIdTimelaps().getPrix() }}
+                                        TND
+                                    </p>
+
+                                </div>
+                                <div class="media-right">
+                                    <button type="button" class="btn btn-success btn-sm">
+                                        Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+            <nav>
+                <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+            </nav>
+        </div>
+    </div>

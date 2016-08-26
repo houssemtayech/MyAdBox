@@ -1,11 +1,11 @@
 ad_box_homepage:
     path:     /
     defaults: { _controller: AdBoxBundle:Default:index }
-    
+
 index_page:
     path:     /index
     defaults: { _controller: AdBoxBundle:Admin:index }
-    
+
 login_page:
     path:     /login
     defaults: { _controller: AdBoxBundle:Security:login }
@@ -17,37 +17,37 @@ registerUserOne_page:
 registerUserTwo_page:
     path:     /registerUserTwo
     defaults: { _controller: AdBoxBundle:Default:registerUserTwo }
-    
+
 registerClient_page:
     path:     /registerClient
     defaults: { _controller: AdBoxBundle:Default:registerClient }
-    
+
 registerAdmin_page:
     path:     /registerAdmin
     defaults: { _controller: AdBoxBundle:Default:registerAdmin }
-    
+
 registerZeus_page:
     path:     /registerZeus
     defaults: { _controller: AdBoxBundle:Default:registerZeus }
-    
+
 registerShopOwner_page:
     path:     /registerShopOwner
     defaults: { _controller: AdBoxBundle:Default:registerShopOwner }
-    
-    
+
+
 media_page:
     path:     /media
     defaults: { _controller: AdBoxBundle:Media:media }
-    
+
 calendar_page:
     path:     /calendar
     defaults: { _controller: AdBoxBundle:Admin:calendar}
-    
+
 profile_page:
     path:     /profile
     defaults: { _controller: AdBoxBundle:Default:profile}
-    
 
+<<<<<<< ab42b6708e96452a815fc2ee61e94fdbe112dd88
 list_admins:
     path:     /listAdmins
     defaults: { _controller: AdBoxBundle:Admin:listAllAdmin }
@@ -76,3 +76,18 @@ edit_ShopOwners:
     path:     /editShopOwner/{id}
     defaults: { _controller: AdBoxBundle:ShopOwner:editShopOwner }
 
+=======
+ws_get_journal:
+    path : /api/journal
+    defaults: { _controller : AdBoxBundle:Default:getUser}
+    methods:  [POST]
+
+myads_client_page:
+    path:     /client/ads
+    defaults: { _controller: AdBoxBundle:Client:showAds}
+
+myads_client_page_Filter:
+    path:     /client/ads/filters
+    defaults: { _controller: AdBoxBundle:Client:showAdsFilter}
+    methods:  [POST]
+>>>>>>> Add View and search client ads

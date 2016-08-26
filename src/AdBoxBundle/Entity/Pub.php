@@ -24,7 +24,7 @@ class Pub
     /**
      * @var \AdBoxBundle\Entity\Shop
      *
-     * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\Shop")
+     * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_shop", referencedColumnName="id")
      * })
@@ -56,7 +56,7 @@ class Pub
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -79,7 +79,7 @@ class Pub
     /**
      * Get idShop
      *
-     * @return \AdBoxBundle\Entity\Shop 
+     * @return \AdBoxBundle\Entity\Shop
      */
     public function getIdShop()
     {
@@ -102,7 +102,7 @@ class Pub
     /**
      * Get idTimelaps
      *
-     * @return \AdBoxBundle\Entity\Timelaps 
+     * @return \AdBoxBundle\Entity\Timelaps
      */
     public function getIdTimelaps()
     {
@@ -125,7 +125,7 @@ class Pub
     /**
      * Get idMedia
      *
-     * @return \AdBoxBundle\Entity\Media 
+     * @return \AdBoxBundle\Entity\Media
      */
     public function getIdMedia()
     {
