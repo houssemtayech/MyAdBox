@@ -1,0 +1,17 @@
+    {{form_start(edit_form)}}
+         {{ form_row(edit_form.titre, { 'attr': {'class': 'form-control'} }   ) }}
+         {{ form_row(edit_form.corps, { 'attr': {'class': 'form-control'} }   ) }}
+         {{ form_row(edit_form.etat, { 'attr': {'class': 'form-control'} }   ) }}
+         {{ form_row(edit_form.file) }} 
+         {{ form_row(edit_form.submit) }} 
+    {{ form(edit_form, {'attr' : { 'style' : 'display: inline-block' }}) }}
+ <br>
+    <ul class="record_actions">
+        
+        <a href="{{ path('actualite') }}" class="btn icon-btn btn-primary" >
+                Retour a la liste des actualites
+            </a>
+                
+         <br>
+        {{ form(delete_form, {'attr' : { 'style' : 'display: inline-block' }}) }}
+    </ul

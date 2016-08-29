@@ -3,11 +3,26 @@
 {% block body %}
     <h1>Media creation</h1>
 
-    {{ form_start(form) }}
+   {# {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    {{ form_end(form) }}#}
 
+   
+   <h1>Video creation</h1>
+ 
+<form action="{{ path('media_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+ 
+    {# {{ form_row(form) }} #}
+ 
+    {{ form_rest(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
     <ul>
         <li>
             <a href="{{ path('media_index') }}">Back to the list</a>

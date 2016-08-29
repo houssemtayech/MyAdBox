@@ -54,6 +54,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         array (
             'Rollerworks\\Component\\SfContainerInjector\\' => 42,
         ),
+        'N' => 
+        array (
+            'Negotiation\\' => 12,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
@@ -171,6 +175,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         array (
             0 => __DIR__ . '/..' . '/rollerworks/sf-container-injector',
         ),
+        'Negotiation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -229,6 +237,20 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
             'PUGX\\MultiUserBundle' => 
             array (
                 0 => __DIR__ . '/..' . '/pugx/multi-user-bundle',
+            ),
+        ),
+        'J' => 
+        array (
+            'JsonpCallbackValidator' => 
+            array (
+                0 => __DIR__ . '/..' . '/willdurand/jsonp-callback-validator/src',
+            ),
+        ),
+        'F' => 
+        array (
+            'FOS\\RestBundle' => 
+            array (
+                0 => __DIR__ . '/..' . '/friendsofsymfony/rest-bundle',
             ),
         ),
         'D' => 

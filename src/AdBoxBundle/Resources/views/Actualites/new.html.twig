@@ -1,0 +1,31 @@
+  <form action="{{ path('actualite_create') }}" method="POST" {{form_enctype(form)}} >
+    
+                         
+                        {{ form_row(form.titre, { 'attr': {'class': 'form-control'} }   ) }}
+                        <br>
+                        <br>
+                        {{ form_row(form.corps, { 'attr': {'class': 'form-control'} }   ) }}
+                        <br> 
+                        <br>
+                        {{ form_row(form.etat, { 'attr': {'class': 'form-control'} }   ) }}
+                        <br>
+                        <br>
+                        {{ form_row(form.file) }}
+                        <br>
+                        <br>
+                        {{  form_row(form.submit, { 'attr': {'class': 'label label-primary'} }  ) }}
+                       
+                       
+                            
+                        
+
+                        <ul class="record_actions">
+                            
+                        
+                            
+                        </ul>
+
+               
+
+            
+                          </form>  

@@ -1,82 +1,55 @@
-<<<<<<< Updated upstream
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerZeus.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/EventListener/ResettingListener.php</file>
             <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/config/routing/registration.xml</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/media.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/config/routing.yml</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Media/new.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Security/LoginSuccessHandler.php</file>
+            <file>file:/C:/wamp/www/adBox2/app/config/security.yml</file>
+            <file>file:/C:/wamp/www/adBox2/app/config/parameters.yml</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Controller/ResettingController.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/confirmed.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/calendar.html.twig</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerClient.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/config/routing.yml</file>
             <file>file:/C:/wamp/www/adBox2/app/config/config.yml</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerUserTwo.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Factory/FormFactory.php</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Media/edit.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/EventListener/RegistrationConfirmationSubscriber.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/config/registration.xml</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Pub.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/index.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Action.php</file>
-            <file>file:/C:/wamp/www/adBox2/app/Resources/views/base.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Admin.php</file>
+            <file>file:/C:/wamp/www/adBox2/app/config/services.yml</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerAdmin.html.twig</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Client.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserZeusController.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/BidClientController.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/symfony/symfony/src/Symfony/Component/Security/Http/Authentication/AuthenticationSuccessHandlerInterface.php</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/layout.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/ClientController.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/ShopOwner.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/User.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserClientController.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/UserTwo.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerShopOwner.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Shop.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Event/UserEvent.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/EventListener/LastLoginListener.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserTwoController.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserOneController.php</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Client/client_home.html.twig</file>
             <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/register.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Type/ProfileClientFormType.php</file>
-            <file>file:/C:/wamp/www/adBox2/app/config/routing.yml</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Box.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerUserOne.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Type/RegistrationClientFormType.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/login.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/app/config/security.yml</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/config/routing/security.xml</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/Security/login.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/app/config/parameters.yml</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Controller/SecurityController.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/config/registration.xml</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Admin.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Type/RegistrationFormType.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/registerAdmin.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/registerOne.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Default/index.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Form/UserOneType.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Table.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/EventTimelapsController.php</file>
-            <file>file:/C:/wamp/www/adBox2/app/bootstrap.php.cache</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Registration/register_content.html.twig</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserShopOwnerController.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Zeus.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Type/RegistrationUserOneFormType.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/config/routing/user.yml</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Event.php</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Media/index.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Form/MediaType.php</file>
+            <file>file:/C:/wamp/www/adBox2/app/config/routing.yml</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Actualites/edit.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/MediaController.php</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/AdminController.php</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/EventListener/FlashListener.php</file>
             <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/RegistrationUserAdminController.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/registerOne_content.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/EventListener/EmailConfirmationListener.php</file>
             <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Controller/RegistrationController.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/UserOne.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Controller/SecurityController.php</file>
-            <file>file:/C:/wamp/www/adBox2/vendor/friendsofsymfony/user-bundle/Form/Type/ProfileUserOneFormType.php</file>
-            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Registration/register.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Media/show.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Resources/views/Admin/admin_home.html.twig</file>
+            <file>file:/C:/wamp/www/adBox2/src/AdBoxBundle/Entity/Media.php</file>
         </group>
     </open-files>
 </project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp64/www/AdBoxi/MyAdBox/src/AdBoxBundle/Resources/views/Admin/profile.html.twig</file>
-            <file>file:/C:/wamp64/www/AdBoxi/MyAdBox/src/AdBoxBundle/Resources/views/ShopOwner/profile.html.twig</file>
-            <file>file:/C:/wamp64/www/AdBoxi/MyAdBox/src/AdBoxBundle/Resources/views/Client/profile.html.twig</file>
-            <file>file:/C:/wamp64/www/AdBoxi/MyAdBox/src/AdBoxBundle/Controller/DefaultController.php</file>
-        </group>
-    </open-files>
-</project-private>
->>>>>>> Stashed changes

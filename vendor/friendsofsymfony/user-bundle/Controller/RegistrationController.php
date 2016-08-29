@@ -61,8 +61,21 @@ class RegistrationController extends Controller
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                if ($user instanceof \AdBoxBundle\Entity\Client)
+                { $url = $this->generateUrl('fos_user_client_registration_confirmed');
                 $response = new RedirectResponse($url);
+                }else if ($user instanceof \AdBoxBundle\Entity\Admin)
+                    { $url = $this->generateUrl('fos_user_admin_registration_confirmed');
+                $response = new RedirectResponse($url);
+                }
+                else if ($user instanceof \AdBoxBundle\Entity\ShopOwner)
+                    { $url = $this->generateUrl('fos_user_shopowner_registration_confirmed');
+                $response = new RedirectResponse($url);
+                    }
+                else if ($user instanceof \AdBoxBundle\Entity\Zeus)
+                    { $url = $this->generateUrl('fos_user_zeus_registration_confirmed');
+                $response = new RedirectResponse($url);
+                    }
             }
 
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
