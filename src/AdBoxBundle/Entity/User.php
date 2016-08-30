@@ -21,10 +21,11 @@ Abstract class User extends BaseUser {
     protected $id;
     
     
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="CIN", type="integer", nullable=false)
+     * @ORM\Column(name="CIN", type="integer", nullable=true)
      */
     private $cin;
 

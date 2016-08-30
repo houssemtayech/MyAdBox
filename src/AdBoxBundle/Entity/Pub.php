@@ -26,7 +26,7 @@ class Pub
      *
      * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\Shop")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_shop", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_shop", referencedColumnName="id_Shop")
      * })
      */
     private $idShop;

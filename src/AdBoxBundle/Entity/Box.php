@@ -19,15 +19,12 @@ class Box
      */
     private $boxid;
 
-    /**
-     * @var \AdBoxBundle\Entity\Shop
+     /**
+     * @var integer
      *
+     * @ORM\Column(name="id_Box", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\Shop")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
-     * })
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 

@@ -61,7 +61,7 @@ class Timelaps
      *
      * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\Shop")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pointpub", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_pointpub", referencedColumnName="id_Shop")
      * })
      */
     private $idPointpub;

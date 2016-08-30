@@ -7,11 +7,41 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Adresse
  *
- * @ORM\Table(name="adresse")
+ * @ORM\Table(name="adress", indexes={@ORM\Index(name="fk_Adress_User1_idx", columns={"User_id_User"}),@ORM\Index(name="fk_Adress_Shop1_idx", columns={"Shop_id_Shop"})})
  * @ORM\Entity
  */
 class Adresse
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @var \AdBoxBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="User_id_User", referencedColumnName="id")
+     * })
+     */
+    private $user;
+     /**
+     * @var \AdBoxBundle\Entity\Shop
+     *
+     * @ORM\ManyToOne(targetEntity="Shop")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Shop_id_Shop", referencedColumnName="id_Shop")
+     * })
+     */
+    private $shop;
+    
+    
+    
     /**
      * @var float
      *
@@ -61,15 +91,9 @@ class Adresse
      */
     private $rue;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
+    
+    
+    
 
 
     /**
@@ -242,4 +266,20 @@ class Adresse
     {
         return $this->id;
     }
+    function getUser() {
+        return $this->user;
+    }
+
+    function setUser(\AdBoxBundle\Entity\User $user) {
+        $this->user = $user;
+    }
+    function getShop() {
+        return $this->shop;
+    }
+
+    function setShop(\AdBoxBundle\Entity\Shop $shop) {
+        $this->shop = $shop;
+    }
+
+
 }

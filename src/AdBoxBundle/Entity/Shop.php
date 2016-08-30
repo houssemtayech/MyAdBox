@@ -4,14 +4,28 @@ namespace AdBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Shop
  *
- * @ORM\Table(name="shop", uniqueConstraints={@ORM\UniqueConstraint(name="id_adress", columns={"id_adress"})})
+ * @ORM\Table(name="shop", indexes={@ORM\Index(name="fk_Shop_ShopOwner1_idx", columns={"ShopOwner_id_ShopOwner"})})
  * @ORM\Entity
+ * 
  */
+
 class Shop
 {
+    
+     
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_Shop", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+   
     /**
      * @var string
      *
@@ -19,126 +33,41 @@ class Shop
      */
     private $name;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="owner_id", type="integer", nullable=false)
-     */
-    private $ownerId;
+   
 
     /**
-     * @var \AdBoxBundle\Entity\ShopOwner
+     * @var \AdBoxBundle\Entity\User
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\ShopOwner")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="ShopOwner_id_ShopOwner", referencedColumnName="id")
      * })
      */
-    private $id;
+    private $shopOwner;
 
-    /**
-     * @var \AdBoxBundle\Entity\Adresse
-     *
-     * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\Adresse")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_adress", referencedColumnName="id")
-     * })
-     */
-    private $idAdress;
-
-
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Shop
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set ownerId
-     *
-     * @param integer $ownerId
-     * @return Shop
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
-
-        return $this;
-    }
-
-    /**
-     * Get ownerId
-     *
-     * @return integer 
-     */
-    public function getOwnerId()
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set id
-     *
-     * @param \AdBoxBundle\Entity\ShopOwner $id
-     * @return Shop
-     */
-    public function setId(\AdBoxBundle\Entity\ShopOwner $id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return \AdBoxBundle\Entity\ShopOwner 
-     */
-    public function getId()
-    {
+    function getId() {
         return $this->id;
     }
 
-    /**
-     * Set idAdress
-     *
-     * @param \AdBoxBundle\Entity\Adresse $idAdress
-     * @return Shop
-     */
-    public function setIdAdress(\AdBoxBundle\Entity\Adresse $idAdress = null)
-    {
-        $this->idAdress = $idAdress;
-
-        return $this;
+    function getName() {
+        return $this->name;
     }
 
-    /**
-     * Get idAdress
-     *
-     * @return \AdBoxBundle\Entity\Adresse 
-     */
-    public function getIdAdress()
-    {
-        return $this->idAdress;
+    function getShopOwner() {
+        return $this->shopOwner;
     }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setName($name) {
+        $this->name = $name;
+    }
+
+    function setShopOwner(\AdBoxBundle\Entity\User $shopOwner) {
+        $this->shopOwner = $shopOwner;
+    }
+
+
 }

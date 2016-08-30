@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ShopOwner
  *
- * @ORM\Table(name="shop_owner")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity
  */
 class ShopOwner extends User
 {
+    
     /**
      * @var string
      *
@@ -27,20 +27,7 @@ class ShopOwner extends User
      */
     private $solde;
 
-    /**
-     * @var \AdBoxBundle\Entity\Adresse
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\Adresse")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
-     * })
-     */
-    protected $id;
-
-
-
+ 
     /**
      * Set categorie
      *
@@ -87,28 +74,6 @@ class ShopOwner extends User
         return $this->solde;
     }
 
-    /**
-     * Set id
-     *
-     * @param \AdBoxBundle\Entity\Adresse $id
-     * @return ShopOwner
-     */
-    public function setId(\AdBoxBundle\Entity\Adresse $id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return \AdBoxBundle\Entity\Adresse 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     
     /**
      * @ORM\PrePersist
