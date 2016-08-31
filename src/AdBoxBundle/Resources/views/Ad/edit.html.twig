@@ -1,0 +1,193 @@
+{% extends 'AdBoxBundle::layout.html.twig' %}
+
+{% block extraLinks %}
+    <!-- Page -->
+    <link rel="stylesheet" href="{{asset('assets/examples/css/apps/media.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('assets/examples/css/uikit/buttons.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
+
+{% endblock %}
+
+{% block monblock %}
+    <div class="app-media">
+        <div class="page bg-white animsition">
+
+            <!-- Media Content -->
+            <div class="page-main">
+
+                <!-- Media Content Header -->
+                <div class="page-header">
+                    <h1 class="page-title">{{ad.getIdTimelaps().getIdPointpub().getName()}}
+                        -
+                        {{event.name}}
+                        <small>
+                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+                            {{ad.getIdTimelaps().getDateStart()|date('Y-m-d h:i')}}
+                            -
+                            {{ad.getIdTimelaps().getDateEnd()|date('Y-m-d h:i')}}
+                        </small>
+                    </h1>
+                    <div class="page-header-actions">
+                        <form>
+                            <div class="input-search input-search-dark">
+                                <i class="input-search-icon wb-search" aria-hidden="true"></i>
+                                <input type="text" class="form-control" name="" placeholder="Search...">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Media Content -->
+                <div class="page-content page-content-table" data-selectable="selectable">
+
+                    <!-- Actions -->
+
+                    <div class="page-content-actions">
+
+                        <div class="pull-right">
+                            <div class="btn-group media-arrangement" role="group">
+                                <button class="btn btn-outline btn-default active" id="arrangement-grid" type="button">
+                                    <i class="icon wb-grid-4" aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-outline btn-default" id="arrangement-list" type="button">
+                                    <i class="icon wb-list" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Media -->
+                    <div class="media-list is-grid padding-bottom-50">
+                        <ul class="blocks blocks-100 blocks-xlg-4 blocks-lg-3 blocks-md-3 blocks-ms-2 blocks-xs-2" data-plugin="animateList" data-child=">li">
+                            {% for media in medias %}
+                                <li>
+                                    <div class="media-item" data-url="panel.tpl">
+                                        <div class="checkbox-custom checkbox-primary checkbox-lg">
+
+                                            {% if (media.getID() == ad.getIdMedia().getId()) %}
+                                                <input type="checkbox" class="selectable-item" id="media_{{media.getID()}}" checked="true"/>
+                                            {% else %}
+                                                <input type="checkbox" class="selectable-item" id="media_{{media.getID()}}"/>
+                                            {% endif %}
+                                            <label for="media_{{media.getID()}}"></label>
+                                        </div>
+                                        <div class="image-wrap">
+                                            {% if (media.getType() == 'video') %}
+                                                <video controls class="image img-rounded" src="{{media.getUrl()}}" alt="{{media.getDescription()}}">
+                                                {% endif %}
+                                                {% if (media.getType() == 'image') %}
+                                                    <img class="image img-rounded" src="{{media.getUrl()}}" alt="{{media.getDescription()}}">
+                                                {% endif %}
+
+                                            </div>
+                                            <div class="info-wrap">
+                                                <div class="title">{{media.getTitle()}}
+                                                </div>
+                                                <div class="time">{{media.getDescription()}}</div>
+                                                <small>
+                                                    <i class="icon md-calendar-alt" aria-hidden="true"></i>
+                                                    {{media.getCreatedAt()|date('Y-m-d h:i:s')}}
+                                                </small>
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="site-action">
+                <button type="button" class="site-action-toggle btn-raised btn btn-dark btn-floating wb-upload">
+
+
+                </button>
+                <button type="button" id="EditConfirm" class="site-action-toggle btn-raised btn btn-success btn-floating wb-check">
+                </button>
+
+            </div>
+
+        </div>
+        <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+        <script src="{{asset('assets/examples/js/apps/media.min.js')}}"></script>
+
+        <!-- Core  -->
+        <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('global/vendor/bootstrap/bootstrap.min.js')}}"></script>
+        <script src="{{asset('global/vendor/animsition/animsition.min.js')}}"></script>
+        <script src="{{asset('global/vendor/asscroll/jquery-asScroll.min.js')}}"></script>
+        <script src="{{asset('global/vendor/mousewheel/jquery.mousewheel.min.js')}}"></script>
+        <script src="{{asset('global/vendor/asscrollable/jquery.asScrollable.all.min.js')}}"></script>
+        <script src="{{asset('global/vendor/ashoverscroll/jquery-asHoverScroll.min.js')}}"></script>
+
+        <!-- Plugins -->
+        <script src="{{asset('global/vendor/switchery/switchery.min.js')}}"></script>
+        <script src="{{asset('global/vendor/intro-js/intro.min.js')}}"></script>
+        <script src="{{asset('global/vendor/screenfull/screenfull.min.js')}}"></script>
+        <script src="{{asset('global/vendor/slidepanel/jquery-slidePanel.min.js')}}"></script>
+        <!-- for this page -->
+        <script src="{{asset('global/vendor/ladda-bootstrap/spin.min.js')}}"></script>
+        <script src="{{asset('global/vendor/ladda-bootstrap/ladda.min.js')}}"></script>
+        <script src="{{asset('global/js/components/buttons.min.js')}}"></script>
+        <script src="{{asset('global/js/components/ladda-bootstrap.min.js')}}"></script>
+        <!-- Scripts -->
+        <script src="{{asset('global/js/core.min.js')}}"></script>
+        <script src="{{asset('assets/js/site.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/sections/menu.min.js')}}"></script>
+        <script src="{{asset('assets/js/sections/menubar.min.js')}}"></script>
+        <script src="{{asset('assets/js/sections/sidebar.min.js')}}"></script>
+
+        <script src="{{asset('global/js/configs/config-colors.min.js')}}"></script>
+        <script src="{{asset('assets/js/configs/config-tour.min.js')}}"></script>
+
+        <script src="{{asset('global/js/components/asscrollable.min.js')}}"></script>
+        <script src="{{asset('global/js/components/animsition.min.js')}}"></script>
+        <script src="{{asset('global/js/components/slidepanel.min.js')}}"></script>
+        <script src="{{asset('global/js/components/switchery.min.js')}}"></script>
+
+        <script src="{{asset('global/js/plugins/sticky-header.min.js')}}"></script>
+        <script src="{{asset('global/js/components/asscrollable.min.js')}}"></script>
+        <script src="{{asset('global/js/components/animate-list.min.js')}}"></script>
+        <script src="{{asset('global/js/plugins/action-btn.min.js')}}"></script>
+        <script src="{{asset('global/js/plugins/selectable.min.js')}}"></script>
+        <script src="{{asset('global/js/components/selectable.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+        <script src="{{asset('assets/examples/js/apps/media.min.js')}}"></script>
+        <script>
+            $('input[type="checkbox"]').on('change', function() {
+                $('input[type="checkbox"]').not($(this)).prop('checked', false);
+            });
+            $("#EditConfirm").click(function(){
+              var id_media=$('input:checked').attr('id').replace('media_','');
+
+              $.ajax({
+                  method: "POST",
+                  url: "http://localhost{{path('edit_ad_flush')}}",
+                  data: {
+                      ad: {{ad.getId()}},
+                      media: id_media
+                  }
+              }).done(function(data) {
+                swal("Success!", "", "success");
+
+              }).fail(function() {
+                swal("Cancelled", "An error has occured", "error");
+              });
+            });
+        </script>
+
+    {% endblock %}

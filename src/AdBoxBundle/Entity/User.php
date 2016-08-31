@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("SINGLE_TABLE")
  *
  */
-Abstract class User extends BaseUser {
+ class User extends BaseUser {
 
     /**
      * @ORM\Id

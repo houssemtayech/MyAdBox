@@ -34,7 +34,6 @@ registerShopOwner_page:
     path:     /registerShopOwner
     defaults: { _controller: AdBoxBundle:Default:registerShopOwner }
 
-
 media_page:
     path:     /media
     defaults: { _controller: AdBoxBundle:Media:media }
@@ -47,11 +46,10 @@ profile_page:
     path:     /profile
     defaults: { _controller: AdBoxBundle:Default:profile}
 
-<<<<<<< ab42b6708e96452a815fc2ee61e94fdbe112dd88
 list_admins:
     path:     /listAdmins
     defaults: { _controller: AdBoxBundle:Admin:listAllAdmin }
-    
+
 find_admins:
     path:     /findAdmin/{id}
     defaults: { _controller: AdBoxBundle:Admin:findAdmins }
@@ -63,20 +61,19 @@ edit_admins:
 edit_clients:
     path:     /editClient/{id}
     defaults: { _controller: AdBoxBundle:Client:editClient }
-    
+
 list_clients:
     path:     /listClients
     defaults: { _controller: AdBoxBundle:Client:listAllClient }
-    
+
 list_ShopOwners:
     path:     /listShopOwners
     defaults: { _controller: AdBoxBundle:ShopOwner:listAllShopOwner }
-    
+
 edit_ShopOwners:
     path:     /editShopOwner/{id}
     defaults: { _controller: AdBoxBundle:ShopOwner:editShopOwner }
 
-=======
 ws_get_journal:
     path : /api/journal
     defaults: { _controller : AdBoxBundle:Default:getUser}
@@ -90,4 +87,36 @@ myads_client_page_Filter:
     path:     /client/ads/filters
     defaults: { _controller: AdBoxBundle:Client:showAdsFilter}
     methods:  [POST]
->>>>>>> Add View and search client ads
+
+get_ad_by_id:
+    path:     /pub
+    defaults: { _controller: AdBoxBundle:Pub:getAdById}
+    methods:  [POST]
+
+set_ad_status:
+    path:     /pub/isEnable
+    defaults: { _controller: AdBoxBundle:Pub:setEnableStatus}
+    methods:  [POST]
+
+get_shop_by_id:
+    path:     /shop
+    defaults: { _controller: AdBoxBundle:Shop:getShopById}
+    methods:  [POST]
+
+edit_ad:
+    path:     /ad/edit/{id}
+    defaults: { _controller: AdBoxBundle:Pub:editshow}
+
+client_ad_add:
+  path:     /ad/add
+  defaults: { _controller: AdBoxBundle:Pub:calendarshow}
+
+get_timelaps_by_event:
+    path:     /event/Timelapses
+    defaults: { _controller: AdBoxBundle:Event:getTimeLapses}
+    methods:  [POST]
+
+edit_ad_flush:
+    path:     /ad/edit
+    defaults: { _controller: AdBoxBundle:Pub:edit}
+    methods:  [POST]

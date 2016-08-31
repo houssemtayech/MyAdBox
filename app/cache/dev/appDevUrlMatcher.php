@@ -351,6 +351,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_shop_delete:
 
+            // getAvailableShopsByAdresse
+            if ($pathinfo === '/shop/ByAdress') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_getAvailableShopsByAdresse;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopsByAdresse',  '_route' => 'getAvailableShopsByAdresse',);
+            }
+            not_getAvailableShopsByAdresse:
+
         }
 
         if (0 === strpos($pathinfo, '/reservation')) {
@@ -416,21 +427,6 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         if (0 === strpos($pathinfo, '/pub')) {
-            // pub_index
-            if (rtrim($pathinfo, '/') === '/pub') {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_pub_index;
-                }
-
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'pub_index');
-                }
-
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::indexAction',  '_route' => 'pub_index',);
-            }
-            not_pub_index:
-
             // pub_new
             if ($pathinfo === '/pub/new') {
                 if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
@@ -442,28 +438,6 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_pub_new:
 
-            // pub_show
-            if (preg_match('#^/pub/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_pub_show;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pub_show')), array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::showAction',));
-            }
-            not_pub_show:
-
-            // pub_edit
-            if (preg_match('#^/pub/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                    goto not_pub_edit;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'pub_edit')), array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::editAction',));
-            }
-            not_pub_edit:
-
             // pub_delete
             if (preg_match('#^/pub/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 if ($this->context->getMethod() != 'DELETE') {
@@ -474,6 +448,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'pub_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::deleteAction',));
             }
             not_pub_delete:
+
+            // addAd
+            if ($pathinfo === '/pub/add') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_addAd;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::addAddAction',  '_route' => 'addAd',);
+            }
+            not_addAd:
 
         }
 
@@ -691,13 +676,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             not_client_new:
 
             // client_show
-            if (preg_match('#^/client/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            if (rtrim($pathinfo, '/') === '/client') {
                 if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                     $allow = array_merge($allow, array('GET', 'HEAD'));
                     goto not_client_show;
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'client_show')), array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAction',));
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'client_show');
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAction',  '_route' => 'client_show',);
             }
             not_client_show:
 
@@ -976,6 +965,42 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     }
                     not_adresse_delete:
 
+                    if (0 === strpos($pathinfo, '/adresse/c')) {
+                        // getAvailableCountries
+                        if ($pathinfo === '/adresse/countries') {
+                            if ($this->context->getMethod() != 'POST') {
+                                $allow[] = 'POST';
+                                goto not_getAvailableCountries;
+                            }
+
+                            return array (  '_controller' => 'AdBoxBundle\\Controller\\AdresseController::getAvailableCountriesAction',  '_route' => 'getAvailableCountries',);
+                        }
+                        not_getAvailableCountries:
+
+                        // getAvailableCities
+                        if ($pathinfo === '/adresse/cities') {
+                            if ($this->context->getMethod() != 'POST') {
+                                $allow[] = 'POST';
+                                goto not_getAvailableCities;
+                            }
+
+                            return array (  '_controller' => 'AdBoxBundle\\Controller\\AdresseController::getCityByCountryAction',  '_route' => 'getAvailableCities',);
+                        }
+                        not_getAvailableCities:
+
+                    }
+
+                    // getAvailableRegions
+                    if ($pathinfo === '/adresse/regions') {
+                        if ($this->context->getMethod() != 'POST') {
+                            $allow[] = 'POST';
+                            goto not_getAvailableRegions;
+                        }
+
+                        return array (  '_controller' => 'AdBoxBundle\\Controller\\AdresseController::getRegionByCityAction',  '_route' => 'getAvailableRegions',);
+                    }
+                    not_getAvailableRegions:
+
                 }
 
                 if (0 === strpos($pathinfo, '/adminTest')) {
@@ -1231,6 +1256,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_event_delete:
 
+            // getAvailableEventByAdressAndShops
+            if ($pathinfo === '/event/adress') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_getAvailableEventByAdressAndShops;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\EventController::getEventsByAdresseAction',  '_route' => 'getAvailableEventByAdressAndShops',);
+            }
+            not_getAvailableEventByAdressAndShops:
+
         }
 
         if (0 === strpos($pathinfo, '/action')) {
@@ -1405,6 +1441,107 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         if (0 === strpos($pathinfo, '/editShopOwner') && preg_match('#^/editShopOwner/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_ShopOwners')), array (  '_controller' => 'AdBoxBundle\\Controller\\ShopOwnerController::editShopOwnerAction',));
         }
+
+        // ws_get_journal
+        if ($pathinfo === '/api/journal') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_ws_get_journal;
+            }
+
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\DefaultController::getUserAction',  '_route' => 'ws_get_journal',);
+        }
+        not_ws_get_journal:
+
+        if (0 === strpos($pathinfo, '/client/ads')) {
+            // myads_client_page
+            if ($pathinfo === '/client/ads') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsAction',  '_route' => 'myads_client_page',);
+            }
+
+            // myads_client_page_Filter
+            if ($pathinfo === '/client/ads/filters') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_myads_client_page_Filter;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsFilterAction',  '_route' => 'myads_client_page_Filter',);
+            }
+            not_myads_client_page_Filter:
+
+        }
+
+        if (0 === strpos($pathinfo, '/pub')) {
+            // get_ad_by_id
+            if ($pathinfo === '/pub') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_get_ad_by_id;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::getAdByIdAction',  '_route' => 'get_ad_by_id',);
+            }
+            not_get_ad_by_id:
+
+            // set_ad_status
+            if ($pathinfo === '/pub/isEnable') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_set_ad_status;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::setEnableStatusAction',  '_route' => 'set_ad_status',);
+            }
+            not_set_ad_status:
+
+        }
+
+        // get_shop_by_id
+        if ($pathinfo === '/shop') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_get_shop_by_id;
+            }
+
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopByIdAction',  '_route' => 'get_shop_by_id',);
+        }
+        not_get_shop_by_id:
+
+        if (0 === strpos($pathinfo, '/ad')) {
+            // edit_ad
+            if (0 === strpos($pathinfo, '/ad/edit') && preg_match('#^/ad/edit/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_ad')), array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::editshowAction',));
+            }
+
+            // client_ad_add
+            if ($pathinfo === '/ad/add') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::calendarshowAction',  '_route' => 'client_ad_add',);
+            }
+
+        }
+
+        // get_timelaps_by_event
+        if ($pathinfo === '/event/Timelapses') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_get_timelaps_by_event;
+            }
+
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\EventController::getTimeLapsesAction',  '_route' => 'get_timelaps_by_event',);
+        }
+        not_get_timelaps_by_event:
+
+        // edit_ad_flush
+        if ($pathinfo === '/ad/edit') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_edit_ad_flush;
+            }
+
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\PubController::editAction',  '_route' => 'edit_ad_flush',);
+        }
+        not_edit_ad_flush:
 
         // homepage
         if (rtrim($pathinfo, '/') === '') {

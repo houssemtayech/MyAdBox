@@ -3,11 +3,17 @@
 namespace AdBoxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Event;
 use AdBoxBundle\Form\EventType;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Event controller.
@@ -136,5 +142,70 @@ class EventController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    public function getTimeLapsesAction(Request $request)
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $id=$request->get('id');
+      $em = $this->getDoctrine()->getManager();
+      $qb = $em->createQueryBuilder()
+              ->select('t')
+              ->from('AdBoxBundle:Timelaps', 't')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->where('e.id = :id')
+              ->andWhere('t.etat= :isEnabled')
+              ->setParameter('id', $id)
+                ->setParameter('isEnabled', true)
+              ->getQuery();
+      $Timelapsitems = $qb->getResult();
+
+      $jsonContent = $serializer->serialize($Timelapsitems, 'json');
+      return new Response( $jsonContent);
+    }
+
+    /**
+     * get Available Events By adresse and shops
+     *
+     * @Route("/adress", name="getAvailableEventByAdressAndShops")
+     * @Method("POST")
+     */
+    public function getEventsByAdresseAction(Request $request)
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+      $country=$request->get('country');
+      $city=$request->get('city');
+      $region=$request->get('region');
+      $shop=$request->get('shop');
+
+      $em = $this->getDoctrine()->getManager();
+      $qb = $em->createQueryBuilder()
+              ->select('e')
+              ->from('AdBoxBundle:Event', 'e')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idEvent = e.id')
+              ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Adresse', 'a', 'WITH', 'a.id = t.idPointpub')
+              ->where('a.pays = :country')
+              ->andWhere('a.ville= :city')
+              ->andWhere('a.region= :region')
+              ->andWhere('t.idPointpub= :shop')
+              ->andWhere('e.status= :es')
+              ->andWhere('t.etat= :et')
+              ->setParameter('country', $country)
+              ->setParameter('city', $city)
+              ->setParameter('region', $region)
+              ->setParameter('shop', $shop)
+              ->setParameter('es', true)
+              ->setParameter('et', true)
+              ->getQuery();
+      $Timelapsitems = $qb->getResult();
+
+      $jsonContent = $serializer->serialize($Timelapsitems, 'json');
+      return new Response( $jsonContent);
     }
 }

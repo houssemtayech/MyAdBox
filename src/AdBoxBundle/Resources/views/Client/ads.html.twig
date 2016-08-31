@@ -5,66 +5,190 @@
     <!-- Plugins For This Page -->
     <script src="{{asset('global/vendor/aspaginator/jquery.asPaginator.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('assets/css/user.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
+
+    <link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('assets/examples/css/uikit/buttons.min3f0d.css?v2.2.0')}}">
 {%endblock %}
 {%block monblock %}
-    <div class="page-user">
-        <!-- Page -->
-        <div class="page animsition">
-            <div class="page-content">
-                <!-- Panel -->
-                <div class="panel">
-                    <div class="panel-body">
-                        <!-- Search Form-->
 
-                            <div class="input-search input-search-dark">
-                                <i class="input-search-icon md-search" aria-hidden="true"></i>
-                                <input type="text" class="form-control" id="inputSearch" name="search" placeholder="Search">
-                                <button type="button" class="input-search-close icon md-close" aria-label="Close"></button>
-                            </div>
+    <!-- Preview Modal -->
+    <div class="modal fade modal-fill-in" id="PreviewModal" aria-hidden="false" aria-labelledby="exampleFillIn" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="loader-wrapper loader-lg active" id="LoaderIcon">
+                <div class="loader-layer loader-blue-only">
+                    <div class="loader-circle-left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="loader-circle-gap"></div>
+                    <div class="loader-circle-right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <iframe width="854" height="480" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    <!-- End Modal -->
 
-                        <!-- Filter -->
-                        <div class="nav-tabs-horizontal">
-                            <div class="dropdown page-user-sortlist">
-                                Order By:
-                                <a id="selectedDropdown" class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">None<span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
-                                  <li class="active" role="presentation">
-                                      <a href="#">None</a>
-                                  </li>
-                                    <li  role="presentation">
-                                        <a href="#">Shop</a>
-                                    </li>
-                                    <li  role="presentation">
-                                        <a href="#">Date</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="#">Price</a>
-                                    </li>
-                                </ul>
-                            </div>
+    <!-- Map Modal -->
+    <div class="modal fade" id="MapModal" role="dialog">
+        <div class="modal-dialog">
 
-                            <!-- Navigation top bar -->
-                            <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
-                                <li class="active" >
-                                    <a data-toggle="tab" href="#All_Ads" aria-controls="All_Ads" role="tab">All Ads</a>
-                                </li>
-                                <li >
-                                    <a data-toggle="tab" href="#Today" aria-controls="Today" role="tab">Today</a>
-                                </li>
-                                <li >
-                                    <a data-toggle="tab" href="#Coming" aria-controls="Coming" role="tab">Coming</a>
-                                </li>
-                                <li >
-                                    <a data-toggle="tab" href="#History" aria-controls="History" role="tab">History</a>
-                                </li>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="map" style="width:auto; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
 
+</div>
+<!-- End Modal -->
+<div class="page-user">
+    <!-- Page -->
+    <div class="page animsition">
+        <div class="page-content">
+
+            <!-- Panel -->
+            <div class="panel">
+                <div class="panel-body">
+                    <!-- Search Form-->
+
+                    <div class="input-search input-search-dark">
+                        <i class="input-search-icon md-search" aria-hidden="true"></i>
+                        <input type="text" class="form-control" id="inputSearch" name="search" placeholder="Search">
+                        <button type="button" class="input-search-close icon md-close" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Filter -->
+                    <div class="nav-tabs-horizontal">
+                        <div class="dropdown page-user-sortlist">
+                            Order By:
+                            <a id="selectedDropdown" class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">None<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                                <li class="active" role="presentation">
+                                    <a href="#">None</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#">Shop</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#">Date</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#">Price</a>
+                                </li>
                             </ul>
-                            <!-- Content -->
-                            <div class="tab-content">
-                                <div class="tab-pane animation-fade active" id="All_Ads" role="tabpanel">
-                                    <ul class="list-group">
-                                        {% for ad in ads %}
+                        </div>
+
+                        <!-- Navigation top bar -->
+                        <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
+                            <li class="active">
+                                <a data-toggle="tab" href="#All_Ads" aria-controls="All_Ads" role="tab">All Ads</a>
+                            </li>
+                            <li >
+                                <a data-toggle="tab" href="#Today" aria-controls="Today" role="tab">Today</a>
+                            </li>
+                            <li >
+                                <a data-toggle="tab" href="#Coming" aria-controls="Coming" role="tab">Coming</a>
+                            </li>
+                            <li >
+                                <a data-toggle="tab" href="#History" aria-controls="History" role="tab">History</a>
+                            </li>
+
+                        </ul>
+                        <!-- Content -->
+                        <div class="tab-content">
+                            <div class="tab-pane animation-fade active" id="All_Ads" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for ad in ads %}
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-away">
+                                                        {% if ad[0].getIdMedia().getType() == "image" %}
+                                                            <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                                        {% endif %}
+                                                        {% if ad[0].getIdMedia().getType() == "video" %}
+                                                            <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                                        {% endif %}
+
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">
+                                                        <a href="#" class="mapPreview">
+                                                            <input type="hidden" value="{{ad['0'].getIdTimelaps().getIdPointpub().getId()}}">
+                                                            {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                                        </a>
+                                                        <small>
+                                                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+
+                                                            {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                                            -
+                                                            {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                                        </small>
+                                                    </h4>
+                                                    <p>
+                                                        <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                                        {{ ad.name }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="icon md-money" aria-hidden="true"></i>
+                                                        {{ ad['0'].getIdTimelaps().getPrix() }}
+                                                        TND
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="media-right" id="{{ ad['0'].getId()}}">
+
+                                                    <button style="width:80px" class="btn btn-success" type="button">
+                                                        Preview
+                                                    </button>
+                                                    <button style="width:80px" class="btn btn-warning" data-toggle="modal" Error: source does not appear to be markup.="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
+                                                        Edit
+                                                    </button>
+                                                    {% if ad[0].getIsEnabled() == 0 %}
+
+                                                        <button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
+                                                            Enable
+                                                        </button>
+                                                    {% endif %}
+                                                    {% if ad[0].getIsEnabled() == 1 %}
+
+                                                        <button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
+                                                            Disable
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <!-- allAds pagination panel -->
+                                <nav>
+                                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+
+                            <div class="tab-pane animation-fade" id="Today" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for ad in ads %}
+                                        {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))==(date()|date('Y-m-d')))%}
                                             <li class="list-group-item">
                                                 <div class="media">
                                                     <div class="media-left">
@@ -107,221 +231,303 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        {% endfor %}
-                                    </ul>
-                                    <!-- allAds pagination panel -->
-                                    <nav>
-                                        <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
-                                    </nav>
-                                </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <nav>
+                                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+                            <div class="tab-pane animation-fade" id="Coming" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for ad in ads %}
+                                        {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))>(date()|date('Y-m-d')))%}
 
-                                <div class="tab-pane animation-fade" id="Today" role="tabpanel">
-                                    <ul class="list-group">
-                                        {% for ad in ads %}
-                                            {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))==(date()|date('Y-m-d')))%}
-                                                <li class="list-group-item">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <div class="avatar avatar-away">
-                                                                {% if ad[0].getIdMedia().getType() == "image" %}
-                                                                    <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
-                                                                {% endif %}
-                                                                {% if ad[0].getIdMedia().getType() == "video" %}
-                                                                    <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
-                                                                {% endif %}
+                                            <li class="list-group-item">
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <div class="avatar avatar-away">
+                                                            {% if ad[0].getIdMedia().getType() == "image" %}
+                                                                <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                                            {% endif %}
+                                                            {% if ad[0].getIdMedia().getType() == "video" %}
+                                                                <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                                            {% endif %}
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">
-                                                              {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
-                                                                <small>
-                                                                    <i class="icon md-calendar-alt" aria-hidden="true"></i>
-
-                                                                    {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
-                                                                    -
-                                                                    {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
-                                                                </small>
-                                                            </h4>
-                                                            <p>
-                                                                <i class="icon icon-color md-pin" aria-hidden="true"></i>
-                                                                {{ ad.name }}
-                                                            </p>
-                                                            <p>
-                                                                <i class="icon md-money" aria-hidden="true"></i>
-                                                                {{ ad['0'].getIdTimelaps().getPrix() }}
-                                                                TND
-                                                            </p>
-
-                                                        </div>
-                                                        <div class="media-right">
-                                                            <button type="button" class="btn btn-success btn-sm">
-                                                                Preview
-                                                            </button>
                                                         </div>
                                                     </div>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <nav>
-                                        <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
-                                    </nav>
-                                </div>
-                                <div class="tab-pane animation-fade" id="Coming" role="tabpanel">
-                                    <ul class="list-group">
-                                        {% for ad in ads %}
-                                            {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))>(date()|date('Y-m-d')))%}
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">
+                                                            {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                                            <small>
+                                                                <i class="icon md-calendar-alt" aria-hidden="true"></i>
 
-                                                <li class="list-group-item">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <div class="avatar avatar-away">
-                                                                {% if ad[0].getIdMedia().getType() == "image" %}
-                                                                    <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
-                                                                {% endif %}
-                                                                {% if ad[0].getIdMedia().getType() == "video" %}
-                                                                    <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
-                                                                {% endif %}
+                                                                {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                                                -
+                                                                {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                                            </small>
+                                                        </h4>
+                                                        <p>
+                                                            <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                                            {{ ad.name }}
+                                                        </p>
+                                                        <p>
+                                                            <i class="icon md-money" aria-hidden="true"></i>
+                                                            {{ ad['0'].getIdTimelaps().getPrix() }}
+                                                            TND
+                                                        </p>
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">
-                                                              {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
-                                                                <small>
-                                                                    <i class="icon md-calendar-alt" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="media-right">
+                                                        <button type="button" class="btn btn-success btn-sm">
+                                                            Preview
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <nav>
+                                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
 
-                                                                    {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
-                                                                    -
-                                                                    {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
-                                                                </small>
-                                                            </h4>
-                                                            <p>
-                                                                <i class="icon icon-color md-pin" aria-hidden="true"></i>
-                                                                {{ ad.name }}
-                                                            </p>
-                                                            <p>
-                                                                <i class="icon md-money" aria-hidden="true"></i>
-                                                                {{ ad['0'].getIdTimelaps().getPrix() }}
-                                                                TND
-                                                            </p>
+                            <div class="tab-pane animation-fade" id="History" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for ad in ads %}
+                                        {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))<(date()|date('Y-m-d')))%}
 
-                                                        </div>
-                                                        <div class="media-right">
-                                                            <button type="button" class="btn btn-success btn-sm">
-                                                                Preview
-                                                            </button>
+                                            <li class="list-group-item">
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <div class="avatar avatar-away">
+                                                            {% if ad[0].getIdMedia().getType() == "image" %}
+                                                                <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
+                                                            {% endif %}
+                                                            {% if ad[0].getIdMedia().getType() == "video" %}
+                                                                <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
+                                                            {% endif %}
+
                                                         </div>
                                                     </div>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <nav>
-                                        <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
-                                    </nav>
-                                </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">
+                                                            {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
+                                                            <small>
+                                                                <i class="icon md-calendar-alt" aria-hidden="true"></i>
 
-                                <div class="tab-pane animation-fade" id="History" role="tabpanel">
-                                    <ul class="list-group">
-                                        {% for ad in ads %}
-                                            {% if ((ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d'))<(date()|date('Y-m-d')))%}
+                                                                {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
+                                                                -
+                                                                {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
+                                                            </small>
+                                                        </h4>
+                                                        <p>
+                                                            <i class="icon icon-color md-pin" aria-hidden="true"></i>
+                                                            {{ ad.name }}
+                                                        </p>
+                                                        <p>
+                                                            <i class="icon md-money" aria-hidden="true"></i>
+                                                            {{ ad['0'].getIdTimelaps().getPrix() }}
+                                                            TND
+                                                        </p>
 
-                                                <li class="list-group-item">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <div class="avatar avatar-away">
-                                                                {% if ad[0].getIdMedia().getType() == "image" %}
-                                                                    <img src="{{asset('assets/images/image-icon.png')}}" alt="...">
-                                                                {% endif %}
-                                                                {% if ad[0].getIdMedia().getType() == "video" %}
-                                                                    <img src="{{asset('assets/images/video-icon.png')}}" alt="...">
-                                                                {% endif %}
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">
-                                                              {{ ad['0'].getIdTimelaps().getIdPointpub().getName() }}
-                                                                <small>
-                                                                    <i class="icon md-calendar-alt" aria-hidden="true"></i>
-
-                                                                    {{ ad['0'].getIdTimelaps().getDateStart()|date('Y-m-d H:i:s') }}
-                                                                    -
-                                                                    {{ ad['0'].getIdTimelaps().getDateEnd()|date('Y-m-d H:i:s') }}
-                                                                </small>
-                                                            </h4>
-                                                            <p>
-                                                                <i class="icon icon-color md-pin" aria-hidden="true"></i>
-                                                                {{ ad.name }}
-                                                            </p>
-                                                            <p>
-                                                                <i class="icon md-money" aria-hidden="true"></i>
-                                                                {{ ad['0'].getIdTimelaps().getPrix() }}
-                                                                TND
-                                                            </p>
-
-                                                        </div>
-                                                        <div class="media-right">
-                                                            <button type="button" class="btn btn-success btn-sm">
-                                                                Preview
-                                                            </button>
-                                                        </div>
                                                     </div>
-                                                </li>
-                                            {% endif %}
+                                                    <div class="media-right">
+                                                        <button type="button" class="btn btn-success btn-sm">
+                                                            Preview
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
 
-                                        {% endfor %}
-                                    </ul>
-                                    <nav>
-                                        <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
-                                    </nav>
-                                </div>
+                                    {% endfor %}
+                                </ul>
+                                <nav>
+                                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Panel -->
             </div>
+            <!-- End Panel -->
         </div>
-        <!-- End Page -->
+        <div class="site-action">
+            <button id="addAdBt" type="button" class="site-action-toggle btn-raised btn btn-dark btn-floating wb-plus">
+            </button>
     </div>
-    <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
-    <script>
-    $(document).ready(function(){
+    <!-- End Page -->
+</div>
+<script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
 
-      $("li[role='presentation'] a").click(function(){
-        $("li[role='presentation'][class='active']").removeAttr("class");
-        $(this).parent().attr("class","active");
-        $("#selectedDropdown").html($(this).html()+'<span class="caret"></span>');
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk" async defer></script>
+
+<script>
+    var map;
+    var element = $(this);
+
+    function initialize(myCenter, mytitle) {
+        var marker = new google.maps.Marker({position: myCenter,title: mytitle});
+
+        var mapProp = {
+            center: myCenter,
+            zoom: 10,
+            //draggable: false, scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapProp);
+        marker.setMap(map);
+    };
+
+    $(document).ready(function() {
+
+        $("li[role='presentation'] a").click(function() {
+            $("li[role='presentation'][class='active']").removeAttr("class");
+            $(this).parent().attr("class", "active");
+            $("#selectedDropdown").html($(this).html() + '<span class="caret"></span>');
+
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('myads_client_page_Filter')}}",
+                data: {
+                    search: $("#inputSearch").val(),
+                    filter: $("li[role='presentation'][class='active'] a").html()
+                }
+            }).done(function(data) {
+                $(".tab-content").html(data);
+
+            }).fail(function() {
+                alert("fail search");
+            });
+        });
+        // Search function
+        $("#inputSearch").keyup(function() {
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('myads_client_page_Filter')}}",
+                data: {
+                    search: $(this).val(),
+                    filter: $("li[role='presentation'][class='active'] a").html()
+                }
+            }).done(function(data) {
+                $(".tab-content").html(data);
+
+            }).fail(function() {
+                alert("fail search");
+            });
+        });
+
+        $(".btn.btn-success").click(function() {
+            var id = $(this).parent().attr('id');
+            $("#PreviewModal").modal('show');
+            $("#LoaderIcon").show();
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('get_ad_by_id')}}",
+                data: {
+                    id: id
+                }
+            }).done(function(data) {
+                var JSONObject = JSON.parse(data);
+                $("iframe").attr("src", JSONObject["url"]);
+                $("#LoaderIcon").hide();
+
+            }).fail(function() {
+                alert("Couldn't Load the ad");
+            });
+
+            $('#PreviewModal').on('hidden.bs.modal', function() {
+                $("iframe").attr("src", "");
+            });
+        });
+
+        $(".btn.btn-warning").click(function() {
+            var id = $(this).parent().attr('id');
+            var url_invalid="http://localhost{{path('edit_ad', {'id':'*NOTFOUND*'}) }} ";
+            var url =url_invalid.replace("*NOTFOUND*",id);
+            window.open(url);
+        });
+
+        $("#addAdBt").click(function(){
+          window.open("http://localhost{{path('client_ad_add')}}");
+        })
+  });
+    $(document).on("click", ".btn.btn-default.main", function(event) {
+        var button = $(this);
+        var id = $(this).parent().attr('id');
 
         $.ajax({
-          method: "POST",
-          url : "http://localhost{{path('myads_client_page_Filter')}}",
-          data : {search : $("#inputSearch").val(),filter:$("li[role='presentation'][class='active'] a").html()}
-        }).done(function(data){
-          $(".tab-content").html(data);
+            method: "POST",
+            url: "http://localhost{{path('set_ad_status')}}",
+            data: {
+                id: id,
+                isEnable: 1
+            }
+        }).done(function() {
+            button.replaceWith('<button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button"> Disable </button>');
 
-        }).fail(function(){
-          alert("fail search");
+            swal("Success!", "Your ad is back on brodcast queue!", "success");
+
+        }).fail(function() {
+            swal("Cancelled", "An error has occured", "error");
         });
-      });
-
-      $("#inputSearch").keyup(function(){
-            $.ajax({
-              method: "POST",
-              url : "http://localhost{{path('myads_client_page_Filter')}}",
-              data : {search : $(this).val(),filter:$("li[role='presentation'][class='active'] a").html()}
-            }).done(function(data){
-              $(".tab-content").html(data);
-
-            }).fail(function(){
-              alert("fail search");
-            });
-      });
     });
+    $(document).on("click", ".btn.btn-danger.main", function(event) {
+        var button = $(this);
+        var id = $(this).parent().attr('id');
+        swal({
+            title: "Are you sure?",
+            text: "Your ad won't be brodcasted !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, disable it!",
+            closeOnConfirm: true
+        }, function() {
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('set_ad_status')}}",
+                data: {
+                    id: id,
+                    isEnable: 0
+                }
+            }).done(function() {
+                button.replaceWith('<button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button"> Enable </button>');
+            }).fail(function() {
+                swal("Cancelled", "An error has occured", "error");
+            });
 
+        });
 
-    </script>
+    });
+    $(".mapPreview").click(function() {
+
+        var idShop = $(this).children("input").val();
+        $.ajax({
+            method: "POST",
+            url: "http://localhost{{path('get_shop_by_id')}}",
+            data: {
+                id: idShop
+            }
+        }).done(function(data) {
+            $("#MapModal").modal('show');
+            var JSONObject = JSON.parse(data);
+            var name = JSONObject["name"];
+            var adress = JSONObject["adress"];
+
+            $("#MapModal").on("shown.bs.modal", function(e) {
+                var element = $(e.relatedTarget);
+                initialize(new google.maps.LatLng(JSONObject["adress"]['latitude'], JSONObject["adress"]['longitude']),name);
+                google.maps.event.trigger(map, 'resize');
+            });
+        }).fail(function() {
+            swal("Cancelled", "An error has occured", "error");
+        });
+
+    });
+</script>
+
 {% endblock %}

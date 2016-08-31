@@ -8,33 +8,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Client;
 use AdBoxBundle\Form\ClientType;
-<<<<<<< ab42b6708e96452a815fc2ee61e94fdbe112dd88
 use AdBoxBundle\Form\EditClientForm;
-=======
 use Symfony\Component\HttpFoundation\Session\Session;
->>>>>>> Add View and search client ads
 
 /**
  * Client controller.
  *
  * @Route("/client")
  */
-class ClientController extends Controller
-{
+class ClientController extends Controller {
+
     /**
      * Lists all Client entities.
      *
      * @Route("/", name="client_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $clients = $em->getRepository('AdBoxBundle:Client')->findAll();
 
         return $this->render('client/index.html.twig', array(
-            'clients' => $clients,
+                    'clients' => $clients,
         ));
     }
 
@@ -44,8 +40,7 @@ class ClientController extends Controller
      * @Route("/new", name="client_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $client = new Client();
         $form = $this->createForm('AdBoxBundle\Form\ClientType', $client);
         $form->handleRequest($request);
@@ -59,8 +54,8 @@ class ClientController extends Controller
         }
 
         return $this->render('client/new.html.twig', array(
-            'client' => $client,
-            'form' => $form->createView(),
+                    'client' => $client,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -70,13 +65,12 @@ class ClientController extends Controller
      * @Route("/", name="client_show")
      * @Method("GET")
      */
-    public function showAction(Client $client)
-    {
+    public function showAction(Client $client) {
         $deleteForm = $this->createDeleteForm($client);
 
         return $this->render('client/show.html.twig', array(
-            'client' => $client,
-            'delete_form' => $deleteForm->createView(),
+                    'client' => $client,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -86,8 +80,7 @@ class ClientController extends Controller
      * @Route("/{id}/edit", name="client_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Client $client)
-    {
+    public function editAction(Request $request, Client $client) {
         $deleteForm = $this->createDeleteForm($client);
         $editForm = $this->createForm('AdBoxBundle\Form\ClientType', $client);
         $editForm->handleRequest($request);
@@ -101,9 +94,9 @@ class ClientController extends Controller
         }
 
         return $this->render('client/edit.html.twig', array(
-            'client' => $client,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'client' => $client,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +106,7 @@ class ClientController extends Controller
      * @Route("/{id}", name="client_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Client $client)
-    {
+    public function deleteAction(Request $request, Client $client) {
         $form = $this->createDeleteForm($client);
         $form->handleRequest($request);
 
@@ -134,29 +126,27 @@ class ClientController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Client $client)
-    {
+    private function createDeleteForm(Client $client) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('client_delete', array('id' => $client->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                        ->setAction($this->generateUrl('client_delete', array('id' => $client->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
-<<<<<<< ab42b6708e96452a815fc2ee61e94fdbe112dd88
-    public function listAllClientAction()
-    {
+
+    public function listAllClientAction() {
         $em = $this->getDoctrine()->getManager();
         $roles = "ROLE_CLIENT";
-        $query = $em -> createQuery('select A from AdBoxBundle:User A where A.roles like :roles ')
-                ->setParameter ('roles','%'. $roles .'%');
-       // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
-        $users = $query ->getResult();
-        
+        $query = $em->createQuery('select A from AdBoxBundle:User A where A.roles like :roles ')
+                ->setParameter('roles', '%' . $roles . '%');
+        // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
+        $users = $query->getResult();
+
         return $this->render('AdBoxBundle:cLIENT:allClients.html.twig', array(
-            'users' => $users,
+                    'users' => $users,
         ));
     }
-    
+
     public function editClientAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $Client = $em->getRepository('AdBoxBundle:Client')->find($id);
@@ -173,72 +163,72 @@ class ClientController extends Controller
                 return $this->render('AdBoxBundle:Client:succes.html.twig', array('msg' => 'Mise à jour affectuée avec succès'));
             }
         } return $this->render('AdBoxBundle:Client:editClient.html.twig', array('Form' => $form->createView()));
-=======
-    public function showAdsAction()
-    {
-            // get Current client id
-            $session = new Session();
-            $session->set('id',1);
-            $user_id = $session->get('id');
-            // initialize tools
-            $em = $this->getDoctrine()->getManager();
-            // Ads query
-            $qb = $em->createQueryBuilder()
-                  ->select('p,e.name')
-                  ->from('AdBoxBundle:Pub', 'p')
-                  ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
-                  ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
-                  ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
-                  ->where('p.idShop = :id')
-                  ->setParameter('id',$user_id)
-                  ->getQuery();
-            $Adsitems = $qb->getResult();
-            // rendering result
-            return $this->render('AdBoxBundle:Client:ads.html.twig',array('ads' => $Adsitems ));
     }
-    public function ShowAdsFilterAction(Request $request)
-    {
 
-      $session = new Session();
-      $session->set('id',1);
-      $user_id = $session->get('id');
-
-      $search=$request->get("search");
-      $filter=$request->get("filter");
-
-      switch ($filter) {
-        case 'Shop':
-          $filter="t.idPointpub";
-          break;
-        case 'Date':
-          $filter="t.dateStart";
-            break;
-        case 'Price':
-          $filter="t.prix";
-              break;
-        case 'None':
-          $filter="p.id";
-              break;
-      }
-
-      $em = $this->getDoctrine()->getManager();
+    public function showAdsAction() {
+        // get Current client id
+        $session = new Session();
+        $session->set('id', 1);
+        $user_id = $session->get('id');
+        // initialize tools
+        $em = $this->getDoctrine()->getManager();
+        // Ads query
         $qb = $em->createQueryBuilder()
-              ->select('p,e.name')
-              ->from('AdBoxBundle:Pub', 'p')
-              ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
-              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
-              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
-              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
-              ->where('p.idShop = :id')
-              ->andWhere('e.name Like :txt OR t.prix Like :txt OR s.name Like :txt')
-              ->orderBy($filter)
-              ->setParameter('id',$user_id)
-              ->setParameter('txt',"%".$search."%")
-              ->getQuery();
-      $Adsitems = $qb->getResult();
+                ->select('p,e.name')
+                ->from('AdBoxBundle:Pub', 'p')
+                ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+                ->where('p.idUSer = :id')
+                ->setParameter('id', $user_id)
+                ->getQuery();
+        $Adsitems = $qb->getResult();
+        // rendering result
 
-      // rendering result
-      return $this->render('AdBoxBundle:Client:adsBlock.html.twig',array('ads' => $Adsitems ));
->>>>>>> Add View and search client ads
+        return $this->render('AdBoxBundle:Client:ads.html.twig', array('ads' => $Adsitems));
     }
+
+    public function ShowAdsFilterAction(Request $request) {
+
+        $session = new Session();
+        $session->set('id', 1);
+        $user_id = $session->get('id');
+
+        $search = $request->get("search");
+        $filter = $request->get("filter");
+
+        switch ($filter) {
+            case 'Shop':
+                $filter = "t.idPointpub";
+                break;
+            case 'Date':
+                $filter = "t.dateStart";
+                break;
+            case 'Price':
+                $filter = "t.prix";
+                break;
+            case 'None':
+                $filter = "p.id";
+                break;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+                ->select('p,e.name')
+                ->from('AdBoxBundle:Pub', 'p')
+                ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+                ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+                ->where('p.idUSer = :id')
+                ->andWhere('e.name Like :txt OR t.prix Like :txt OR s.name Like :txt')
+                ->orderBy($filter)
+                ->setParameter('id', $user_id)
+                ->setParameter('txt', "%" . $search . "%")
+                ->getQuery();
+        $Adsitems = $qb->getResult();
+        // rendering result
+        return $this->render('AdBoxBundle:Client:adsBlock.html.twig', array('ads' => $Adsitems));
+    }
+
 }

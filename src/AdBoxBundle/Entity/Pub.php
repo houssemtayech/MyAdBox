@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Pub
  *
- * @ORM\Table(name="pub", indexes={@ORM\Index(name="id_intervalle", columns={"id_timelaps"}), @ORM\Index(name="id_media", columns={"id_media"}), @ORM\Index(name="id_shop", columns={"id_shop"}), @ORM\Index(name="id_timelaps", columns={"id_timelaps"}), @ORM\Index(name="id_media_2", columns={"id_media"})})
+ * @ORM\Table(name="pub", indexes={@ORM\Index(name="id_intervalle", columns={"id_timelaps"}), @ORM\Index(name="id_media", columns={"id_media"}), @ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_timelaps", columns={"id_timelaps"})})
  * @ORM\Entity
  */
 class Pub
@@ -22,14 +22,14 @@ class Pub
     private $id;
 
     /**
-     * @var \AdBoxBundle\Entity\Shop
+     * @var \AdBoxBundle\Entity\User
      *
      * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_shop", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })
      */
-    private $idShop;
+    private $idUSer;
 
     /**
      * @var \AdBoxBundle\Entity\Timelaps
@@ -50,9 +50,35 @@ class Pub
      * })
      */
     private $idMedia;
+ /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isEnabled", type="boolean", nullable=false)
+     */
+    private $isEnabled;
 
+/**
+     * Set isEnabled
+     *
+     * @param boolean $isEnabled
+     * @return Pub
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
 
+        return $this;
+    }
 
+    /**
+     * Get isEnabled
+     *
+     * @return boolean 
+     */
+    public function getisEnabled()
+    {
+        return $this->isEnabled;
+    }
     /**
      * Get id
      *
@@ -64,26 +90,26 @@ class Pub
     }
 
     /**
-     * Set idShop
+     * Set idUSer
      *
-     * @param \AdBoxBundle\Entity\Shop $idShop
+     * @param \AdBoxBundle\Entity\User $idUSer
      * @return Pub
      */
-    public function setIdShop(\AdBoxBundle\Entity\Shop $idShop = null)
+    public function setidUSer(\AdBoxBundle\Entity\User $idUSer = null)
     {
-        $this->idShop = $idShop;
+        $this->idUSer = $idUSer;
 
         return $this;
     }
 
     /**
-     * Get idShop
+     * Get idUSer
      *
-     * @return \AdBoxBundle\Entity\Shop
+     * @return \AdBoxBundle\Entity\User
      */
-    public function getIdShop()
+    public function getidUSer()
     {
-        return $this->idShop;
+        return $this->idUSer;
     }
 
     /**

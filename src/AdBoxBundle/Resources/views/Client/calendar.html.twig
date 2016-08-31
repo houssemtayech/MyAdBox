@@ -1,0 +1,481 @@
+{%extends 'AdBoxBundle::layout.html.twig' %}
+{% block extraLinks %}
+    <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('global/vendor/moment/moment.min.js')}}"></script>
+    <script src="{{asset('global/vendor/fullcalendar/fullcalendar.min.js')}}"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <link href="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet"/>
+    <script src="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
+    <!-- Plugins For This Page -->
+    <link rel="stylesheet" href="{{asset('global/vendor/fullcalendar/fullcalendar.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('global/vendor/bootstrap-datepicker/bootstrap-datepicker.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('global/vendor/bootstrap-touchspin/bootstrap-touchspin.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('global/vendor/jquery-selective/jquery-selective.min3f0d.css?v2.2.0')}}">
+
+    <link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0')}}">
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700'>
+
+    <link rel="stylesheet" href="{{asset('assets/examples/css/apps/media.min3f0d.css?v2.2.0')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
+    <!-- Page -->
+    <link rel="stylesheet" href="{{asset('assets/examples/css/apps/calendar.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min.js')}}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk&callback=initMap" async defer></script>
+
+{% endblock %}
+{% block monblock %}
+    <!-- Map Modal -->
+    <div class="modal fade" id="ConfirmAddAd" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">×</span>
+                                            </button>
+                                            <h4 class="modal-title">Confirm</h4>
+                                          </div>                </div>
+                <div class="modal-body">
+                    <label>Media :
+                        <label id="modalMedia"></label>
+                    </label>
+                    <br/>
+                    <label>Shop :
+                        <label id="modalshop"></label>
+                    </label>
+                    <br/>
+
+                    <label>Start :
+                        <label id="modalTimeStart"></label>
+                    </label>
+                    <br/>
+
+                    <label>End :
+                        <label id="modalTimeEnd"></label>
+                    </label>
+                    <br/>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="AddAdBTConfirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+    <div class="page animsition">
+        <div class="page-content container-fluid ">
+            <div id="gallery_media_panel" class="page-main">
+                <div class="app-media">
+                    <div class="page bg-white animsition">
+                        <!-- Media Content -->
+                        <div class>
+                            <!-- Media Content Header -->
+                            <div class="page-header">
+                                <h1 class="page-title">
+                                    Media Selection
+                                </h1>
+                                <div class="page-header-actions">
+                                    <form>
+                                        <div class="input-search input-search-dark">
+                                            <i class="input-search-icon wb-search" aria-hidden="true"></i>
+                                            <input type="text" class="form-control" name="" placeholder="Search...">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Media Content -->
+                            <div class="page-content page-content-table" data-selectable="selectable">
+                                <div class="page-content-actions">
+
+                                    <div class="pull-right">
+                                        <div class="btn-group media-arrangement" role="group">
+                                            <button class="btn btn-outline btn-default active" id="arrangement-grid" type="button">
+                                                <i class="icon wb-grid-4" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn-outline btn-default" id="arrangement-list" type="button">
+                                                <i class="icon wb-list" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="media-list is-grid padding-bottom-50">
+                                    <ul class="blocks blocks-100 blocks-xlg-4 blocks-lg-3 blocks-md-3 blocks-ms-2 blocks-xs-2" data-plugin="animateList" data-child=">li">
+                                        {% for media in medias %}
+                                            <li>
+                                                <div class="media-item" data-url="panel.tpl">
+                                                    <div class="checkbox-custom checkbox-primary checkbox-lg">
+
+                                                        <input type="checkbox" class="selectable-item" id="media_{{media.getID()}}"/>
+
+                                                        <label for="media_{{media.getID()}}"></label>
+                                                    </div>
+                                                    <div class="image-wrap">
+                                                        {% if (media.getType() == 'video') %}
+                                                            <video controls class="image img-rounded" src="{{media.getUrl()}}" alt="{{media.getDescription()}}"/>
+                                                        {% endif %}
+                                                        {% if (media.getType() == 'image') %}
+                                                            <img class="image img-rounded" src="{{media.getUrl()}}" alt="{{media.getDescription()}}"/>
+                                                        {% endif %}
+
+                                                    </div>
+                                                    <div class="info-wrap">
+                                                        <div class="title" id="title_media_{{media.getID()}}">{{media.getTitle()}}
+                                                        </div>
+                                                        <div class="time">{{media.getDescription()}}</div>
+                                                        <small>
+                                                            <i class="icon md-calendar-alt" aria-hidden="true"></i>
+                                                            {{media.getCreatedAt()|date('Y-m-d h:i:s')}}
+                                                        </small>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="shop_filter_panel" class="page-main">
+                <div class="app-media">
+                    <div class="page bg-white animsition">
+                        <!-- Media Content -->
+                        <div class="page-aside">
+
+                            <div class="page-aside-inner" data-plugin="pageAsideScroll">
+                                <div data-role="container">
+                                    <div data-role="content">
+
+                                        <div>
+                                            <label>Country</label>
+                                            <select style="width:100%" id="select_country"></select>
+                                        </div>
+                                        <div>
+
+                                            <label>City</label>
+                                            <select style="width:100%" id="select_city"></select>
+
+                                        </div>
+                                        <div>
+                                            <label>Region</label>
+                                            <select style="width:100%" id="select_region"></select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-main">
+
+                            <div class="page-content page-content-table" data-selectable="selectable">
+
+                                <div class="media-list is-grid padding-bottom-50">
+                                    <div id="map" style="width:auto; height: 500px;"></div>
+                                    <div id="ShopsList"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="timelaps_event_panel" class="page-main">
+                    <div class="calendar-container">
+                        <div id="calendar"></div>
+                        <div id="calendarTimelaps"></div>
+                    </div>
+                </div>
+
+                <div id=Submit_panel class="page-main"></div>
+
+            </div>
+
+        </div>
+
+        <div class="site-action">
+            <button id="LoadCalendarBt" type="button" class="site-action-toggle btn-raised btn btn-dark btn-floating wb-calendar"></button>
+        </div>
+
+        <!-- Scripts -->
+        <script src="{{asset('global/js/core.min.js')}}"></script>
+        <script src="{{asset('assets/js/site.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/sections/menu.min.js')}}"></script>
+        <script src="{{asset('assets/js/sections/menubar.min.js')}}"></script>
+        <script src="{{asset('assets/js/sections/sidebar.min.js')}}"></script>
+
+        <script src="{{asset('global/js/configs/config-colors.min.js')}}"></script>
+        <script src="{{asset('assets/js/configs/config-tour.min.js')}}"></script>
+
+        <script src="{{asset('global/js/components/asscrollable.min.js')}}"></script>
+        <script src="{{asset('global/js/components/animsition.min.js')}}"></script>
+        <script src="{{asset('global/js/components/slidepanel.min.js')}}"></script>
+        <script src="{{asset('global/js/components/switchery.min.js')}}"></script>
+        <script src="{{asset('global/js/components/tabs.min.js')}}"></script>
+
+        <script src="{{asset('global/js/components/bootstrap-touchspin.min.js')}}"></script>
+        <script src="{{asset('global/js/components/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{asset('global/js/components/material.min.js')}}"></script>
+        <script src="{{asset('global/js/plugins/action-btn.min.js')}}"></script>
+        <script src="{{asset('global/js/components/bootbox.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+        <script src="{{asset('assets/examples/js/apps/media.min.js')}}"></script>
+
+        <!-- Media Selection Script -->
+        <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: -34.397,
+                        lng: 150.644
+                    },
+                    zoom: 8
+                });
+            }
+        </script>
+
+
+        <script type="text/javascript">
+        $('input[type="checkbox"][class="selectable-item"]').on('change', function() {
+            $('input[type="checkbox"][class="selectable-item"]').not($(this)).prop('checked', false);
+
+        });
+
+            var myCalendar = $('#calendar');
+            var TimelapsCalendar = $('#calendarTimelaps');
+            TimelapsCalendar.hide();
+            myCalendar.hide();
+            $("#LoadCalendarBt").hide();
+            var selectDate;
+            var my_events = [];
+            var timelaps_calendar = [];
+
+            var select_country = $("#select_country");
+            var select_city = $("#select_city");
+            var select_region = $("#select_region");
+
+            $('select').select2();
+            select_city.prop('disabled', true);
+            select_region.prop('disabled', true);
+
+            //  select_region.prop('disabled', true);
+
+            $.ajax({method: "POST", url: "http://localhost{{path('getAvailableCountries')}}"}).done(function(data) {
+                var json_data = JSON.parse(data);
+                var html_countries = "<option></option>";
+                for (var i = 0; i < json_data.length; i++) {
+                    html_countries += "<option>" + json_data[i]["pays"] + "</option>";
+                }
+                select_country.html(html_countries);
+            }).fail(function() {
+                swal("Cancelled", "An error has occured", "error");
+            });
+
+            select_country.on('select2:select', function(evt) {
+
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost{{path('getAvailableCities')}}",
+                    data: {
+                        country: $(this).val()
+                    }
+                }).done(function(data) {
+
+                    var json_data = JSON.parse(data);
+                    var html_cities = "<option></option>";
+                    for (var i = 0; i < json_data.length; i++) {
+                        html_cities += "<option>" + json_data[i]["ville"] + "</option>";
+                    }
+                    select_city.prop('disabled', false);
+                    select_city.html(html_cities);
+
+                }).fail(function() {
+                    swal("Cancelled", "An error has occured", "error");
+                });
+            });
+
+            select_city.on('select2:select', function(evt) {
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost{{path('getAvailableRegions')}}",
+                    data: {
+                        country: select_country.val(),
+                        city: $(this).val()
+                    }
+                }).done(function(data) {
+                    var json_data = JSON.parse(data);
+                    var html_regions = "<option></option>";
+                    for (var i = 0; i < json_data.length; i++) {
+                        html_regions += "<option>" + json_data[i]["region"] + "</option>";
+                    }
+                    select_region.prop("disabled", false);
+                    select_region.html(html_regions);
+
+                }).fail(function() {
+                    swal("Cancelled", "An error has occured", "error");
+                });
+            });
+            select_region.on('select2:select', function(evt) {
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost{{path('getAvailableShopsByAdresse')}}",
+                    data: {
+                        country: select_country.val(),
+                        city: select_city.val(),
+                        region: $(this).val()
+                    }
+                }).done(function(data) {
+                    var json_data = JSON.parse(data);
+                    var html_shops = "";
+                    for (var i = 0; i < json_data.length; i++) {
+                        html_shops += '<div class="checkbox-custom checkbox-primary"><input type="checkbox" class="shopSelectInput" id="shop__' + json_data[i]["id"] + '" /><label class="shop__' + json_data[i]["id"] + '" for="inputUnchecked">' + json_data[i]["name"] + '</label>  </div>'
+                    }
+                    $("#ShopsList").html(html_shops);
+                }).fail(function() {
+                    swal("Cancelled", "An error has occured", "error");
+                });
+            });
+            $(document).on("click", ".shopSelectInput", function(event) {
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost{{path('getAvailableEventByAdressAndShops')}}",
+                    data: {
+                        country: select_country.val(),
+                        city: select_city.val(),
+                        region: select_region.val(),
+                        shop: ($(this).attr('id')).replace("shop__", "")
+                    }
+                }).done(function(data) {
+                    my_events = [];
+                    var json_data = JSON.parse(data);
+                    for (var i = 0; i < json_data.length; i++) {
+                        my_events.push({
+                            title: json_data[i]['name'],
+                            start: moment(moment.unix(json_data[i]['starttime']['timestamp'])).format("YYYY-MM-DDTHH:mm:ss"),
+                            end: moment(moment.unix(json_data[i]['endtime']['timestamp'])).format("YYYY-MM-DDTHH:mm:ss"),
+                            description: json_data[i]['eventType'],
+                            allDay: false,
+                            id_event: json_data[i]['id']
+                        });
+
+                    }
+                    myCalendar.show();
+                    myCalendar.fullCalendar({
+                        events: my_events,
+                        timeFormat: 'H:mm',
+                        displayEventEnd: {
+                            month: true,
+                            basicWeek: true,
+                            "default": true
+                        },
+                        dayClick: function(date, jsEvent, view) {},
+                        eventClick: function(calEvent, jsEvent, view) {
+                            $.ajax({
+                                method: "POST",
+                                url: "http://localhost{{path('get_timelaps_by_event')}}",
+                                data: {
+                                    id: calEvent.id_event
+                                }
+                            }).done(function(data) {
+                                var timelapsItems = JSON.parse(data);
+                                jQuery.each(timelapsItems, function(i, val) {
+                                    var date = new Date(val['dateStart']['timestamp'] * 1000);
+                                    var start = moment(moment.unix(val['dateStart']['timestamp'])).format("YYYY-MM-DDTHH:mm:ss");
+                                    var end = moment(moment.unix(val['dateEnd']['timestamp'])).format("YYYY-MM-DDTHH:mm:ss");
+                                    timelaps_calendar.push({
+                                        title: val['prix'],
+                                        start: start,
+                                        end: end,
+                                        allDay: false,
+                                        idTimelaps: val['id'],
+                                        id_event: calEvent.id_event
+                                    });
+                                });
+                                myCalendar.hide();
+                                TimelapsCalendar.show();
+                                $("#LoadCalendarBt").show();
+                                TimelapsCalendar.fullCalendar({
+                                    defaultDate: calEvent.start.format("YYYY-MM-DD"),
+                                    events: timelaps_calendar,
+                                    timeFormat: 'H:mm',
+                                    defaultView: 'agendaDay',
+                                    displayEventEnd: {
+                                        agendaDay: true,
+                                        "default": true
+                                    },
+                                    eventClick: function(calEvent, jsEvent, view) {
+                                      console.log(calEvent);
+                                        $("#ConfirmAddAd").modal('show');
+                                        $("#ConfirmAddAd").on("shown.bs.modal", function(e) {
+                                          var timelaps_id=calEvent.idTimelaps;
+                                          var media_id=$('input[type="checkbox"][class="selectable-item"]:checked').attr("id");
+                                          var media_name=$("#title_"+media_id).html();
+                                          var shop_name=$("."+$(".shopSelectInput:checked").attr("id")).html();
+
+                                          $("#modalMedia").html(media_name);
+                                          $("#modalshop").html(shop_name);
+                                          $("#modalTimeStart").html(calEvent.start.format("YYYY-MM-DD HH:mm:ss"));
+                                          if (calEvent.end!=null)
+                                          $("#modalTimeEnd").html(calEvent.end.format("YYYY-MM-DD HH:mm:ss"));
+                                          $("#AddAdBTConfirm").click(function(){
+                                            $.ajax({
+                                              method:"POST",url:"http://localhost{{path('addAd')}}",
+                                              data:{
+                                                idMedia:media_id.replace("media_",""),
+                                                idTimelaps:timelaps_id
+                                              }
+                                            }).done(function(){
+                                              $("#ConfirmAddAd").modal('hide');
+                                              swal("Success!", "Sucess", "success");
+
+                                            }).fail(function(){
+                                              $("#ConfirmAddAd").modal('hide');
+                                              swal("Cancelled", "An error has occured", "error");
+
+                                            });
+                                          });
+
+                                          });
+                                    }
+                                });
+                                TimelapsCalendar.fullCalendar('render');
+
+                            }).fail(function() {
+                                alert("fail search");
+                            });
+
+                        },
+                        eventRender: function(event, element) {
+                            element.qtip({
+                                content: '<b>' + event.title + ' - </b></b><b>' + event.start.format('hh:mma') + ' - </b><b>' + event.end.format('hh:mma') + ' - </b><br><u>' + event.description + '</u>'
+                            });
+                        }
+
+                    });
+                }).fail(function() {
+                    swal("Cancelled", "An error has occured", "error");
+                });
+                $("#ConfirmAddAd").on("shown.bs.modal", function(e) {
+
+                  });
+            });
+        </script>
+    {% endblock %}

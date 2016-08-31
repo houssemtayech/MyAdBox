@@ -19,7 +19,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "pugx/multi-user-bundle": "3.0.*@dev",
-        "friendsofsymfony/rest-bundle": "@dev"
+        "friendsofsymfony/rest-bundle": "@dev",
+        "symfony/serializer": "^2.8"
 
     },
     "require-dev": {

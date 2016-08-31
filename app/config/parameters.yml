@@ -2,7 +2,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: null
-    database_name: adbox
+    database_name: myadbox
     database_user: root
     database_password: null
     mailer_transport: smtp

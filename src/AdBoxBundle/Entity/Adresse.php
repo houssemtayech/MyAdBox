@@ -88,7 +88,7 @@ class Adresse
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -111,7 +111,7 @@ class Adresse
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -134,7 +134,7 @@ class Adresse
     /**
      * Get pays
      *
-     * @return string 
+     * @return string
      */
     public function getPays()
     {
@@ -157,7 +157,7 @@ class Adresse
     /**
      * Get ville
      *
-     * @return string 
+     * @return string
      */
     public function getVille()
     {
@@ -180,7 +180,7 @@ class Adresse
     /**
      * Get region
      *
-     * @return string 
+     * @return string
      */
     public function getRegion()
     {
@@ -203,7 +203,7 @@ class Adresse
     /**
      * Get codepostal
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodepostal()
     {
@@ -226,7 +226,7 @@ class Adresse
     /**
      * Get rue
      *
-     * @return string 
+     * @return string
      */
     public function getRue()
     {
@@ -236,7 +236,7 @@ class Adresse
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

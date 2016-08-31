@@ -3,12 +3,19 @@
 namespace AdBoxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Pub;
 use AdBoxBundle\Form\PubType;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use Symfony\Component\Security\Acl\Exception\Exception;
 /**
  * Pub controller.
  *
@@ -16,12 +23,7 @@ use AdBoxBundle\Form\PubType;
  */
 class PubController extends Controller
 {
-    /**
-     * Lists all Pub entities.
-     *
-     * @Route("/", name="pub_index")
-     * @Method("GET")
-     */
+
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -59,47 +61,70 @@ class PubController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a Pub entity.
-     *
-     * @Route("/{id}", name="pub_show")
-     * @Method("GET")
-     */
+/*
     public function showAction(Pub $pub)
     {
-        $deleteForm = $this->createDeleteForm($pub);
 
+        $deleteForm = $this->createDeleteForm($pub);
+var_dump($pub);
         return $this->render('pub/show.html.twig', array(
             'pub' => $pub,
             'delete_form' => $deleteForm->createView(),
         ));
     }
+*/
 
-    /**
-     * Displays a form to edit an existing Pub entity.
-     *
-     * @Route("/{id}/edit", name="pub_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Pub $pub)
+    public function editshowAction($id)
     {
-        $deleteForm = $this->createDeleteForm($pub);
-        $editForm = $this->createForm('AdBoxBundle\Form\PubType', $pub);
-        $editForm->handleRequest($request);
+      $em = $this->getDoctrine()->getManager();
+      $ad=$em->getRepository('AdBoxBundle:Pub')->find($id);
+      $medias = $em->getRepository('AdBoxBundle:Media')->findBy(array("idUser"=>$ad->getIdUSer()));
+      $qb = $em->createQueryBuilder()
+              ->select('e.name')
+              ->from('AdBoxBundle:Event', 'e')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idEvent = e.id')
+              ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = et.idTimelaps')
+              ->where('t.id = :id')
+              ->setParameter('id',$ad->getIdTimelaps())
+              ->getQuery();
+      $event = $qb->getResult();
+      return $this->render('AdBoxBundle:Ad:edit.html.twig',
+                              array('ad'=>$ad,'medias'=>$medias,'event'=>$event[0]));
+    }
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($pub);
-            $em->flush();
+    public function editAction(Request $request)
+    {
+      $ad_id=$request->get('ad');
+      $media_id=$request->get('media');
 
-            return $this->redirectToRoute('pub_edit', array('id' => $pub->getId()));
+      //Todo check media owner
+      try{
+        $em = $this->getDoctrine()->getManager();
+        $ad = $this->getDoctrine()
+              ->getRepository('AdBoxBundle:Pub')
+              ->find($ad_id);
+
+        $media = $this->getDoctrine()
+                  ->getRepository('AdBoxBundle:Media')
+                  ->find($media_id);
+        echo "Media user ID : ".$media->getIdUSer()->getId()."ad user id : ".$ad->getIdUSer()->getId();
+        if ($media->getIdUSer()->getId()==$ad->getIdUSer()->getId())
+        {
+         $ad->setIdMedia($media);
+         // tells Doctrine you want to (eventually) save the Product (no queries yet)
+         $em->persist($ad);
+         // actually executes the queries (i.e. the INSERT query)
+         $em->flush();
+         return new Response( Response::HTTP_OK);
+         }
+         else {
+           throw new Exception('Not an owner');
+         }
+
+      }
+        catch(Exception $e){
+    return new Response( $e->getMessage(),Response::HTTP_NOT_FOUND);
         }
-
-        return $this->render('pub/edit.html.twig', array(
-            'pub' => $pub,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**
@@ -136,5 +161,94 @@ class PubController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+    public function getAdByIdAction(Request $request)
+    {
+      $id=$request->get('id');
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+
+      $serializer = new Serializer($normalizers, $encoders);
+      $ad = $this->getDoctrine()
+       ->getRepository('AdBoxBundle:Pub')
+       ->find($id);
+      $jsonContent = $serializer->serialize($ad->getIdMedia(), 'json');
+      return new Response( $jsonContent);
+
+    }
+
+    public function setEnableStatusAction(Request $request)
+    {
+      $id=$request->get('id');
+      $isEnable=$request->get('isEnable');
+      try{
+        $em = $this->getDoctrine()->getManager();
+        $ad = $this->getDoctrine()
+         ->getRepository('AdBoxBundle:Pub')
+         ->find($id);
+         $ad->setIsEnabled($isEnable);
+         // tells Doctrine you want to (eventually) save the Product (no queries yet)
+         $em->persist($ad);
+         // actually executes the queries (i.e. the INSERT query)
+         $em->flush();
+         return new Response( Response::HTTP_OK);
+      }
+        catch(Exception $e){
+            return new Response( Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function calendarshowAction()
+    {
+      $em = $this->getDoctrine()->getManager();
+      $id_user=1;
+      //Todo check media owner
+
+      $medias = $this->getDoctrine()
+                ->getRepository('AdBoxBundle:Media')
+                ->findBy(array('idUser'=>$id_user));
+      $events = $em->getRepository('AdBoxBundle:Event')->findBy(array('status'=>true));
+      return $this->render('AdBoxBundle:Client:calendar.html.twig', array(
+                         'events' => $events,'medias'=>$medias
+             ));
+    }
+    /**
+     * Add Ad
+     *
+     * @Route("/add", name="addAd")
+     * @Method("POST")
+     */
+    public function addAddAction(Request $request)
+    {
+      try{
+      $em = $this->getDoctrine()->getManager();
+      $media_id=$request->get("idMedia");
+      $timelaps_id=$request->get("idTimelaps");
+      $user_id=1;
+      $pub = new Pub();
+      $timelaps = $this->getDoctrine()
+                ->getRepository('AdBoxBundle:Timelaps')
+                ->find($timelaps_id);
+      $media = $this->getDoctrine()
+                  ->getRepository('AdBoxBundle:Media')
+                  ->find($media_id);
+      $user = $this->getDoctrine()
+              ->getRepository('AdBoxBundle:User')
+              ->find($user_id);
+      $pub->setidUSer( $user);
+      $pub->setIdMedia( $media);
+      $pub->setIdTimelaps( $timelaps);
+      $pub->setIsEnabled(false);
+      $em->persist($pub);
+      $em->flush();
+      return new Response( Response::HTTP_OK);
+}
+catch(Exception $e)
+{
+  return new Response( Response::HTTP_NOT_FOUND);
+
+}
     }
 }

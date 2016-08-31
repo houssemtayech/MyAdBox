@@ -20,21 +20,21 @@ class Shop
     private $name;
 
     /**
-     * @var integer
+     * @var \AdBoxBundle\Entity\User
      *
-     * @ORM\Column(name="owner_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AdBoxBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * })
      */
     private $ownerId;
 
     /**
-     * @var \AdBoxBundle\Entity\ShopOwner
+     * @var integer
      *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="AdBoxBundle\Entity\ShopOwner")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
-     * })
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
