@@ -21,10 +21,11 @@ use Doctrine\ORM\Mapping as ORM;
     protected $id;
     
     
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="CIN", type="integer", nullable=false)
+     * @ORM\Column(name="CIN", type="integer", nullable=true)
      */
     private $cin;
 

@@ -525,64 +525,31 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         if (0 === strpos($pathinfo, '/media')) {
-            // media_index
+            // media
             if (rtrim($pathinfo, '/') === '/media') {
                 if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                     $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_media_index;
+                    goto not_media;
                 }
 
                 if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'media_index');
+                    return $this->redirect($pathinfo.'/', 'media');
                 }
 
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::indexAction',  '_route' => 'media_index',);
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::indexAction',  '_route' => 'media',);
             }
-            not_media_index:
+            not_media:
 
-            // media_new
-            if ($pathinfo === '/media/new') {
-                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                    goto not_media_new;
-                }
-
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::newAction',  '_route' => 'media_new',);
-            }
-            not_media_new:
-
-            // media_show
-            if (preg_match('#^/media/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_media_show;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_show')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::showAction',));
-            }
-            not_media_show:
-
-            // media_edit
-            if (preg_match('#^/media/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                    goto not_media_edit;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_edit')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::editAction',));
-            }
-            not_media_edit:
-
-            // media_delete
+            // mdeia_delete
             if (preg_match('#^/media/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 if ($this->context->getMethod() != 'DELETE') {
                     $allow[] = 'DELETE';
-                    goto not_media_delete;
+                    goto not_mdeia_delete;
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::deleteAction',));
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'mdeia_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::deleteAction',));
             }
-            not_media_delete:
+            not_mdeia_delete:
 
         }
 
@@ -1387,7 +1354,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         // media_page
-        if ($pathinfo === '/media') {
+        if ($pathinfo === '/mediaa') {
             return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::mediaAction',  '_route' => 'media_page',);
         }
 
@@ -1399,6 +1366,170 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         // profile_page
         if ($pathinfo === '/profile') {
             return array (  '_controller' => 'AdBoxBundle\\Controller\\DefaultController::profileAction',  '_route' => 'profile_page',);
+        }
+
+        if (0 === strpos($pathinfo, '/actualite')) {
+            // actualite_show
+            if (preg_match('#^/actualite/(?P<idactualite>[^/]++)/actualite_show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'actualite_show')), array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::showAction',));
+            }
+
+            // actualite_new
+            if ($pathinfo === '/actualite/new') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::newAction',  '_route' => 'actualite_new',);
+            }
+
+            // actualite_create
+            if ($pathinfo === '/actualite/create') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::createAction',  '_route' => 'actualite_create',);
+            }
+
+            // actualite_edit
+            if (preg_match('#^/actualite/(?P<idactualite>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'PUT', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'PUT', 'HEAD'));
+                    goto not_actualite_edit;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'actualite_edit')), array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::editAction',));
+            }
+            not_actualite_edit:
+
+            // actualite_update
+            if (preg_match('#^/actualite/(?P<idactualite>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'PUT', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'PUT', 'HEAD'));
+                    goto not_actualite_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'actualite_update')), array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::UpdateAction',));
+            }
+            not_actualite_update:
+
+            // actualite_delete
+            if (preg_match('#^/actualite/(?P<idactualite>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_actualite_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'actualite_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\ActualitesController::deleteAction',));
+            }
+            not_actualite_delete:
+
+        }
+
+        if (0 === strpos($pathinfo, '/media')) {
+            // media_show
+            if (preg_match('#^/media/(?P<id>[^/]++)/media_show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_show')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::showAction',));
+            }
+
+            // media_new
+            if ($pathinfo === '/media/new') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::newAction',  '_route' => 'media_new',);
+            }
+
+            // media_create
+            if ($pathinfo === '/media/create') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::createAction',  '_route' => 'media_create',);
+            }
+
+            // media_edit
+            if (preg_match('#^/media/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'PUT', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'PUT', 'HEAD'));
+                    goto not_media_edit;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_edit')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::editAction',));
+            }
+            not_media_edit:
+
+            // media_update
+            if (preg_match('#^/media/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'PUT', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'PUT', 'HEAD'));
+                    goto not_media_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_update')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::UpdateAction',));
+            }
+            not_media_update:
+
+            // media_delete
+            if (preg_match('#^/media/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_media_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'media_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::deleteAction',));
+            }
+            not_media_delete:
+
+            // media_index
+            if ($pathinfo === '/media') {
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::indexAction',  '_route' => 'media_index',);
+            }
+
+        }
+
+        // admin_home
+        if ($pathinfo === '/admin') {
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\AdminController::indexAction',  '_route' => 'admin_home',);
+        }
+
+        // client_home
+        if ($pathinfo === '/client') {
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::indexAction',  '_route' => 'client_home',);
+        }
+
+        if (0 === strpos($pathinfo, '/registration')) {
+            // fos_user_client_registration_confirmed
+            if ($pathinfo === '/registrationC/confirmed') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_client_registration_confirmed;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::indexAction',  '_route' => 'fos_user_client_registration_confirmed',);
+            }
+            not_fos_user_client_registration_confirmed:
+
+            // fos_user_admin_registration_confirmed
+            if ($pathinfo === '/registrationA/confirmed') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_admin_registration_confirmed;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\AdminController::indexAction',  '_route' => 'fos_user_admin_registration_confirmed',);
+            }
+            not_fos_user_admin_registration_confirmed:
+
+            // fos_user_zeus_registration_confirmed
+            if ($pathinfo === '/registrationZ/confirmed') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_zeus_registration_confirmed;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ZeusController::indexAction',  '_route' => 'fos_user_zeus_registration_confirmed',);
+            }
+            not_fos_user_zeus_registration_confirmed:
+
+            // fos_user_shopowner_registration_confirmed
+            if ($pathinfo === '/registrationS/confirmed') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_shopowner_registration_confirmed;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopOwnerController::indexAction',  '_route' => 'fos_user_shopowner_registration_confirmed',);
+            }
+            not_fos_user_shopowner_registration_confirmed:
+
         }
 
         // list_admins
@@ -1453,24 +1584,21 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
         not_ws_get_journal:
 
-        if (0 === strpos($pathinfo, '/client/ads')) {
-            // myads_client_page
-            if ($pathinfo === '/client/ads') {
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsAction',  '_route' => 'myads_client_page',);
-            }
-
-            // myads_client_page_Filter
-            if ($pathinfo === '/client/ads/filters') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_myads_client_page_Filter;
-                }
-
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsFilterAction',  '_route' => 'myads_client_page_Filter',);
-            }
-            not_myads_client_page_Filter:
-
+        // myads_client_page
+        if ($pathinfo === '/myads') {
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsAction',  '_route' => 'myads_client_page',);
         }
+
+        // myads_client_page_Filter
+        if ($pathinfo === '/client/ads/filters') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_myads_client_page_Filter;
+            }
+
+            return array (  '_controller' => 'AdBoxBundle\\Controller\\ClientController::showAdsFilterAction',  '_route' => 'myads_client_page_Filter',);
+        }
+        not_myads_client_page_Filter:
 
         if (0 === strpos($pathinfo, '/pub')) {
             // get_ad_by_id
@@ -1656,140 +1784,50 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        if (0 === strpos($pathinfo, '/re')) {
-            if (0 === strpos($pathinfo, '/registerfos')) {
-                // fos_user_registration_register
-                if (rtrim($pathinfo, '/') === '/registerfos') {
-                    if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                        goto not_fos_user_registration_register;
-                    }
-
-                    if (substr($pathinfo, -1) !== '/') {
-                        return $this->redirect($pathinfo.'/', 'fos_user_registration_register');
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::registerAction',  '_route' => 'fos_user_registration_register',);
-                }
-                not_fos_user_registration_register:
-
-                // fos_userOne_registration_register
-                if (rtrim($pathinfo, '/') === '/registerfos') {
-                    if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                        goto not_fos_userOne_registration_register;
-                    }
-
-                    if (substr($pathinfo, -1) !== '/') {
-                        return $this->redirect($pathinfo.'/', 'fos_userOne_registration_register');
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::registerOneAction',  '_route' => 'fos_userOne_registration_register',);
-                }
-                not_fos_userOne_registration_register:
-
-                // fos_userTwo_registration_register
-                if (rtrim($pathinfo, '/') === '/registerfos') {
-                    if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                        goto not_fos_userTwo_registration_register;
-                    }
-
-                    if (substr($pathinfo, -1) !== '/') {
-                        return $this->redirect($pathinfo.'/', 'fos_userTwo_registration_register');
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::registerTwoAction',  '_route' => 'fos_userTwo_registration_register',);
-                }
-                not_fos_userTwo_registration_register:
-
-                if (0 === strpos($pathinfo, '/registerfos/c')) {
-                    // fos_user_registration_check_email
-                    if ($pathinfo === '/registerfos/check-email') {
-                        if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                            $allow = array_merge($allow, array('GET', 'HEAD'));
-                            goto not_fos_user_registration_check_email;
-                        }
-
-                        return array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::checkEmailAction',  '_route' => 'fos_user_registration_check_email',);
-                    }
-                    not_fos_user_registration_check_email:
-
-                    if (0 === strpos($pathinfo, '/registerfos/confirm')) {
-                        // fos_user_registration_confirm
-                        if (preg_match('#^/registerfos/confirm/(?P<token>[^/]++)$#s', $pathinfo, $matches)) {
-                            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                                $allow = array_merge($allow, array('GET', 'HEAD'));
-                                goto not_fos_user_registration_confirm;
-                            }
-
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_registration_confirm')), array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::confirmAction',));
-                        }
-                        not_fos_user_registration_confirm:
-
-                        // fos_user_registration_confirmed
-                        if ($pathinfo === '/registerfos/confirmed') {
-                            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                                $allow = array_merge($allow, array('GET', 'HEAD'));
-                                goto not_fos_user_registration_confirmed;
-                            }
-
-                            return array (  '_controller' => 'FOS\\UserBundle\\Controller\\RegistrationController::confirmedAction',  '_route' => 'fos_user_registration_confirmed',);
-                        }
-                        not_fos_user_registration_confirmed:
-
-                    }
-
+        if (0 === strpos($pathinfo, '/resetting')) {
+            // fos_user_resetting_request
+            if ($pathinfo === '/resetting/request') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_resetting_request;
                 }
 
+                return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::requestAction',  '_route' => 'fos_user_resetting_request',);
             }
+            not_fos_user_resetting_request:
 
-            if (0 === strpos($pathinfo, '/resetting')) {
-                // fos_user_resetting_request
-                if ($pathinfo === '/resetting/request') {
-                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'HEAD'));
-                        goto not_fos_user_resetting_request;
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::requestAction',  '_route' => 'fos_user_resetting_request',);
+            // fos_user_resetting_send_email
+            if ($pathinfo === '/resetting/send-email') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_fos_user_resetting_send_email;
                 }
-                not_fos_user_resetting_request:
 
-                // fos_user_resetting_send_email
-                if ($pathinfo === '/resetting/send-email') {
-                    if ($this->context->getMethod() != 'POST') {
-                        $allow[] = 'POST';
-                        goto not_fos_user_resetting_send_email;
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::sendEmailAction',  '_route' => 'fos_user_resetting_send_email',);
-                }
-                not_fos_user_resetting_send_email:
-
-                // fos_user_resetting_check_email
-                if ($pathinfo === '/resetting/check-email') {
-                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'HEAD'));
-                        goto not_fos_user_resetting_check_email;
-                    }
-
-                    return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::checkEmailAction',  '_route' => 'fos_user_resetting_check_email',);
-                }
-                not_fos_user_resetting_check_email:
-
-                // fos_user_resetting_reset
-                if (0 === strpos($pathinfo, '/resetting/reset') && preg_match('#^/resetting/reset/(?P<token>[^/]++)$#s', $pathinfo, $matches)) {
-                    if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                        goto not_fos_user_resetting_reset;
-                    }
-
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_resetting_reset')), array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::resetAction',));
-                }
-                not_fos_user_resetting_reset:
-
+                return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::sendEmailAction',  '_route' => 'fos_user_resetting_send_email',);
             }
+            not_fos_user_resetting_send_email:
+
+            // fos_user_resetting_check_email
+            if ($pathinfo === '/resetting/check-email') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_fos_user_resetting_check_email;
+                }
+
+                return array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::checkEmailAction',  '_route' => 'fos_user_resetting_check_email',);
+            }
+            not_fos_user_resetting_check_email:
+
+            // fos_user_resetting_reset
+            if (0 === strpos($pathinfo, '/resetting/reset') && preg_match('#^/resetting/reset/(?P<token>[^/]++)$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                    goto not_fos_user_resetting_reset;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'fos_user_resetting_reset')), array (  '_controller' => 'FOS\\UserBundle\\Controller\\ResettingController::resetAction',));
+            }
+            not_fos_user_resetting_reset:
 
         }
 

@@ -2714,7 +2714,11 @@
         ],
         "authors": [
             {
+<<<<<<< HEAD
                 "name": "William Durand",
+=======
+                "name": "William DURAND",
+>>>>>>> 1e91d9ca08258646e1ed9c09fbb6f8dcf5bf36a4
                 "email": "william.durand1@gmail.com"
             }
         ],

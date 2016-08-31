@@ -35,7 +35,7 @@ registerShopOwner_page:
     defaults: { _controller: AdBoxBundle:Default:registerShopOwner }
 
 media_page:
-    path:     /media
+    path:     /mediaa
     defaults: { _controller: AdBoxBundle:Media:media }
 
 calendar_page:
@@ -45,6 +45,94 @@ calendar_page:
 profile_page:
     path:     /profile
     defaults: { _controller: AdBoxBundle:Default:profile}
+
+calendar_page:
+    path:     /calendar
+    defaults: { _controller: AdBoxBundle:Admin:calendar}
+#
+#media_create:
+#    path:     /media/create
+#    defaults: { _controller: AdBoxBundle:Media:new }
+
+actualite_show:
+    path:     /actualite/{idactualite}/actualite_show
+    defaults: { _controller: AdBoxBundle:Actualites:show }
+actualite_new:
+    path:     /actualite/new
+    defaults: { _controller: AdBoxBundle:Actualites:new }
+actualite_create:
+    path:     /actualite/create
+    defaults: { _controller: AdBoxBundle:Actualites:create }
+actualite_edit:
+    path:     /actualite/{idactualite}/edit
+    defaults: { _controller: AdBoxBundle:Actualites:edit }
+    methods: [GET,PUT]
+
+actualite_update:
+    path:     /actualite/{idactualite}/update
+    defaults: { _controller: AdBoxBundle:Actualites:Update }
+    methods: [GET,PUT]
+actualite_delete:
+    path:     /actualite/{idactualite}/delete
+    defaults: { _controller: AdBoxBundle:Actualites:delete }
+    methods: [POST,DELETE]
+media_show:
+    path:     /media/{id}/media_show
+    defaults: { _controller: AdBoxBundle:Media:show }
+media_new:
+    path:     /media/new
+    defaults: { _controller: AdBoxBundle:Media:new }
+media_create:
+    path:     /media/create
+    defaults: { _controller: AdBoxBundle:Media:create }
+media_edit:
+    path:     /media/{id}/edit
+    defaults: { _controller: AdBoxBundle:Media:edit }
+    methods: [GET,PUT]
+
+media_update:
+    path:     /media/{id}/update
+    defaults: { _controller: AdBoxBundle:Media:Update }
+    methods: [GET,PUT]
+media_delete:
+    path:     /media/{id}/delete
+    defaults: { _controller: AdBoxBundle:Media:delete }
+    methods: [POST,DELETE]
+
+media_index:
+    path:     /media
+    defaults: { _controller: AdBoxBundle:Media:index }
+
+admin_home:
+    path:     /admin
+    defaults: { _controller: AdBoxBundle:Admin:index }
+client_home:
+    path:     /client
+    defaults: { _controller: AdBoxBundle:Client:index }
+
+fos_user_client_registration_confirmed:
+    pattern: /registrationC/confirmed
+    defaults: { _controller: AdBoxBundle:Client:index }
+    requirements:
+        _method: GET
+
+fos_user_admin_registration_confirmed:
+    pattern: /registrationA/confirmed
+    defaults: { _controller: AdBoxBundle:Admin:index }
+    requirements:
+        _method: GET
+
+fos_user_zeus_registration_confirmed:
+    pattern: /registrationZ/confirmed
+    defaults: { _controller: AdBoxBundle:Zeus:index }
+    requirements:
+        _method: GET
+
+fos_user_shopowner_registration_confirmed:
+    pattern: /registrationS/confirmed
+    defaults: { _controller: AdBoxBundle:ShopOwner:index }
+    requirements:
+        _method: GET
 
 list_admins:
     path:     /listAdmins
@@ -80,7 +168,7 @@ ws_get_journal:
     methods:  [POST]
 
 myads_client_page:
-    path:     /client/ads
+    path:     /myads
     defaults: { _controller: AdBoxBundle:Client:showAds}
 
 myads_client_page_Filter:

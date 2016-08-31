@@ -29,8 +29,9 @@ class ClientController extends Controller {
 
         $clients = $em->getRepository('AdBoxBundle:Client')->findAll();
 
-        return $this->render('client/index.html.twig', array(
-                    'clients' => $clients,
+
+        return $this->render('AdBoxBundle:Client:client_home.html.twig', array(
+            'clients' => $clients,
         ));
     }
 

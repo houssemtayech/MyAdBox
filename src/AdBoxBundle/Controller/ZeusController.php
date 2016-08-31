@@ -28,7 +28,7 @@ class ZeusController extends Controller
 
         $zeuses = $em->getRepository('AdBoxBundle:Zeus')->findAll();
 
-        return $this->render('zeus/index.html.twig', array(
+        return $this->render('AdBoxBundle:Zeus:zeus_home.html.twig', array(
             'zeuses' => $zeuses,
         ));
     }

@@ -1,0 +1,21 @@
+
+ <table class="record_properties">
+        <tbody>
+            <tr>
+
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+
+                    {{ entity.titre}}
+                </div>
+                <div class="panel-body" style="word-wrap: break-word!important">
+                    <p> {{ entity.corps }} </p> <br>
+                   
+                    <b style="color: #0044cc" > Date de Redaction:  </b>{{ entity.dateredaction|date('Y-m-d') }} <br> <br>
+                    <b style="color: #0044cc" > Etat:  </b>{{ entity.etat }}  <br>
+                   
+                    </tr>
+                    <img src="{{ asset( 'uploads/'~entity.photo) }}" height="270" width="280" class="img-thumbnail">  </img> 
+                      </tbody>
+                    </table>

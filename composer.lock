@@ -6,6 +6,7 @@
     ],
     "hash": "8d0f676b2a6382a3674bced838359ae4",
     "content-hash": "347bfb54934449914219670306eaf5ed",
+
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2348,6 +2349,7 @@
             ],
             "authors": [
                 {
+
                     "name": "William Durand",
                     "email": "william.durand1@gmail.com"
                 }

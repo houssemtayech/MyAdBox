@@ -1,0 +1,35 @@
+   <table class="table table-striped" data-toggle="table" data-url="tables/data1.json"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+
+                    <thead>
+                        <tr class="info">   
+
+                            <th>Titre</th>
+                            
+                            <th>Date Redaction</th>
+                           
+                            <th>Photo</th>
+
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                            <tr >
+
+                                <td>{{ entity.titre }}</td>
+                               
+                                <td>{% if entity.dateredaction %}{{ entity.dateredaction|date('Y-m-d') }}{% endif %}</td>
+
+                                
+                                <td>{{ entity.photo }}</td>
+                                <td>
+                                    <a href="{{ path('actualite_show', { 'idactualite': entity.idactualite }) }}" class="label label-success" >Afficher</a>
+                                    
+                                    <a href="{{ path('actualite_edit', { 'idactualite': entity.idactualite }) }}" class="label label-warning">Modifier</a>
+                                    
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>

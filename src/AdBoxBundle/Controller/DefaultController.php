@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller {
 
+
     public function indexAction() {
         $session = new Session();
         $session->set('type', 'Client');
@@ -27,15 +28,12 @@ class DefaultController extends Controller {
         return $this->render('AdBoxBundle:Admin:login.html.twig');
     }
 
-    public function registerAction() {
-        return $this->render('AdBoxBundle:Admin:register.html.twig');
-    }
 
-//      public function registerAction()
-//    {
-//       return $this->render('AdBoxBundle:Admin:register.html.twig');
-//
-//    }
+      public function registerAction()
+    {
+       return $this->render('AdBoxBundle:Admin:register.html.twig');
+
+    }
     public function registerUserOneAction(Request $request) {
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
@@ -110,7 +108,7 @@ class DefaultController extends Controller {
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $url = $this->generateUrl('fos_user_client_registration_confirmed');
                 $response = new RedirectResponse($url);
             }
 
@@ -198,7 +196,7 @@ class DefaultController extends Controller {
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $url = $this->generateUrl('fos_user_admin_registration_confirmed');
                 $response = new RedirectResponse($url);
             }
 
@@ -242,7 +240,7 @@ class DefaultController extends Controller {
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $url = $this->generateUrl('fos_user_zeus_registration_confirmed');
                 $response = new RedirectResponse($url);
             }
 
@@ -266,7 +264,7 @@ class DefaultController extends Controller {
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
-
+    
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
@@ -282,11 +280,11 @@ class DefaultController extends Controller {
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
+           
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $url = $this->generateUrl('fos_user_shopowner_registration_confirmed');
                 $response = new RedirectResponse($url);
             }
 
@@ -299,6 +297,7 @@ class DefaultController extends Controller {
                     'form' => $form->createView(),
         ));
     }
+
 
     public function profileAction() {
         $session = new Session();

@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Adresse
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+     
+    /**
      * @var float
      *
      * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=true)
@@ -61,15 +70,9 @@ class Adresse
      */
     private $rue;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
+    
+    
+    
 
 
     /**
@@ -242,4 +245,8 @@ class Adresse
     {
         return $this->id;
     }
+    
+   
+
+
 }
