@@ -125,9 +125,7 @@ pugx_multi_user:
           template: FOSUserBundle:Registration:registerTwo.html.twig
         profile:
           form:
-            type: FOS\UserBundle\Form\Type\ProfileClientFormType
-            name: fos_user_profile_form
-            validation_groups:  [Profile, Default]
+            type: AdBoxBundle\Form\ProfileFormType
     zeus:
         entity:
           class: AdBoxBundle\Entity\Zeus

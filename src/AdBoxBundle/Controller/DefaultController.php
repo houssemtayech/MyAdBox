@@ -28,7 +28,6 @@ class DefaultController extends Controller {
         return $this->render('AdBoxBundle:Admin:login.html.twig');
     }
 
-
       public function registerAction()
     {
        return $this->render('AdBoxBundle:Admin:register.html.twig');
@@ -300,16 +299,19 @@ class DefaultController extends Controller {
 
 
     public function profileAction() {
+
         $session = new Session();
-        $user_type = $session->get('type');
-        if ($user_type == "Admin")
+        $user= $this->getUser();
+
+        // $user_type = $session->get('type');
+        if ($user->hasRole('ROLE_ADMIN'))
             return $this->render('AdBoxBundle:Admin:profile.html.twig');
-        else if ($user_type == "User")
+        else if ($user->hasRole('ROLE_SHOPOWNER'))
             return $this->render('AdBoxBundle:ShopOwner:profile.html.twig');
-        else if ($user_type == "Client")
+        else if ($user->hasRole('ROLE_CLIENT'))
             return $this->render('AdBoxBundle:Client:profile.html.twig');
         else
-            return $this->render('AdBoxBundle:Admin:login.html.twig');
+            return $this->render('login_page');
     }
 
    /* public function getUserAction(Request $request) {

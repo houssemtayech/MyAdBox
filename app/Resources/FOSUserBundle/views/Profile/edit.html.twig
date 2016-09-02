@@ -1,0 +1,13 @@
+{% extends 'AdBoxBundle::layout.html.twig' %}
+
+{% block monblock %}
+    <div class="">
+        <div class="col-md-6">
+            <div class="panel">
+                <div class="panel-body container-fluid">
+                    {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
