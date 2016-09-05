@@ -182,24 +182,24 @@ class EventController extends Controller
       $city=$request->get('city');
       $region=$request->get('region');
       $shop=$request->get('shop');
-
       $em = $this->getDoctrine()->getManager();
       $qb = $em->createQueryBuilder()
-              ->select('e')
+              ->select('e As event,s.name As shop')
               ->from('AdBoxBundle:Event', 'e')
               ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idEvent = e.id')
               ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 'et.idTimelaps = t.id')
               ->innerJoin('AdBoxBundle:Adresse', 'a', 'WITH', 'a.id = t.idPointpub')
+              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
               ->where('a.pays = :country')
               ->andWhere('a.ville= :city')
               ->andWhere('a.region= :region')
-              ->andWhere('t.idPointpub= :shop')
+              ->andWhere('t.idPointpub IN (:shop)')
               ->andWhere('e.status= :es')
               ->andWhere('t.etat= :et')
               ->setParameter('country', $country)
               ->setParameter('city', $city)
               ->setParameter('region', $region)
-              ->setParameter('shop', $shop)
+              ->setParameter('shop', json_decode($shop))
               ->setParameter('es', true)
               ->setParameter('et', true)
               ->getQuery();

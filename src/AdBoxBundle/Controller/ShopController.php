@@ -167,7 +167,7 @@ class ShopController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder()
-                ->select('s.name,s.id ,a as adress')
+                ->select('s.name,s.id ,s.logo,a as adress')
                 ->from('AdBoxBundle:Shop', 's')
                 ->innerJoin('AdBoxBundle:Adresse', 'a', 'WITH', 's.idAdress=a.id')
                 ->where('a.pays = :country')
@@ -179,6 +179,62 @@ class ShopController extends Controller {
                 ->getQuery();
         $shops = $qb->getResult();
         $jsonContent = $serializer->serialize($shops, 'json');
+        return new Response( $jsonContent,Response::HTTP_OK);
+      }
+      catch (Exception $e)
+      {
+        return new Response( Response::HTTP_404);
+      }
+    }
+    /**
+     * get shops  By mutltiple ids
+     * @Route("/ByAdressByID", name="getAvailableShopsByIds")
+     * @Method("POST")
+     */
+     //Edit : Get only a single shop
+    public function getShopsByIdsAction(Request $request)
+    {
+      $shop=$request->get('shop');
+      try{
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+                ->select('s.name,s.logo,s.id')
+                ->from('AdBoxBundle:Shop', 's')
+                ->where('s.id = :id')
+                ->setParameter('id',$shop)
+                ->getQuery();
+        $shops_res = $qb->getResult();
+        $jsonContent = $serializer->serialize($shops_res, 'json');
+        return new Response( $jsonContent,Response::HTTP_OK);
+      }
+      catch (Exception $e)
+      {
+        return new Response( Response::HTTP_404);
+      }
+    }
+
+    /**
+     * get shops adress
+     * @Route("/adresse", name="getShopAdress")
+     * @Method("POST")
+     */
+
+    public function getShopAdresseAction(Request $request)
+    {
+      $id=$request->get('id');
+      try{
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $shop = $this->getDoctrine()
+                ->getRepository('AdBoxBundle:Shop')
+                ->find($id);
+        $jsonContent = $serializer->serialize(array("id"=>$shop->getId(),"name"=>$shop->getName(),"adress"=>$shop->getIdAdress(),"logo"=>$shop->getLogo()), 'json');
         return new Response( $jsonContent,Response::HTTP_OK);
       }
       catch (Exception $e)

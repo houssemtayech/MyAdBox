@@ -100,9 +100,6 @@ class Media {
      *     uploadErrorMessage = "uploaded file could not be uploaded for some unknown reason",
      *     maxSizeMessage = "fichier trop volumineux"
      * )
-
-      /**
-     * @Assert\File(maxSize="6000000")
      */
     private $file;
 

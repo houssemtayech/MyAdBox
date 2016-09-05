@@ -227,22 +227,25 @@ var_dump($pub);
       $media_id=$request->get("idMedia");
       $timelaps_id=$request->get("idTimelaps");
       $user_id=1;
-      $pub = new Pub();
-      $timelaps = $this->getDoctrine()
-                ->getRepository('AdBoxBundle:Timelaps')
-                ->find($timelaps_id);
-      $media = $this->getDoctrine()
-                  ->getRepository('AdBoxBundle:Media')
-                  ->find($media_id);
-      $user = $this->getDoctrine()
-              ->getRepository('AdBoxBundle:User')
-              ->find($user_id);
-      $pub->setidUSer( $user);
-      $pub->setIdMedia( $media);
-      $pub->setIdTimelaps( $timelaps);
-      $pub->setIsEnabled(false);
-      $em->persist($pub);
-      $em->flush();
+      $timelaps_array=json_decode($timelaps_id);
+      foreach($timelaps_array as $id_t) {
+        $pub = new Pub();
+        $timelaps = $this->getDoctrine()
+                  ->getRepository('AdBoxBundle:Timelaps')
+                  ->find($id_t);
+        $media = $this->getDoctrine()
+                    ->getRepository('AdBoxBundle:Media')
+                    ->find($media_id);
+        $user = $this->getDoctrine()
+                ->getRepository('AdBoxBundle:User')
+                ->find($user_id);
+        $pub->setidUSer( $user);
+        $pub->setIdMedia( $media);
+        $pub->setIdTimelaps( $timelaps);
+        $pub->setIsEnabled(false);
+        $em->persist($pub);
+        $em->flush();
+      }
       return new Response( Response::HTTP_OK);
 }
 catch(Exception $e)

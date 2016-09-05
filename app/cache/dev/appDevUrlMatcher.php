@@ -351,16 +351,41 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_shop_delete:
 
-            // getAvailableShopsByAdresse
-            if ($pathinfo === '/shop/ByAdress') {
+            if (0 === strpos($pathinfo, '/shop/ByAdress')) {
+                // getAvailableShopsByAdresse
+                if ($pathinfo === '/shop/ByAdress') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_getAvailableShopsByAdresse;
+                    }
+
+                    return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopsByAdresse',  '_route' => 'getAvailableShopsByAdresse',);
+                }
+                not_getAvailableShopsByAdresse:
+
+                // getAvailableShopsByIds
+                if ($pathinfo === '/shop/ByAdressByID') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_getAvailableShopsByIds;
+                    }
+
+                    return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopsByIdsAction',  '_route' => 'getAvailableShopsByIds',);
+                }
+                not_getAvailableShopsByIds:
+
+            }
+
+            // getShopAdress
+            if ($pathinfo === '/shop/adresse') {
                 if ($this->context->getMethod() != 'POST') {
                     $allow[] = 'POST';
-                    goto not_getAvailableShopsByAdresse;
+                    goto not_getShopAdress;
                 }
 
-                return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopsByAdresse',  '_route' => 'getAvailableShopsByAdresse',);
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\ShopController::getShopAdresseAction',  '_route' => 'getShopAdress',);
             }
-            not_getAvailableShopsByAdresse:
+            not_getShopAdress:
 
         }
 
@@ -550,6 +575,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'mdeia_delete')), array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::deleteAction',));
             }
             not_mdeia_delete:
+
+            // media_show_byID
+            if ($pathinfo === '/media/ById') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_media_show_byID;
+                }
+
+                return array (  '_controller' => 'AdBoxBundle\\Controller\\MediaController::getMediaByIdAction',  '_route' => 'media_show_byID',);
+            }
+            not_media_show_byID:
 
         }
 

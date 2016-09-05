@@ -3,13 +3,18 @@
 namespace AdBoxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use AdBoxBundle\Entity\User;
 use AdBoxBundle\Entity\Media;
 use AdBoxBundle\Form\MediaType;
-
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 /**
  * Media controller.
  *
@@ -31,7 +36,7 @@ class MediaController extends Controller
 
         $entities = $em->getRepository('AdBoxBundle:Media')->findAll();
 
-        return  array(          
+        return  array(
         'entities' => $entities,
 
         );
@@ -57,16 +62,16 @@ class MediaController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('media_show', array('id' => $entity->getId())));
-        
+
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
-     
+
     }
-    
-    
+
+
     /**
      * Creates a form to create a Media entity.
      *
@@ -83,11 +88,11 @@ class MediaController extends Controller
         $form->add('submit', 'submit', array('label' => 'Ajouter'));
 
         return $form;
-    
-    
+
+
     }
-    
-    
+
+
      /**
      * Displays a form to create a new Media entity.
      *
@@ -105,15 +110,9 @@ class MediaController extends Controller
         );
     }
 
-    
-    
-    /**
-     * Finds and displays a Media entity.
-     *
-     * @Route("/{id}", name="media_show")
-     * @Method("GET")
-     * @Template()
-     */
+
+
+
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
@@ -205,7 +204,7 @@ class MediaController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('media_show', array('id' => $id)));
-        
+
 
         return array(
             'entity' => $entity,
@@ -233,7 +232,7 @@ class MediaController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        
+
 
         return $this->redirect($this->generateUrl('media'));
     }
@@ -258,6 +257,26 @@ class MediaController extends Controller
                         )
                         ->getForm()
         ;
+    }
+
+    /**
+     * Finds and displays a Media entity.
+     *
+     * @Route("/ById", name="media_show_byID")
+     * @Method("POST")
+     */
+    public function getMediaByIdAction(Request $request)
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $id=$request->get('id');
+      $em = $this->getDoctrine()->getManager();
+      $media=$em->getRepository('AdBoxBundle:Media')->find($id);
+      $array_obj=array("type"=>$media->getType(),"url"=>$media->getUrl());
+      $jsonContent = $serializer->serialize($array_obj, 'json');
+      return new Response( $jsonContent);
     }
 
 }

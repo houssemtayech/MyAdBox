@@ -18,6 +18,13 @@ class Shop
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=100, nullable=false)
+     */
+    //Default value
+    private $logo="http://localhost/AdBoxi/MyAdBox/web/global/photos/cofee_shop.png";
 
     /**
      * @var \AdBoxBundle\Entity\User
@@ -85,8 +92,15 @@ class Shop
 
         return $this;
     }
+    function getLogo() {
+        return $this->logo;
+    }
 
-    /**
+    function setLogo($logo) {
+        $this->logo = $logo;
+    }
+
+        /**
      * Get ownerId
      *
      * @return integer 
