@@ -208,3 +208,4 @@ edit_ad_flush:
     path:     /ad/edit
     defaults: { _controller: AdBoxBundle:Pub:edit}
     methods:  [POST]
+
