@@ -151,7 +151,7 @@ class AdresseController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-        'SELECT a.pays
+        'SELECT DISTINCT a.pays
         FROM AdBoxBundle:Adresse a'
       );
         $countries = $query->getResult();
@@ -182,7 +182,7 @@ class AdresseController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                    'SELECT a.ville
+                    'SELECT DISTINCT a.ville
                     FROM AdBoxBundle:Adresse a
                     WHERE a.pays=:country')
                     ->setParameter('country',$country);
@@ -214,7 +214,7 @@ class AdresseController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                    'SELECT a.region
+                    'SELECT DISTINCT a.region
                     FROM AdBoxBundle:Adresse a
                     WHERE a.ville=:city AND a.pays=:country')
                     ->setParameter('city',$city)

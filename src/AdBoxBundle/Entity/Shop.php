@@ -3,7 +3,7 @@
 namespace AdBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Shop
  *
@@ -22,6 +22,7 @@ class Shop
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=100, nullable=false)
+     * @Assert\Image()
      */
     //Default value
     private $logo="http://localhost/AdBoxi/MyAdBox/web/global/photos/cofee_shop.png";
@@ -73,7 +74,7 @@ class Shop
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -103,7 +104,7 @@ class Shop
         /**
      * Get ownerId
      *
-     * @return integer 
+     * @return integer
      */
     public function getOwnerId()
     {
@@ -126,7 +127,7 @@ class Shop
     /**
      * Get id
      *
-     * @return \AdBoxBundle\Entity\ShopOwner 
+     * @return \AdBoxBundle\Entity\ShopOwner
      */
     public function getId()
     {
@@ -149,7 +150,7 @@ class Shop
     /**
      * Get idAdress
      *
-     * @return \AdBoxBundle\Entity\Adresse 
+     * @return \AdBoxBundle\Entity\Adresse
      */
     public function getIdAdress()
     {

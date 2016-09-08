@@ -1,4 +1,4 @@
-{%extends 'AdBoxBundle::layout.html_1.twig' %}
+{%extends 'AdBoxBundle::layout.html.twig' %}
 {% block extraLinks %}
 
     <link href="{{asset('global/vendor/select2/select2.min.css')}}" rel="stylesheet"/>
@@ -22,7 +22,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
     <!-- Page -->
     <link rel="stylesheet" href="{{asset('assets/examples/css/apps/calendar.min3f0d.css?v2.2.0')}}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk&callback=initMap" async defer></script>
     <link href="{{asset('global/vendor/icheck/skins/all.css?v=1.0.2')}}" rel="stylesheet">
 {% endblock %}
 {% block monblock %}
@@ -205,7 +204,7 @@
                 </div>
                 <div class="page bg-white animsition">
                     <!-- Media Content -->
-                    <div class="page-aside" style="padding-top:5%;padding-right:5%;">
+                    <div class="page-aside" style="padding-top:5%;padding-right:5%;padding-left:1%;">
                         <h2 >Location filter</h2>
 
                         <div class="page-aside-inner" data-plugin="pageAsideScroll">
@@ -260,8 +259,8 @@
 
                             </div>
 
-                            <div class="media-list is-grid padding-bottom-50 row">
-                                <div id="map" style="width:auto; height: 500px;"></div>
+                            <div class="media-list is-grid padding-bottom-50 ">
+                                <div id="map" style="height:500px"></div>
                             </div>
                         </div>
                     </div>
@@ -303,34 +302,11 @@
                                 <input type="text" class="form-control" data-plugin="datepicker" data-date-format="yyyy-mm-dd" id="confirmDate" readonly>
                             </div>
                             <div id="timeplapsConfirm">
-                              <!--
-                              <h4 class="example-title">Price :
-                              </h4>
-                              <h4 style="padding-left:2%;padding-bottom:1%" id="EventPriceConfirm"></h3>
 
-                                <h4 class="example-title">Time</h4>
-                                <div class="input-daterange" data-plugin="datepicker" style="max-width:500px;">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="icon md-calendar" aria-hidden="true"></i>
-                                        </span>
-                                        <input id="confirmTimeStart" type="text" class="form-control" name="start" readonly/>
+                            </div>
 
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">to</span>
-                                        <input id="confirmTimeEnd" type="text" class="form-control" name="end" readonly/>
-                                    </div>
-                                </div>
--->
-                              </div>
-
-                          <!--  <h4 class="example-title">Shops</h4>
-                            <ul class="list-group list-group-full row" id="ConfirmShopListItems"></ul>
-                          -->
                         </div>
                         <div class="col-md-6 mediaConfirm">
-                            <video controls class="image img-rounded" src="http://www.w3schools.com/html/mov_bbb.mp4"/>
                         </div>
                     </div>
                 </div>
@@ -379,6 +355,7 @@
 
 <script src="{{asset('assets/js/app.min.js')}}"></script>
 <script src="{{asset('assets/examples/js/apps/media.min.js')}}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk&callback=initMap" async defer></script>
 
 <script>
     var map;

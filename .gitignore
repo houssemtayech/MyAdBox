@@ -12,3 +12,4 @@
 /.idea/
 /app/config/parameters.yml
 nbproject/private/private.xml
+/web/uploads/*
