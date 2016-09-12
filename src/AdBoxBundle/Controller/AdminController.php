@@ -3,12 +3,20 @@
 namespace AdBoxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdBoxBundle\Entity\Admin;
 use AdBoxBundle\Form\AdminType;
 use AdBoxBundle\Form\EditAdminForm;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 /**
  * Admin controller.
  *
@@ -33,9 +41,9 @@ class AdminController extends Controller
         ));
     }
     function CalendarAction (){
-        
+
         return $this-> render('AdBoxBundle:Admin:calendar.html.twig');
-          
+
     }
 
     /**
@@ -142,7 +150,7 @@ class AdminController extends Controller
             ->getForm()
         ;
     }
-    
+
     public function listAllAdminAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -151,12 +159,12 @@ class AdminController extends Controller
                 ->setParameter ('roles','%'. $roles .'%');
        // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
         $users = $query ->getResult();
-        
+
         return $this->render('AdBoxBundle:Admin:allAdmins.html.twig', array(
             'users' => $users,
         ));
     }
-    
+
     public function editAdminAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $Admin = $em->getRepository('AdBoxBundle:Admin')->find($id);
@@ -174,4 +182,183 @@ class AdminController extends Controller
             }
         } return $this->render('AdBoxBundle:Admin:editAdmin.html.twig', array('Form' => $form->createView()));
     }
+
+    /**
+     * Admin ADs management
+     *
+     * @Route("/ads/Manage", name="admin_ad_manage")
+     * @Method("GET")
+     */
+    public function AdManagementAction(){
+
+      // rendering result
+   return $this->render('AdBoxBundle:Admin:ads.html.twig');
+    }
+
+    /**
+     * Admin ADs management loader
+     *
+     * @Route("/ads/Manage/loader", name="admin_ad_manage_loader")
+     * @Method("POST")
+     */
+    public function AdManagementLoaderAction(Request $request){
+      // get Current client id
+      $session = new Session();
+      $session->set('id', 1);
+      $user_id = $session->get('id');
+
+      $client=$request->get("client");
+      $shop=$request->get("shop");
+      $event=$request->get("event");
+
+
+      // initialize tools
+      $em = $this->getDoctrine()->getManager();
+      // Ads query
+      $qb = $em->createQueryBuilder()
+              ->select('p,e.name')
+              ->from('AdBoxBundle:Pub', 'p')
+              ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+              ->innerJoin('AdBoxBundle:Client', 'c', 'WITH', 'c.id = p.idUSer')
+              ->where('c.id LIKE  :client_id')
+              ->andWhere("e.id LIKE  :event_id")
+              ->andWhere("s.id LIKE  :shop_id")
+              ->andWhere('p.isArchieved = :archive')
+              ->setParameter('client_id', "%".$client."%")
+              ->setParameter('shop_id', "%".$shop."%")
+              ->setParameter('event_id', "%".$event."%")
+              ->setParameter('archive', 0)
+              ->getQuery();
+      $Adsitems = $qb->getResult();
+      // rendering result
+   return $this->render('AdBoxBundle:Admin:ads_loader.html.twig',array('ads' => $Adsitems));
+    }
+
+    /**
+     * Lists all clients.
+     *
+     * @Route("/clients", name="admin_clients_get")
+     * @Method("POST")
+     */
+    public function getAllClientsAction()
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $em = $this->getDoctrine()->getManager();
+      // Ads query
+      $qb = $em->createQueryBuilder()
+              ->select('c.id,c.username,c.email')
+              ->from('AdBoxBundle:Client', 'c')
+              ->getQuery();
+      $clients = $qb->getResult();
+      $jsonContent = $serializer->serialize($clients, 'json');
+
+      // rendering result
+    return new Response( $jsonContent);
+    }
+    /**
+     * Lists all Shop.
+     *
+     * @Route("/shops", name="admin_shops_get")
+     * @Method("POST")
+     */
+    public function getAllShopsAction()
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $em = $this->getDoctrine()->getManager();
+      // Ads query
+      $qb = $em->createQueryBuilder()
+              ->select('s.id,s.name,s.logo')
+              ->from('AdBoxBundle:Shop', 's')
+              ->getQuery();
+      $shops = $qb->getResult();
+      $jsonContent = $serializer->serialize($shops, 'json');
+
+      // rendering result
+    return new Response( $jsonContent);
+    }
+    /**
+     * Lists all Events.
+     *
+     * @Route("/events", name="admin_events_get")
+     * @Method("POST")
+     */
+    public function getAllEventsAction()
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $em = $this->getDoctrine()->getManager();
+      // Ads query
+      $qb = $em->createQueryBuilder()
+              ->select('e.id,e.name,e.eventType,e.starttime')
+              ->from('AdBoxBundle:Event', 'e')
+              ->getQuery();
+      $events = $qb->getResult();
+
+      $jsonContent = $serializer->serialize($events, 'json');
+
+      // rendering result
+    return new Response( $jsonContent);
+    }
+    /**
+     * admin_ad_filter.
+     *
+     * @Route("/ads/search", name="admin_ad_filter")
+     * @Method("POST")
+     */
+    public function ShowAdsFilterAction(Request $request) {
+
+
+        $user_id = $request->get('id');
+
+        $search = $request->get("search");
+        $filter = $request->get("filter");
+
+        switch ($filter) {
+            case 'Shop':
+                $filter = "t.idPointpub";
+                break;
+            case 'Date':
+                $filter = "t.dateStart";
+                break;
+            case 'Price':
+                $filter = "t.prix";
+                break;
+            case 'None':
+                $filter = "p.id";
+                break;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+                ->select('p,e.name')
+                ->from('AdBoxBundle:Pub', 'p')
+                ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 't.id = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = p.idTimelaps')
+                ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+                ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+                ->where('p.idUSer = :id')
+                ->andWhere('e.name Like :txt OR t.prix Like :txt OR s.name Like :txt')
+                ->andWhere('p.isArchieved = :archive')
+                ->orderBy($filter)
+                ->setParameter('id', $user_id)
+                ->setParameter('archive', 0)
+                ->setParameter('txt', "%" . $search . "%")
+                ->getQuery();
+        $Adsitems = $qb->getResult();
+        // rendering result
+        return $this->render('AdBoxBundle:Admin:ads_loader.html.twig', array('ads' => $Adsitems));
+    }
+
+
 }

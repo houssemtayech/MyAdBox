@@ -57,6 +57,14 @@ class Pub
      */
     private $isEnabled;
 
+    /**
+        * @var boolean
+        *
+        * @ORM\Column(name="isArchieved", type="boolean", nullable=false)
+        */
+       private $isArchieved;
+
+
 /**
      * Set isEnabled
      *
@@ -70,14 +78,26 @@ class Pub
         return $this;
     }
 
+    public function setIsArchieved($isArchieved)
+    {
+        $this->isArchieved = $isArchieved;
+
+        return $this;
+    }
+
     /**
      * Get isEnabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getisEnabled()
     {
         return $this->isEnabled;
+    }
+
+    public function getIsArchieved()
+    {
+        return $this->isArchieved;
     }
     /**
      * Get id

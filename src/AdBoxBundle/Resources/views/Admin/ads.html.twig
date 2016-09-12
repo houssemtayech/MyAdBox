@@ -1,0 +1,367 @@
+{# empty Twig template #}
+
+{%extends 'AdBoxBundle::layout.html.twig' %}
+{%block extraLinks %}
+    <!-- Plugins For This Page -->
+    <script src="{{asset('global/vendor/aspaginator/jquery.asPaginator.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/user.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
+
+    <link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('assets/examples/css/uikit/buttons.min3f0d.css?v2.2.0')}}">
+    <link href="{{asset('global/vendor/select2/select2.min.css')}}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{asset('global/vendor/bootstrap-datepicker/bootstrap-datepicker.min3f0d.css?v2.2.0')}}">
+
+{%endblock %}
+{%block monblock %}
+
+    <!-- Preview Modal -->
+    <div class="modal fade modal-fill-in" id="PreviewModal" aria-hidden="false" aria-labelledby="exampleFillIn" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="loader-wrapper loader-lg active" id="LoaderIcon">
+                <div class="loader-layer loader-blue-only">
+                    <div class="loader-circle-left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="loader-circle-gap"></div>
+                    <div class="loader-circle-right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <iframe width="854" height="480" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Map Modal -->
+    <div class="modal fade" id="MapModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="map" style="width:auto; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+</div>
+<!-- End Modal -->
+
+<div class="page-user">
+
+    <!-- Page -->
+    <div class="page animsition">
+        <div class="page-aside" style="position:fixed;padding-top:5%;">
+            <div class="page-aside-switch">
+                <i class="icon wb-chevron-left" aria-hidden="true"></i>
+                <i class="icon wb-chevron-right" aria-hidden="true"></i>
+            </div>
+            <div class="page-aside-inner" data-plugin="pageAsideScroll">
+                <div data-role="container">
+                    <div data-role="content">
+
+                        <section class="page-aside-section">
+                            <h5 class="page-aside-title">Search filters</h5>
+
+                            <div class="list-group">
+
+                                <div class="list-group-item" style="padding-top:10%" href="javascript:void(0)">
+                                    <i class="icon wb-settings" aria-hidden="true"></i>
+                                    <span class="list-group-item-content">Client</span>
+                                </div>
+                                <div style="padding-left:10%;padding-right:10%">
+                                    <select style="width:100%" id="select_client" data-placeholder="Select a client"></select>
+                                </div>
+                                <div class="list-group-item" style="padding-top:10%" href="javascript:void(0)">
+                                    <i class="icon wb-settings" aria-hidden="true"></i>
+                                    <span class="list-group-item-content">Shop</span>
+                                </div>
+
+                                <div style="padding-left:10%;padding-right:10%">
+                                    <select style="width:100%" id="select_shop" data-placeholder="Select a shop"></select>
+                                </div>
+
+                                <div class="list-group-item" style="padding-top:10%" href="javascript:void(0)">
+                                    <i class="icon wb-extension" aria-hidden="true"></i>
+                                    <span class="list-group-item-content">Event</span>
+                                </div>
+                                <div style="padding-left:10%;padding-right:10%">
+                                    <select style="width:100%" id="select_event" data-placeholder="Select an event"></select>
+                                </div>
+                            </div>
+
+                        < </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- page main -->
+        <div class="page-main">
+            <div class="page-content">
+                <!-- Panel -->
+                <div class="panel">
+                    <div class="panel-body">
+                        <!-- Search Form-->
+                        <div class="input-search input-search-dark">
+                            <i class="input-search-icon md-search" aria-hidden="true"></i>
+                            <input type="text" class="form-control" id="inputSearch" name="search" placeholder="Search">
+                            <button type="button" class="input-search-close icon md-close" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Filter -->
+                        <div class="nav-tabs-horizontal">
+                            <div class="dropdown page-user-sortlist">
+                                Order By:
+                                <a id="selectedDropdown" class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">None<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                                    <li class="active" role="presentation">
+                                        <a href="#">None</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#">Shop</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#">Date</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#">Price</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Navigation top bar -->
+                            <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#All_Ads" aria-controls="All_Ads" role="tab">All Ads</a>
+                                </li>
+                                <li >
+                                    <a data-toggle="tab" href="#Today" aria-controls="Today" role="tab">Today</a>
+                                </li>
+                                <li >
+                                    <a data-toggle="tab" href="#Coming" aria-controls="Coming" role="tab">Coming</a>
+                                </li>
+                                <li >
+                                    <a data-toggle="tab" href="#History" aria-controls="History" role="tab">History</a>
+                                </li>
+
+                            </ul>
+                            <!-- Content -->
+                            <div class="tab-content"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+        </div>
+        <!-- page main end-->
+        <!--
+    <div class="site-action">
+        <button id="addAdBt" type="button" class="site-action-toggle btn-raised btn btn-dark btn-floating wb-plus"></button>
+    </div>-->
+        <!-- End Page -->
+    </div>
+</div>
+<script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('global/vendor/moment/moment.min.js')}}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk" async defer></script>
+<script src="{{asset('global/vendor/select2/select2.min.js')}}"></script>
+<script src="{{asset('global/js/components/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('global/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('global/Adbox/admin/ads.js')}}"></script>
+
+<script>
+
+    var map;
+    var element = $(this);
+
+    function initialize(myCenter, mytitle) {
+        var marker = new google.maps.Marker({position: myCenter, title: mytitle});
+
+        var mapProp = {
+            center: myCenter,
+            zoom: 10,
+            //draggable: false, scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapProp);
+        marker.setMap(map);
+    };
+
+    $(document).ready(function() {
+
+        $("li[role='presentation'] a").click(function() {
+          var obj = $("#select_client").select2("data");
+
+            $("li[role='presentation'][class='active']").removeAttr("class");
+            $(this).parent().attr("class", "active");
+            $("#selectedDropdown").html($(this).html() + '<span class="caret"></span>');
+
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('admin_ad_filter')}}",
+                data: {
+                    search: $("#inputSearch").val(),
+                    filter: $("li[role='presentation'][class='active'] a").html(),
+                    id:obj[0].id
+
+                }
+            }).done(function(data) {
+                $(".tab-content").html(data);
+
+            }).fail(function() {
+                alert("fail search");
+            });
+        });
+        // Search function
+        $(document).on("keyup", "#inputSearch", function(event) {
+          var obj = $("#select_client").select2("data");
+
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('admin_ad_filter')}}",
+                data: {
+                    search: $(this).val(),
+                    filter: $("li[role='presentation'][class='active'] a").html(),
+                    id:obj[0].id
+                }
+            }).done(function(data) {
+                $(".tab-content").html(data);
+
+            }).fail(function() {
+                alert("fail search");
+            });
+        });
+        $(document).on("click", ".btn.btn-success", function(event) {
+
+            var id = $(this).parent().attr('id');
+            $("#PreviewModal").modal('show');
+            $("#LoaderIcon").show();
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('get_ad_by_id')}}",
+                data: {
+                    id: id
+                }
+            }).done(function(data) {
+                var JSONObject = JSON.parse(data);
+                $("iframe").attr("src", JSONObject["url"]);
+                $("#LoaderIcon").hide();
+
+            }).fail(function() {
+                alert("Couldn't Load the ad");
+            });
+
+            $('#PreviewModal').on('hidden.bs.modal', function() {
+                $("iframe").attr("src", "");
+            });
+        });
+        $(document).on("click", ".btn.btn-warning", function(event) {
+
+            var id = $(this).parent().attr('id');
+            var url_invalid = "http://localhost{{path('edit_ad', {'id':'*NOTFOUND*'}) }} ";
+            var url = url_invalid.replace("*NOTFOUND*", id);
+            window.open(url);
+        });
+
+        $("#addAdBt").click(function() {
+            window.open("http://localhost{{path('client_ad_add')}}");
+        })
+    });
+    $(document).on("click", ".btn.btn-default.main", function(event) {
+        var button = $(this);
+        var id = $(this).parent().attr("id");
+        var parent = $(".media-right[id='" + id + "']");
+        var bt = parent.find(".btn.btn-default.main");
+
+        $.ajax({
+            method: "POST",
+            url: "http://localhost{{path('set_ad_status')}}",
+            data: {
+                id: id,
+                isEnable: 1
+            }
+        }).done(function() {
+            bt.replaceWith('<button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button"> Disable </button>');
+
+            button.replaceWith('<button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button"> Disable </button>');
+
+            swal("Success!", "Your ad is back on brodcast queue!", "success");
+
+        }).fail(function() {
+            swal("Cancelled", "An error has occured", "error");
+        });
+    });
+    $(document).on("click", ".btn.btn-danger.main", function(event) {
+        var id = $(this).parent().attr("id");
+        var parent = $(".media-right[id='" + id + "']");
+        var bt = parent.find(".btn.btn-danger.main");
+        var button = $(this);
+        swal({
+            title: "Are you sure?",
+            text: "Your ad won't be brodcasted !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, disable it!",
+            closeOnConfirm: true
+        }, function() {
+            $.ajax({
+                method: "POST",
+                url: "http://localhost{{path('set_ad_status')}}",
+                data: {
+                    id: id,
+                    isEnable: 0
+                }
+            }).done(function() {
+                bt.replaceWith('<button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button"> Enable </button>');
+                button.replaceWith('<button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button"> Enable </button>');
+            }).fail(function() {
+                swal("Cancelled", "An error has occured", "error");
+            });
+
+        });
+
+    });
+    $(document).on("click", ".mapPreview", function(event) {
+        var idShop = $(this).children("input").val();
+        $.ajax({
+            method: "POST",
+            url: "http://localhost{{path('get_shop_by_id')}}",
+            data: {
+                id: idShop
+            }
+        }).done(function(data) {
+            $("#MapModal").modal('show');
+            var JSONObject = JSON.parse(data);
+            var name = JSONObject["name"];
+            var adress = JSONObject["adress"];
+
+            $("#MapModal").on("shown.bs.modal", function(e) {
+                var element = $(e.relatedTarget);
+                initialize(new google.maps.LatLng(JSONObject["adress"]['latitude'], JSONObject["adress"]['longitude']), name);
+                google.maps.event.trigger(map, 'resize');
+            });
+        }).fail(function() {
+            swal("Cancelled", "An error has occured", "error");
+        });
+
+    });
+</script>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 {# empty Twig template #}
 
-{%extends 'AdBoxBundle::layout.html_1.twig' %}
+{%extends 'AdBoxBundle::layout.html.twig' %}
 {%block extraLinks %}
     <!-- Plugins For This Page -->
     <script src="{{asset('global/vendor/aspaginator/jquery.asPaginator.min.js')}}"></script>
@@ -159,20 +159,20 @@
                                                     <button style="width:80px" class="btn btn-success" type="button">
                                                         Preview
                                                     </button>
-                                                    <button style="width:80px" class="btn btn-warning" data-toggle="modal" Error: source does not appear to be markup.="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
+                                                    <button style="width:80px" class="btn btn-warning" data-toggle="modal" id="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
                                                         Edit
                                                     </button>
                                                     {% if ad[0].getIsEnabled() == 0 %}
 
-                                                        <button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
+                                                        <!--<button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
                                                             Enable
-                                                        </button>
+                                                        </button>-->
                                                     {% endif %}
                                                     {% if ad[0].getIsEnabled() == 1 %}
 
-                                                        <button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
+                                                        <!--<button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
                                                             Disable
-                                                        </button>
+                                                        </button>-->
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -224,10 +224,26 @@
                                                         </p>
 
                                                     </div>
-                                                    <div class="media-right">
-                                                        <button type="button" class="btn btn-success btn-sm">
+                                                    <div class="media-right" id="{{ ad['0'].getId()}}">
+
+                                                        <button style="width:80px" class="btn btn-success" type="button">
                                                             Preview
                                                         </button>
+                                                        <button style="width:80px" class="btn btn-warning" data-toggle="modal" id="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
+                                                            Edit
+                                                        </button>
+                                                        {% if ad[0].getIsEnabled() == 0 %}
+
+                                                            <!--<button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
+                                                                Enable
+                                                            </button>-->
+                                                        {% endif %}
+                                                        {% if ad[0].getIsEnabled() == 1 %}
+
+                                                          <!--  <button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
+                                                                Disable
+                                                            </button>-->
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </li>
@@ -278,10 +294,26 @@
                                                         </p>
 
                                                     </div>
-                                                    <div class="media-right">
-                                                        <button type="button" class="btn btn-success btn-sm">
+                                                    <div class="media-right" id="{{ ad['0'].getId()}}">
+
+                                                        <button style="width:80px" class="btn btn-success" type="button">
                                                             Preview
                                                         </button>
+                                                        <button style="width:80px" class="btn btn-warning" data-toggle="modal" id="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
+                                                            Edit
+                                                        </button>
+                                                        {% if ad[0].getIsEnabled() == 0 %}
+
+                                                        <!--    <button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
+                                                                Enable
+                                                            </button>-->
+                                                        {% endif %}
+                                                        {% if ad[0].getIsEnabled() == 1 %}
+
+                                                          <!--  <button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
+                                                                Disable
+                                                            </button> -->
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </li>
@@ -333,10 +365,26 @@
                                                         </p>
 
                                                     </div>
-                                                    <div class="media-right">
-                                                        <button type="button" class="btn btn-success btn-sm">
+                                                    <div class="media-right" id="{{ ad['0'].getId()}}">
+
+                                                        <button style="width:80px" class="btn btn-success" type="button">
                                                             Preview
                                                         </button>
+                                                        <button style="width:80px" class="btn btn-warning" data-toggle="modal" id="http://localhost{{path('edit_ad', {'id':1}) }}" type="button">
+                                                            Edit
+                                                        </button>
+                                                        {% if ad[0].getIsEnabled() == 0 %}
+
+                                                          <!--  <button style="width:80px" class="btn btn-default main" data-toggle="modal" type="button">
+                                                                Enable
+                                                            </button>-->
+                                                        {% endif %}
+                                                        {% if ad[0].getIsEnabled() == 1 %}
+
+                                                            <!--<button style="width:80px" class="btn btn-danger main" data-toggle="modal" type="button">
+                                                                Disable
+                                                            </button>-->
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </li>
@@ -420,41 +468,41 @@
             });
         });
 
-        $(".btn.btn-success").click(function() {
-            var id = $(this).parent().attr('id');
-            $("#PreviewModal").modal('show');
-            $("#LoaderIcon").show();
-            $.ajax({
-                method: "POST",
-                url: "http://localhost{{path('get_ad_by_id')}}",
-                data: {
-                    id: id
-                }
-            }).done(function(data) {
-                var JSONObject = JSON.parse(data);
-                $("iframe").attr("src", JSONObject["url"]);
-                $("#LoaderIcon").hide();
-
-            }).fail(function() {
-                alert("Couldn't Load the ad");
-            });
-
-            $('#PreviewModal').on('hidden.bs.modal', function() {
-                $("iframe").attr("src", "");
-            });
-        });
-
-        $(".btn.btn-warning").click(function() {
-            var id = $(this).parent().attr('id');
-            var url_invalid="http://localhost{{path('edit_ad', {'id':'*NOTFOUND*'}) }} ";
-            var url =url_invalid.replace("*NOTFOUND*",id);
-            window.open(url);
-        });
 
         $("#addAdBt").click(function(){
           window.open("http://localhost{{path('client_ad_add')}}");
         })
   });
+  $(document).on("click", ".btn.btn-success", function(event) {
+      var id = $(this).parent().attr('id');
+      $("#PreviewModal").modal('show');
+      $("#LoaderIcon").show();
+      $.ajax({
+          method: "POST",
+          url: "http://localhost{{path('get_ad_by_id')}}",
+          data: {
+              id: id
+          }
+      }).done(function(data) {
+          var JSONObject = JSON.parse(data);
+          $("iframe").attr("src", JSONObject["url"]);
+          $("#LoaderIcon").hide();
+
+      }).fail(function() {
+          alert("Couldn't Load the ad");
+      });
+
+      $('#PreviewModal').on('hidden.bs.modal', function() {
+          $("iframe").attr("src", "");
+      });
+  });
+$(document).on("click", ".btn.btn-warning", function(event) {
+      var id = $(this).parent().attr('id');
+      var url_invalid="http://localhost{{path('edit_ad', {'id':'*NOTFOUND*'}) }} ";
+      var url =url_invalid.replace("*NOTFOUND*",id);
+      window.open(url);
+  });
+
     $(document).on("click", ".btn.btn-default.main", function(event) {
         var button = $(this);
         var id = $(this).parent().attr('id');

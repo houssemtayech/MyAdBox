@@ -11,6 +11,8 @@ use AdBoxBundle\Form\ClientType;
 use AdBoxBundle\Form\EditClientForm;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Client controller.
  *
@@ -231,5 +233,6 @@ class ClientController extends Controller {
         // rendering result
         return $this->render('AdBoxBundle:Client:adsBlock.html.twig', array('ads' => $Adsitems));
     }
+
 
 }
