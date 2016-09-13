@@ -1,0 +1,204 @@
+{%extends 'AdBoxBundle::layout.html.twig' %}
+{%block extraLinks %}
+    <!-- Plugins For This Page -->
+    <script src="{{asset('global/vendor/aspaginator/jquery.asPaginator.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/user.min3f0d.css?v2.2.0')}}">
+    <script src="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/font-awesome-4.6.3/css/font-awesome.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0')}}">
+    <link rel="stylesheet" href="{{asset('assets/examples/css/uikit/buttons.min3f0d.css?v2.2.0')}}">
+{%endblock %}
+{%block monblock %}
+
+    <!-- Map Modal -->
+    <div class="modal fade" id="MapModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="map" style="width:auto; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+</div>
+<!-- End Modal -->
+<div class="page-user">
+    <!-- Page -->
+    <div class="page animsition">
+        <div class="page-content">
+
+            <!-- Panel -->
+            <div class="panel">
+                <div class="panel-body">
+
+
+                        <!-- Content -->
+                        <div class="tab-content">
+                            <div class="tab-pane animation-fade active" id="All_Ads" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for shop in shops %}
+                                    {% if (shop.getIsDeleted()==0) %}
+                                        <li class="list-group-item" id="list{{shop.getId()}}">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-away">
+
+                                                            <img id="img{{shop.getId()}}" src="{{shop.getLogo()}}" alt="...">
+
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">
+
+                                                        <p style="font-weight: bold" class="shopItem">
+                                                            <a><i class="icon  md-pin mapPreview" id="shop{{shop.getId()}}"  aria-hidden="true"></i></a>
+                                                            {{ shop.getName() }}
+                                                        </p>
+                                                    </h4>
+
+                                                    <p>
+                                                        <i class="icon md-money" aria-hidden="true"></i>
+                                                        <small>Revenue</small>
+                                                        {{ shop.getCurrentMonthRevenue()}}
+                                                        TND
+                                                    </p>
+                                                    <p>
+                                                    {% if shop.getType() == "coffee" %}
+                                                        <i class="fa fa-coffee" aria-hidden="true"></i>
+                                                        {% endif %}
+                                                        <small>Type</small>
+                                                        {{ shop.getType()}}
+
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="media-right" id="{{shop.getId()}}">
+                                                    <button style="width:80px" class="btn btn-warning" data-toggle="modal" type="button">
+                                                        Edit
+                                                    </button>
+                                                    <button style="width:80px" class="btn btn-danger" data-toggle="modal" type="button">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+        <div class="site-action">
+            <button id="addshop" type="button" class="site-action-toggle btn-raised btn btn-dark btn-floating wb-plus">
+            </button>
+    </div>
+    <!-- End Page -->
+</div>
+<script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9xGQ4SVN2QqBldQfqJhVKxltFgcnYJOk" async defer></script>
+
+<script>
+    var map;
+    var element = $(this);
+
+    function initialize(myCenter, mytitle,icon) {
+        var marker = new google.maps.Marker({position: myCenter,title: mytitle,icon:icon,optimized: false});
+
+        var mapProp = {
+            center: myCenter,
+            zoom: 10,
+            //draggable: false, scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapProp);
+        marker.setMap(map);
+    };
+
+    $(document).ready(function() {
+
+        $("#addshop").click(function(){
+          window.open("http://localhost{{path('shop_new')}}");
+        });
+      $(".mapPreview").css("cursor","pointer");
+      $(".mapPreview").click(function() {
+        var current=$(this);
+          var idShop = $(this).attr("id");
+          $.ajax({
+              method: "POST",
+              url: "http://localhost{{path('get_shop_by_id')}}",
+              data: {
+                  id: idShop.replace("shop","")
+              }
+          }).done(function(data) {
+              $("#MapModal").modal('show');
+              var JSONObject = JSON.parse(data);
+              var name = JSONObject["name"];
+              var adress = JSONObject["adress"];
+
+              $("#MapModal").on("shown.bs.modal", function(e) {
+                  var element = $(e.relatedTarget);
+                  var icon_url=$("#"+current.attr("id").replace("shop","img")).attr("src");
+
+                  var icon = {
+                      url: icon_url,
+                      size: new google.maps.Size(71, 71),
+                      origin: new google.maps.Point(0, 0),
+                      anchor: new google.maps.Point(17, 34),
+                      scaledSize: new google.maps.Size(34, 34)
+                  };
+                  initialize(new google.maps.LatLng(JSONObject["adress"]['latitude'], JSONObject["adress"]['longitude']),name,icon);
+                  google.maps.event.trigger(map, 'resize');
+              });
+          }).fail(function() {
+              swal("Cancelled", "An error has occured", "error");
+          });
+
+      });
+  });
+
+$(document).on("click", ".btn.btn-warning", function(event) {
+      var id = $(this).parent().attr('id');
+      var url_invalid="http://localhost{{path('shop_edit', {'id':'*NOTFOUND*'}) }} ";
+      var url =url_invalid.replace("*NOTFOUND*",id);
+      window.open(url);
+  });
+  $(document).on("click", ".btn.btn-danger", function(event) {
+        var id = $(this).parent().attr('id');
+        var url_invalid="http://localhost{{path('shop_delete', {'id':'*NOTFOUND*'}) }} ";
+        var url =url_invalid.replace("*NOTFOUND*",id);
+        $.ajax({
+          method:"POST",
+          url:url,
+          data:{
+            id:id
+          }
+        }).done(function(data){
+          $("#list"+id).remove();
+            swal("success", "Deleted !", "success");
+        }).fail(function(data){
+            swal("Cancelled", "An error has occured", "error");
+        });
+
+    });
+
+</script>
+
+{% endblock %}

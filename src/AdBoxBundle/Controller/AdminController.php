@@ -359,6 +359,31 @@ class AdminController extends Controller
         // rendering result
         return $this->render('AdBoxBundle:Admin:ads_loader.html.twig', array('ads' => $Adsitems));
     }
+    /**
+     * get my shops.
+     *
+     * @Route("/user/shops", name="shopowner_my_shop")
+     * @Method("POST")
+     */
+    public function getMyShopsAction(Request $request) {
 
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
 
+        $user_id=$request->get("id");
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+                ->select('s')
+                ->from('AdBoxBundle:Shop', 's')
+                ->innerJoin('AdBoxBundle:User', 'u', 'WITH', 's.ownerId = u.id')
+                ->where('u.id = :id')
+                ->setParameter('id', $user_id)
+                ->getQuery();
+        $shops = $qb->getResult();
+        $jsonContent = $serializer->serialize($shops, 'json');
+
+        // rendering result
+        return new Response( $jsonContent);
+    }
 }

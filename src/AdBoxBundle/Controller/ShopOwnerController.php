@@ -63,7 +63,7 @@ class ShopOwnerController extends Controller
     /**
      * Finds and displays a ShopOwner entity.
      *
-     * @Route("/{id}", name="shopowner_show")
+     * @Route("/get/{id}", name="shopowner_show")
      * @Method("GET")
      */
     public function showAction(ShopOwner $shopOwner)
@@ -79,7 +79,7 @@ class ShopOwnerController extends Controller
     /**
      * Displays a form to edit an existing ShopOwner entity.
      *
-     * @Route("/{id}/edit", name="shopowner_edit")
+     * @Route("/edit/{id}", name="shopowner_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, ShopOwner $shopOwner)
@@ -106,7 +106,7 @@ class ShopOwnerController extends Controller
     /**
      * Deletes a ShopOwner entity.
      *
-     * @Route("/{id}", name="shopowner_delete")
+     * @Route("/delete/{id}", name="shopowner_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, ShopOwner $shopOwner)
@@ -138,6 +138,7 @@ class ShopOwnerController extends Controller
             ->getForm()
         ;
     }
+
         public function listAllShopOwnerAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -146,12 +147,11 @@ class ShopOwnerController extends Controller
                 ->setParameter ('roles','%'. $roles .'%');
        // $users = $em->getRepository('AdBoxBundle:Admin')->findAll();
         $users = $query ->getResult();
-        
+
         return $this->render('AdBoxBundle:ShopOwner:allShopOwners.html.twig', array(
             'users' => $users,
         ));
     }
-    
     public function editShopOwnerAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $ShopOwner = $em->getRepository('AdBoxBundle:ShopOwner')->find($id);
@@ -167,6 +167,32 @@ class ShopOwnerController extends Controller
                 $em->flush();
                 return $this->render('AdBoxBundle:ShopOwner:succes.html.twig', array('msg' => 'Mise à jour affectuée avec succès'));
             }
-        } return $this->render('AdBoxBundle:ShopOwner:editShopOwner.html.twig', array('Form' => $form->createView()));
+        }
+        return $this->render('AdBoxBundle:ShopOwner:editShopOwner.html.twig', array('Form' => $form->createView()));
+      }
+
+      /** this route refuse to be accesible ,god knows why but if you add the same route to the routing file everything is ok **/
+      /* Mother of logic */
+    /**
+     * get my shops.
+     *
+     * @Route("/myshops", name="shopowner_my_shop")
+     * @Method("GET")
+     */
+    public function getMyShopsAction() {
+        $user_id=1;
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder()
+                ->select('s')
+                ->from('AdBoxBundle:Shop', 's')
+                ->innerJoin('AdBoxBundle:User', 'u', 'WITH', 's.ownerId = u.id')
+                ->where('u.id = :id')
+                ->andWhere('s.isDeleted = :delete')
+                ->setParameter('id', $user_id)
+                ->setParameter('delete', 0)
+                ->getQuery();
+        $shops = $qb->getResult();
+        // rendering result
+        return $this->render('AdBoxBundle:shopOwner:myshops.html.twig', array('shops' => $shops));
     }
 }

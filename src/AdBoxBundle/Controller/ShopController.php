@@ -81,6 +81,7 @@ class ShopController extends Controller
                   $em->persist($adresse);
                   $em->flush();
                   $shop->setIdAdress($adresse);
+                  $shop->setOwnerId($user);
                     $shop->setLogo($path);
                     $em->persist($shop);
                     $em->flush();
@@ -89,8 +90,6 @@ class ShopController extends Controller
                     return new Response(Response::HTTP_404);
                 }
             }
-
-
 
         }
         catch (Exception $e) {
@@ -117,52 +116,93 @@ class ShopController extends Controller
     /**
      * Displays a form to edit an existing Shop entity.
      *
-     * @Route("/{id}/edit", name="shop_edit")
+     * @Route("/edit/{id}", name="shop_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Shop $shop)
+    public function editAction(Request $request,  $id)
     {
-        $deleteForm = $this->createDeleteForm($shop);
-        $editForm   = $this->createForm('AdBoxBundle\Form\ShopType', $shop);
-        $editForm->handleRequest($request);
+      $iduser=1;
+      $encoders    = array(
+          new XmlEncoder(),
+          new JsonEncoder()
+      );
+      $normalizers = array(
+          new ObjectNormalizer()
+      );
+      $serializer  = new Serializer($normalizers, $encoders);
+      if ($request->isMethod("GET"))
+      {
+        $shop= $this->getDoctrine()->getRepository('AdBoxBundle:Shop')->findBy(array("ownerId"=>$iduser,"id"=>$id,"isDeleted"=>false));
+        return $this->render('AdBoxBundle:Shop:edit.html.twig',array("shop"=>$shop[0]));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+      }
+      if ($request->isMethod("POST")){
+        try {
+          $em = $this->getDoctrine()->getManager();
+          $idshop=$request->get('id');
+          $shop      = $this->getDoctrine()->getRepository('AdBoxBundle:Shop')->find($idshop);
+          $adresse = $shop->getIdAdress();
+            $adresse->setPays($request->get('Country'));
+            $adresse->setVille($request->get('City'));
+            $adresse->setRegion($request->get('Region'));
+            $adresse->setRue($request->get('Street'));
+            $adresse->setCodepostal($request->get('PostalCode'));
+            $adresse->setLongitude($request->get('Longitude'));
+            $adresse->setLatitude($request->get('Latitude'));
+            $shop->setName($request->get('Name'));
+            //just for test set user id 1
+            $user      = $this->getDoctrine()->getRepository('AdBoxBundle:User')->find(1);
+            $date      = new DateTime();
+            $timestamp = $date->format('U');
+            $em->persist($adresse);
+            $em->flush();
+            $shop->setIdAdress($adresse);
+            $shop->setOwnerId($user);
+            foreach ($request->files as $uploadedFile) {
+                $path = $this->get('kernel')->getRootDir() . "/../web/uploads/" . $timestamp . basename($uploadedFile->getClientOriginalName());
+                if (move_uploaded_file($uploadedFile, $path)) {
+                    str_replace("C:\wamp64\www\\", "http://localhost/", $path);
+                    $shop->setLogo($path);
+
+                    return new Response(Response::HTTP_OK);
+                } else {
+                    return new Response(Response::HTTP_404);
+                }
+            }
             $em->persist($shop);
             $em->flush();
-
-            return $this->redirectToRoute('shop_edit', array(
-                'id' => $shop->getId()
-            ));
+            return new Response(Response::HTTP_OK);
         }
+        catch (Exception $e) {
+            return new Response(Response::HTTP_404);
 
-        return $this->render('shop/edit.html.twig', array(
-            'shop' => $shop,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView()
-        ));
+        }
+      }
+
     }
 
     /**
      * Deletes a Shop entity.
      *
      * @Route("/delete/{id}", name="shop_delete")
-     * @Method("DELETE")
+     * @Method("POST")
      */
-    public function deleteAction(Request $request, Shop $shop)
+    public function deleteAction(Request $request)
     {
-        $form = $this->createDeleteForm($shop);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($shop);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('shop_index');
+      try{
+      $em = $this->getDoctrine()->getManager();
+      $idshop=$request->get('id');
+      $shop      = $this->getDoctrine()->getRepository('AdBoxBundle:Shop')->find($idshop);
+      $shop->setIsDeleted(1);
+      $em->persist($shop);
+      $em->flush();
+          return new Response(Response::HTTP_OK);
     }
-
+    catch(Exception $e)
+    {
+                  return new Response(Response::HTTP_404);
+    }
+}
     /**
      * Creates a form to delete a Shop entity.
      *

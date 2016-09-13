@@ -21,6 +21,12 @@ class Shop
     /**
      * @var string
      *
+     * @ORM\Column(name="type", type="string", length=100, nullable=false)
+     */
+    private $type;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="logo", type="string", length=100, nullable=false)
      * @Assert\Image()
      */
@@ -57,8 +63,29 @@ class Shop
     private $idAdress;
 
 
-
     /**
+     * @var float
+     *
+     * @ORM\Column(name="Current_month_revenue", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $CurrentMonthRevenue=0;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isDeleted", type="boolean", nullable=false)
+     */
+    private $isDeleted;
+    
+    public function getIsDeleted() {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted($isDeleted) {
+        $this->isDeleted = $isDeleted;
+    }
+
+        /**
      * Set name
      *
      * @param string $name
@@ -93,15 +120,27 @@ class Shop
 
         return $this;
     }
-    function getLogo() {
+    public function getLogo() {
         return $this->logo;
     }
 
-    function setLogo($logo) {
+    public function setLogo($logo) {
         $this->logo = $logo;
     }
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
 
-        /**
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+            /**
      * Get ownerId
      *
      * @return integer
@@ -111,7 +150,15 @@ class Shop
         return $this->ownerId;
     }
 
-    /**
+    public function getCurrentMonthRevenue() {
+        return $this->CurrentMonthRevenue;
+    }
+
+  public function setCurrentMonthRevenue($CurrentMonthRevenue) {
+        $this->CurrentMonthRevenue = $CurrentMonthRevenue;
+    }
+
+        /**
      * Set id
      *
      * @param \AdBoxBundle\Entity\ShopOwner $id
