@@ -239,11 +239,19 @@ var_dump($pub);
         $user = $this->getDoctrine()
                 ->getRepository('AdBoxBundle:User')
                 ->find($user_id);
+        $reservation= $this->getDoctrine()
+                ->getRepository('AdBoxBundle:Reservation')
+                ->find($id_t);
+        $timelaps->setEtat(false);
+        $reservation->setIdClient($user_id);
         $pub->setidUSer( $user);
         $pub->setIdMedia( $media);
         $pub->setIdTimelaps( $timelaps);
         $pub->setIsEnabled(false);
         $em->persist($pub);
+        $em->persist($reservation);
+        $em->persist($timelaps);
+
         $em->flush();
       }
       return new Response( Response::HTTP_OK);

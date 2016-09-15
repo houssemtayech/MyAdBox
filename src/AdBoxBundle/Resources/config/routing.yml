@@ -201,7 +201,7 @@ client_ad_add:
 
 get_timelaps_by_event:
     path:     /event/Timelapses
-    defaults: { _controller: AdBoxBundle:Event:getTimeLapses}
+    defaults: { _controller: AdBoxBundle:Event:getTimeLapsesReservation}
     methods:  [POST]
 
 edit_ad_flush:

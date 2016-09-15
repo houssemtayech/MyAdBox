@@ -485,7 +485,6 @@
             var json_data = JSON.parse(data);
             for (var i = 0; i < json_data.length; i++) {
                 var clone = checkboxItem.clone();
-
                 clone.find("input").attr("id", "shop__" + json_data[i]['id']);
                 clone.find("img").attr("src", json_data[i]['logo']);
                 clone.find("h4").text(json_data[i]['name']);
@@ -506,7 +505,7 @@
                 selected_shops.push($(this).attr("id").replace("shop__", ""));
             }
         );
-        if (selected_shops.length == 0) {
+        if (selected_shops.length === 0) {
             swal("Cancelled", "No shops has been selected !", "warning");
         } else {
             shops = selected_shops;

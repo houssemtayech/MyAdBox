@@ -143,7 +143,7 @@ class EventController extends Controller
             ->getForm()
         ;
     }
-    public function getTimeLapsesAction(Request $request)
+    public function getTimeLapsesReservationAction(Request $request)
     {
       $encoders = array(new XmlEncoder(), new JsonEncoder());
       $normalizers = array(new ObjectNormalizer());
@@ -156,10 +156,13 @@ class EventController extends Controller
               ->from('AdBoxBundle:Timelaps', 't')
               ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
               ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Reservation','r','WITH','r.id =t.id')
               ->where('e.id = :id')
               ->andWhere('t.etat= :isEnabled')
+              ->andWhere('r.idClient= :client')
               ->setParameter('id', $id)
-                ->setParameter('isEnabled', true)
+              ->setParameter('isEnabled', true)
+              ->setParameter('client', null)
               ->getQuery();
       $Timelapsitems = $qb->getResult();
 
