@@ -169,7 +169,48 @@ class EventController extends Controller
       $jsonContent = $serializer->serialize($Timelapsitems, 'json');
       return new Response( $jsonContent);
     }
-
+    /**
+     * get all events.
+     *
+     * @Route("/all", name="get_timelaps")
+     * @Method("POST")
+     */
+    public function getTimeLapsesReservationsAndBidsAction(Request $request)
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+      $event=$request->get('id');
+      $em = $this->getDoctrine()->getManager();
+      $qb = $em->createQueryBuilder()
+              ->select('t')
+              ->from('AdBoxBundle:Timelaps', 't')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Reservation','r','WITH','r.id =t.id')
+              ->Where('t.etat= :isEnabled')
+              ->andWhere('r.idClient IS Null')
+              ->andWhere('e.id = :id')
+              ->setParameter('isEnabled', true)
+              ->setParameter('id', $event)
+              ->getQuery();
+      $reservations = $qb->getResult();
+      $qb = $em->createQueryBuilder()
+              ->select('t')
+              ->from('AdBoxBundle:Timelaps', 't')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Bid','b','WITH','b.id =t.id')
+              ->Where('t.etat= :isEnabled')
+              ->andWhere('e.id = :id')
+              ->setParameter('isEnabled', true)
+              ->setParameter('id', $event)
+              ->getQuery();
+      $bids = $qb->getResult();
+      $jsonContent = $serializer->serialize(array("reservations"=>$reservations,"bids"=>$bids),
+                                            'json');
+      return new Response( $jsonContent);
+    }
     /**
      * get Available Events By adresse and shops
      *
@@ -209,6 +250,37 @@ class EventController extends Controller
       $Timelapsitems = $qb->getResult();
 
       $jsonContent = $serializer->serialize($Timelapsitems, 'json');
+      return new Response( $jsonContent);
+    }
+    /**
+     * get Available Events
+     *
+     * @Route("/shop", name="getAvailableEventByShops")
+     * @Method("POST")
+     */
+    public function getEventsByShopAction(Request $request)
+    {
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+      $shop=$request->get("shop");
+      $em = $this->getDoctrine()->getManager();
+      $qb = $em->createQueryBuilder()
+              ->select('e As event,s.name As shop')
+              ->from('AdBoxBundle:Event', 'e')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idEvent = e.id')
+              ->innerJoin('AdBoxBundle:Timelaps', 't', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+              ->Where('s.id = :shop')
+              ->andWhere('e.status= :es')
+              ->andWhere('t.etat= :et')
+              ->setParameter('shop', $shop)
+              ->setParameter('es', true)
+              ->setParameter('et', true)
+              ->getQuery();
+      $Events = $qb->getResult();
+      //var_dump($qb);
+      $jsonContent = $serializer->serialize($Events, 'json');
       return new Response( $jsonContent);
     }
 }

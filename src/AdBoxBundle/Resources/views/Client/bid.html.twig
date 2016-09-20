@@ -1,0 +1,140 @@
+{%extends 'AdBoxBundle::layout.html.twig' %}
+{% block extraLinks %}
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/jquery-timer/css/demo.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('global/vendor/asspinner/asSpinner.min3f0d.css')}}">
+
+{% endblock %}
+{% block monblock %}
+<!-- Todo : Add toast on calender update :  toast ,alertify
+            List bid template basic table
+-->
+
+    <!-- Panel Blocks -->
+    <div class="page animsition">
+        <div class="page-content container-fluid">
+
+            <div class="panel" style="background-color:#3f51b5">
+
+                <div class="panel-body container">
+                    <div class="row">
+                        <div class="countdown countdown-container ">
+                            <div class="clock row">
+                                <div class="clock-item clock-days countdown-time-value col-sm-6 col-md-3">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div id="canvas-days" class="clock-canvas"></div>
+
+                                            <div class="text">
+                                                <p class="val">0</p>
+                                                <p class="type-days type-time">DAYS</p>
+                                            </div>
+                                            <!-- /.text -->
+                                        </div>
+                                        <!-- /.inner -->
+                                    </div>
+                                    <!-- /.wrap -->
+                                </div>
+                                <!-- /.clock-item -->
+
+                                <div class="clock-item clock-hours countdown-time-value col-sm-6 col-md-3">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div id="canvas-hours" class="clock-canvas"></div>
+
+                                            <div class="text">
+                                                <p class="val">0</p>
+                                                <p class="type-hours type-time">HOURS</p>
+                                            </div>
+                                            <!-- /.text -->
+                                        </div>
+                                        <!-- /.inner -->
+                                    </div>
+                                    <!-- /.wrap -->
+                                </div>
+                                <!-- /.clock-item -->
+
+                                <div class="clock-item clock-minutes countdown-time-value col-sm-6 col-md-3">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div id="canvas-minutes" class="clock-canvas"></div>
+
+                                            <div class="text">
+                                                <p class="val">0</p>
+                                                <p class="type-minutes type-time">MINUTES</p>
+                                            </div>
+                                            <!-- /.text -->
+                                        </div>
+                                        <!-- /.inner -->
+                                    </div>
+                                    <!-- /.wrap -->
+                                </div>
+                                <!-- /.clock-item -->
+
+                                <div class="clock-item clock-seconds countdown-time-value col-sm-6 col-md-3">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div id="canvas-seconds" class="clock-canvas"></div>
+
+                                            <div class="text">
+                                                <p class="val">0</p>
+                                                <p class="type-seconds type-time">SECONDS</p>
+                                            </div>
+                                            <!-- /.text -->
+                                        </div>
+                                        <!-- /.inner -->
+                                    </div>
+                                    <!-- /.wrap -->
+                                </div>
+                                <!-- /.clock-item -->
+                            </div>
+                            <!-- /.clock -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+
+                <div class="panel-body container">
+                    <div class="row">
+                      <h4> Current price</h4>
+                      <h3>200 DT</h3>
+                      <input type="number">
+                      <button>submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+        <script src="{{asset('global/vendor/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('global/vendor/jquery-timer/js/kinetic.js')}}"></script>
+        <script src="{{asset('global/vendor/jquery-timer/jquery.final-countdown.js')}}"></script>
+        <script src="{{asset('global/vendor/moment/moment.min.js')}}"></script>
+        <script src="{{asset('global/vendor/asspinner/jquery-asSpinner.min.js')}}"></script>
+
+        <script>
+
+
+            var id_timelaps = 3;
+            $('document').ready(function() {
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost{{path('get_bid_timelaps_status')}}",
+                    data: {
+                        timelaps: id_timelaps
+                    }
+                }).done(function(data) {
+
+                    var jsonContent = (JSON.parse(data))[0];
+                    var end = Math.round(new Date(moment(moment.unix(jsonContent.dateEnd.timestamp)).format("YYYY-MM-DD") + " " + moment(moment.unix(jsonContent.endTime.timestamp)).format("HH:mm:ss")) / 1000);
+                    var timestamp = Math.round(new Date() / 1000);
+
+                    $('.countdown').final_countdown({'start': timestamp, 'end': end, 'now': timestamp});
+                }).fail(function(data) {
+                    alert("fail");
+                    console.log(data);
+                });
+
+            });
+        </script>
+    {% endblock %}

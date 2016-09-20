@@ -7,12 +7,6 @@
     <route id="fos_user_registration_register" path="/" methods="GET POST">
         <default key="_controller">FOSUserBundle:Registration:register</default>
     </route>
-    <route id="fos_userOne_registration_register" path="/" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Registration:registerOne</default>
-    </route>
-    <route id="fos_userTwo_registration_register" path="/" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Registration:registerTwo</default>
-    </route>
 
     <route id="fos_user_registration_check_email" path="/check-email" methods="GET">
         <default key="_controller">FOSUserBundle:Registration:checkEmail</default>

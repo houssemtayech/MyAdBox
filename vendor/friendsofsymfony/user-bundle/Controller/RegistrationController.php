@@ -54,33 +54,29 @@ class RegistrationController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $event = new FormEvent($form, $request);
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-            $userManager->updateUser($user);
+                $userManager->updateUser($user);
 
-            if (null === $response = $event->getResponse()) {
-                if ($user instanceof \AdBoxBundle\Entity\Client)
-                { $url = $this->generateUrl('fos_user_client_registration_confirmed');
-                $response = new RedirectResponse($url);
-                }else if ($user instanceof \AdBoxBundle\Entity\Admin)
-                    { $url = $this->generateUrl('fos_user_admin_registration_confirmed');
-                $response = new RedirectResponse($url);
+                if (null === $response = $event->getResponse()) {
+                    $url = $this->generateUrl('fos_user_registration_confirmed');
+                    $response = new RedirectResponse($url);
                 }
-                else if ($user instanceof \AdBoxBundle\Entity\ShopOwner)
-                    { $url = $this->generateUrl('fos_user_shopowner_registration_confirmed');
-                $response = new RedirectResponse($url);
-                    }
-                else if ($user instanceof \AdBoxBundle\Entity\Zeus)
-                    { $url = $this->generateUrl('fos_user_zeus_registration_confirmed');
-                $response = new RedirectResponse($url);
-                    }
+
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                return $response;
             }
 
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
 
-            return $response;
+            if (null !== $response = $event->getResponse()) {
+                return $response;
+            }
         }
 
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
@@ -94,6 +90,11 @@ class RegistrationController extends Controller
     public function checkEmailAction()
     {
         $email = $this->get('session')->get('fos_user_send_confirmation_email/email');
+
+        if (empty($email)) {
+            return new RedirectResponse($this->get('router')->generate('fos_user_registration_register'));
+        }
+
         $this->get('session')->remove('fos_user_send_confirmation_email/email');
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
 
@@ -101,7 +102,7 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
         }
 
-        return $this->render('FOSUserBundle:Registration:checkEmail.html.twig', array(
+        return $this->render('FOSUserBundle:Registration:check_email.html.twig', array(
             'user' => $user,
         ));
     }

@@ -200,8 +200,10 @@ var_dump($pub);
         }
     }
 
-    public function calendarshowAction()
+    public function calendarshowAction(Request $request)
     {
+      // TODO: pass timelpas id as param
+      $timelaps=$this->getRequest()->query->get('timelaps');
       $em = $this->getDoctrine()->getManager();
       $id_user=1;
       //Todo check media owner
@@ -210,7 +212,7 @@ var_dump($pub);
                 ->getRepository('AdBoxBundle:Media')
                 ->findBy(array('idUser'=>$id_user));
       $events = $em->getRepository('AdBoxBundle:Event')->findBy(array('status'=>true));
-      return $this->render('AdBoxBundle:Client:calendar.html.twig', array(
+      return $this->render('AdBoxBundle:Client:adWizard.html.twig', array(
                          'events' => $events,'medias'=>$medias
              ));
     }

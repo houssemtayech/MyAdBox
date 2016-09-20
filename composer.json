@@ -20,7 +20,10 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "pugx/multi-user-bundle": "3.0.*@dev",
         "friendsofsymfony/rest-bundle": "@dev",
-        "symfony/serializer": "^2.8"
+        "symfony/serializer": "^2.8",
+        "cboden/ratchet": "^0.3.5",
+        "react/react": "^0.4.2",
+        "react/zmq": "^0.3.0"
 
     },
     "require-dev": {
@@ -46,10 +49,7 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
-        "platform": {
-            "php": "5.3.9"
-        }
+        "bin-dir": "bin"
     },
     "extra": {
         "symfony-app-dir": "app",

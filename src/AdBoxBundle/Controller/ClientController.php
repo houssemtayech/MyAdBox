@@ -12,6 +12,12 @@ use AdBoxBundle\Form\EditClientForm;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * Client controller.
@@ -233,6 +239,38 @@ class ClientController extends Controller {
         // rendering result
         return $this->render('AdBoxBundle:Client:adsBlock.html.twig', array('ads' => $Adsitems));
     }
+    public function getCalendarAction()
+    {
+      return $this->render('AdBoxBundle:Client:calendar.html.twig');
+    }
 
+    public function getBidByTimelapsAction(Request $request)
+    {
+      $timelaps=$request->get("timelaps");
+      return $this->render('AdBoxBundle:Client:bid.html.twig',array("id"=>$timelaps));
+    }
+    public function getBidStatusAction(Request $request)
+    {
+      $timelaps=$request->get("timelaps");
+
+      $encoders = array(new XmlEncoder(), new JsonEncoder());
+      $normalizers = array(new ObjectNormalizer());
+      $serializer = new Serializer($normalizers, $encoders);
+
+      $em = $this->getDoctrine()->getManager();
+      $qb = $em->createQueryBuilder()
+              ->select('t.id,t.prix,t.dateStart,e.id,e.name,s.name,s.id,t.dateEnd,b.startTime,b.endTime')
+              ->from('AdBoxBundle:Timelaps', 't')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+              ->innerJoin('AdBoxBundle:Bid', 'b', 'WITH', 'b.id = t.id')
+              ->where('t.id = :id')
+              ->setParameter('id', $timelaps)
+              ->getQuery();
+      $bid_info = $qb->getResult();
+      $jsonContent = $serializer->serialize($bid_info , 'json');
+      return new Response( $jsonContent);
+    }
 
 }

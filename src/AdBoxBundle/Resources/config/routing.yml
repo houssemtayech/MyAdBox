@@ -212,3 +212,15 @@ edit_ad_flush:
 shopowner_my_shop:
     path:     /shopowner/myshops
     defaults: { _controller: AdBoxBundle:ShopOwner:getMyShops}
+
+show_calendar:
+    path:     /events/calendar
+    defaults: { _controller: AdBoxBundle:Client:getCalendar}
+get_bid_timelaps:
+    path:     /events/bid/{id}
+    defaults: { _controller: AdBoxBundle:Client:getBidByTimelaps}
+
+get_bid_timelaps_status:
+    path:     /bid/status
+    defaults: { _controller: AdBoxBundle:Client:getBidStatus}
+    methods: [POST]

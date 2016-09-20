@@ -258,7 +258,15 @@ class ShopController extends Controller
             $serializer  = new Serializer($normalizers, $encoders);
 
             $em          = $this->getDoctrine()->getManager();
-            $qb          = $em->createQueryBuilder()->select('s.name,s.id ,s.logo,a as adress')->from('AdBoxBundle:Shop', 's')->innerJoin('AdBoxBundle:Adresse', 'a', 'WITH', 's.idAdress=a.id')->where('a.pays = :country')->andwhere('a.ville = :city')->andwhere('a.region = :region')->setParameter('country', $country)->setParameter('city', $city)->setParameter('region', $region)->getQuery();
+            $qb          = $em->createQueryBuilder()->select('s.name,s.id ,s.logo,a as adress')
+                              ->from('AdBoxBundle:Shop', 's')
+                              ->innerJoin('AdBoxBundle:Adresse', 'a', 'WITH', 's.idAdress=a.id')
+                              ->where('a.pays = :country')
+                              ->andwhere('a.ville LIKE :city')
+                              ->andwhere('a.region LIKE :region')
+                              ->setParameter('country', $country)
+                              ->setParameter('city', "%".$city."%")
+                              ->setParameter('region', "%".$region."%")->getQuery();
             $shops       = $qb->getResult();
             $jsonContent = $serializer->serialize($shops, 'json');
             return new Response($jsonContent, Response::HTTP_OK);
