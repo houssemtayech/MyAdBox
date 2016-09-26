@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
+class ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -23,6 +23,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Workerman\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Util\\' => 22,
@@ -64,6 +68,7 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
+            'PHPSocketIO\\' => 12,
         ),
         'N' => 
         array (
@@ -94,9 +99,17 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
+        'C' => 
+        array (
+            'Channel\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
+        ),
         'Symfony\\Polyfill\\Util\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-util',
@@ -229,6 +242,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
+        'PHPSocketIO\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/phpsocket.io/src',
+        ),
         'Negotiation\\' => 
         array (
             0 => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation',
@@ -272,6 +289,10 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
+        ),
+        'Channel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/channel/src',
         ),
     );
 
@@ -366,6 +387,13 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
             'Doctrine\\Common\\Annotations\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
+            ),
+        ),
+        'B' => 
+        array (
+            'BidManager' => 
+            array (
+                0 => __DIR__ . '/../..' . '/src/AdBoxBundle/Controller',
             ),
         ),
     );
@@ -479,6 +507,8 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'CallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
+        'Channel\\Client' => __DIR__ . '/..' . '/workerman/channel/src/Client.php',
+        'Channel\\Server' => __DIR__ . '/..' . '/workerman/channel/src/Server.php',
         'Collator' => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/Collator.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
         'Doctrine\\Bundle\\DoctrineBundle\\Command\\CreateDatabaseDoctrineCommand' => __DIR__ . '/..' . '/doctrine/doctrine-bundle/Command/CreateDatabaseDoctrineCommand.php',
@@ -1807,6 +1837,30 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'Negotiation\\Match' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Match.php',
         'Negotiation\\Negotiator' => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation/Negotiator.php',
         'NumberFormatter' => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/NumberFormatter.php',
+        'PHPSocketIO\\ChannelAdapter' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/ChannelAdapter.php',
+        'PHPSocketIO\\Client' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Client.php',
+        'PHPSocketIO\\DefaultAdapter' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/DefaultAdapter.php',
+        'PHPSocketIO\\Engine\\Engine' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Engine.php',
+        'PHPSocketIO\\Engine\\Parser' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Parser.php',
+        'PHPSocketIO\\Engine\\Protocols\\Http\\Request' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Protocols/Http/Request.php',
+        'PHPSocketIO\\Engine\\Protocols\\Http\\Response' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Protocols/Http/Response.php',
+        'PHPSocketIO\\Engine\\Protocols\\SocketIO' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Protocols/SocketIO.php',
+        'PHPSocketIO\\Engine\\Protocols\\WebSocket' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Protocols/WebSocket.php',
+        'PHPSocketIO\\Engine\\Protocols\\WebSocket\\RFC6455' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Protocols/WebSocket/RFC6455.php',
+        'PHPSocketIO\\Engine\\Socket' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Socket.php',
+        'PHPSocketIO\\Engine\\Transport' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Transport.php',
+        'PHPSocketIO\\Engine\\Transports\\Polling' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Transports/Polling.php',
+        'PHPSocketIO\\Engine\\Transports\\PollingJsonp' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Transports/PollingJsonp.php',
+        'PHPSocketIO\\Engine\\Transports\\PollingXHR' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Transports/PollingXHR.php',
+        'PHPSocketIO\\Engine\\Transports\\WebSocket' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Engine/Transports/WebSocket.php',
+        'PHPSocketIO\\Event\\Emitter' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Event/Emitter.php',
+        'PHPSocketIO\\Nsp' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Nsp.php',
+        'PHPSocketIO\\Parser\\Decoder' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Parser/Decoder.php',
+        'PHPSocketIO\\Parser\\Encoder' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Parser/Encoder.php',
+        'PHPSocketIO\\Parser\\Parser' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Parser/Parser.php',
+        'PHPSocketIO\\Socket' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Socket.php',
+        'PHPSocketIO\\SocketIO' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/SocketIO.php',
+        'PHPSocketIO\\debug' => __DIR__ . '/..' . '/workerman/phpsocket.io/src/Debug.php',
         'PUGX\\MultiUserBundle\\Controller\\ProfileManager' => __DIR__ . '/..' . '/pugx/multi-user-bundle/PUGX/MultiUserBundle/Controller/ProfileManager.php',
         'PUGX\\MultiUserBundle\\Controller\\RegistrationManager' => __DIR__ . '/..' . '/pugx/multi-user-bundle/PUGX/MultiUserBundle/Controller/RegistrationManager.php',
         'PUGX\\MultiUserBundle\\DependencyInjection\\Compiler\\OverrideServiceCompilerPass' => __DIR__ . '/..' . '/pugx/multi-user-bundle/PUGX/MultiUserBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php',
@@ -4142,16 +4196,37 @@ class ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6
         'Twig_Util_DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/DeprecationCollector.php',
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
+        'Workerman\\Autoloader' => __DIR__ . '/..' . '/workerman/workerman/Autoloader.php',
+        'Workerman\\Connection\\AsyncTcpConnection' => __DIR__ . '/..' . '/workerman/workerman/Connection/AsyncTcpConnection.php',
+        'Workerman\\Connection\\AsyncUdpConnection' => __DIR__ . '/..' . '/workerman/workerman/Connection/AsyncUdpConnection.php',
+        'Workerman\\Connection\\ConnectionInterface' => __DIR__ . '/..' . '/workerman/workerman/Connection/ConnectionInterface.php',
+        'Workerman\\Connection\\TcpConnection' => __DIR__ . '/..' . '/workerman/workerman/Connection/TcpConnection.php',
+        'Workerman\\Connection\\UdpConnection' => __DIR__ . '/..' . '/workerman/workerman/Connection/UdpConnection.php',
+        'Workerman\\Events\\Ev' => __DIR__ . '/..' . '/workerman/workerman/Events/Ev.php',
+        'Workerman\\Events\\Event' => __DIR__ . '/..' . '/workerman/workerman/Events/Event.php',
+        'Workerman\\Events\\EventInterface' => __DIR__ . '/..' . '/workerman/workerman/Events/EventInterface.php',
+        'Workerman\\Events\\Libevent' => __DIR__ . '/..' . '/workerman/workerman/Events/Libevent.php',
+        'Workerman\\Events\\Select' => __DIR__ . '/..' . '/workerman/workerman/Events/Select.php',
+        'Workerman\\Lib\\Timer' => __DIR__ . '/..' . '/workerman/workerman/Lib/Timer.php',
+        'Workerman\\Protocols\\Frame' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Frame.php',
+        'Workerman\\Protocols\\Http' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Http.php',
+        'Workerman\\Protocols\\HttpCache' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Http.php',
+        'Workerman\\Protocols\\ProtocolInterface' => __DIR__ . '/..' . '/workerman/workerman/Protocols/ProtocolInterface.php',
+        'Workerman\\Protocols\\Text' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Text.php',
+        'Workerman\\Protocols\\Websocket' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Websocket.php',
+        'Workerman\\Protocols\\Ws' => __DIR__ . '/..' . '/workerman/workerman/Protocols/Ws.php',
+        'Workerman\\WebServer' => __DIR__ . '/..' . '/workerman/workerman/WebServer.php',
+        'Workerman\\Worker' => __DIR__ . '/..' . '/workerman/workerman/Worker.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitb82f97cdf82207d6cccfcbd6127982e6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0c3614a15baaad422ba9b00eebfeb9f5::$classMap;
 
         }, null, ClassLoader::class);
     }

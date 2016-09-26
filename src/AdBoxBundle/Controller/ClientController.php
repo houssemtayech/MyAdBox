@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 use Symfony\Component\Security\Acl\Exception\Exception;
-
+use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * Client controller.
  *
@@ -244,11 +244,39 @@ class ClientController extends Controller {
       return $this->render('AdBoxBundle:Client:calendar.html.twig');
     }
 
-    public function getBidByTimelapsAction(Request $request)
+    public function getBidByTimelapsAction(Request $request,$id)
     {
+      $em = $this->getDoctrine()->getManager();
+
+    //  $session=session_start();
+    //  $user_id=$session->get("id");
+      $user_id=1;
+      $user=$em->getRepository('AdBoxBundle:User')->find($user_id);
+
       $timelaps=$request->get("timelaps");
-      return $this->render('AdBoxBundle:Client:bid.html.twig',array("id"=>$timelaps));
-    }
+      if ($timelaps==null)
+      $timelaps=$id;
+
+      $bid=$em->getRepository('AdBoxBundle:Timelaps')->findBy(array("id"=>$timelaps));
+      $list = $em->getRepository('AdBoxBundle:BidClient')->findBy(array("idBid"=>$bid));
+      $qb = $em->createQueryBuilder()
+              ->select('t.id,t.prix,t.dateStart,t.dateEnd,e.id,e.name,s.name,s.id,b.startTime,b.endTime')
+              ->from('AdBoxBundle:Timelaps', 't')
+              ->innerJoin('AdBoxBundle:EventTimelaps', 'et', 'WITH', 'et.idTimelaps = t.id')
+              ->innerJoin('AdBoxBundle:Event', 'e', 'WITH', 'e.id = et.idEvent')
+              ->innerJoin('AdBoxBundle:Shop', 's', 'WITH', 's.id = t.idPointpub')
+              ->innerJoin('AdBoxBundle:Bid', 'b', 'WITH', 'b.id = t.id')
+              ->where('t.id = :id')
+              ->setParameter('id', $timelaps)
+              ->getQuery();
+      $bid_info = $qb->getResult();
+      return $this->render('AdBoxBundle:Client:bid.html.twig',
+                            array("id"=>$timelaps,
+                                  "bidInfo"=>$bid_info[0],
+                                  "bidList"=>$list,
+                                  "user"=>array("id"=>$user->getId(),"name"=>$user->getUsername())
+                                ));
+          }
     public function getBidStatusAction(Request $request)
     {
       $timelaps=$request->get("timelaps");

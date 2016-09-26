@@ -88,7 +88,7 @@ class Media {
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $createdAt ;
 
     /**
      * @Assert\File(

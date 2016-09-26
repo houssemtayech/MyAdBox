@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Workerman\\' => array($vendorDir . '/workerman/workerman'),
     'Symfony\\Polyfill\\Util\\' => array($vendorDir . '/symfony/polyfill-util'),
     'Symfony\\Polyfill\\Php70\\' => array($vendorDir . '/symfony/polyfill-php70'),
     'Symfony\\Polyfill\\Php56\\' => array($vendorDir . '/symfony/polyfill-php56'),
@@ -39,6 +40,7 @@ return array(
     'Ratchet\\' => array($vendorDir . '/cboden/ratchet/src/Ratchet'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'PHPSocketIO\\' => array($vendorDir . '/workerman/phpsocket.io/src'),
     'Negotiation\\' => array($vendorDir . '/willdurand/negotiation/src/Negotiation'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Incenteev\\ParameterHandler\\' => array($vendorDir . '/incenteev/composer-parameter-handler'),
@@ -50,5 +52,6 @@ return array(
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib/Doctrine/Common'),
     'Doctrine\\Bundle\\DoctrineCacheBundle\\' => array($vendorDir . '/doctrine/doctrine-cache-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
+    'Channel\\' => array($vendorDir . '/workerman/channel/src'),
     '' => array($baseDir . '/src'),
 );

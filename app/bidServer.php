@@ -1,27 +1,65 @@
 <?php
-    require dirname(__DIR__) . '/vendor/autoload.php';
 
-    $loop   = React\EventLoop\Factory::create();
-    $pusher = new MyApp\Pusher;
+use Workerman\Worker;
+use Workerman\WebServer;
+use PHPSocketIO\SocketIO;
 
-    // Listen for the web server to make a ZeroMQ push after an ajax request
-    $context = new React\ZMQ\Context($loop);
-    $pull = $context->getSocket(ZMQ::SOCKET_PULL);
-    $pull->bind('tcp://127.0.0.1:5555'); // Binding to 127.0.0.1 means the only client that can connect is itself
-    $pull->on('message', array($pusher, 'onBlogEntry'));
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AdBoxBundle\Entity\Client;
 
-    // Set up our WebSocket server for clients wanting real-time updates
-    $webSock = new React\Socket\Server($loop);
-    $webSock->listen(8080, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
-    $webServer = new Ratchet\Server\IoServer(
-        new Ratchet\Http\HttpServer(
-            new Ratchet\WebSocket\WsServer(
-                new Ratchet\Wamp\WampServer(
-                    $pusher
-                )
-            )
-        ),
-        $webSock
-    );
 
-    $loop->run();
+include __DIR__ . '\autoload.php';
+// listen port 2021 for socket.io client
+$io = new SocketIO(2021);
+session_start();
+
+$_SESSION["bid_array"] = array();
+$_SESSION["sockets"]   = array();
+
+$io->on('connection', function($socket) use ($io)
+{
+    $_SESSION["sockets"][$socket->id]=$socket;
+
+    $socket->on('register', function($msg) use ($io,$socket)
+    {
+        echo "registring ... ".$socket->id."\n";
+        $obj    = json_decode($msg);
+        $bid    = $obj->bid;
+        $client = $obj->client;
+        if (!isset($_SESSION["bid_array"]["$bid"])) {
+            $_SESSION["bid_array"]["$bid"] = array();
+        }
+        $data = array(
+            "client" => $client,
+            "socket" => $socket->id
+        );
+        array_push($_SESSION["bid_array"]["$bid"], $data);
+    });
+    $socket->on('disconnect', function($msg) use ($io,$socket)
+    {
+        echo "disconnect".$socket->id."\n";
+        foreach ($_SESSION["bid_array"] as $key => $value) {
+          foreach ($value as $ind=>$sub_key ) {
+                if ($sub_key["socket"] == $socket->id) {
+                    unset($_SESSION["bid_array"][$key][$ind]);
+                }
+            }
+        }
+        unset($_SESSION["sockets"][$socket->id]);
+    });
+    $socket->on('bidding',function($data) use ($io,$socket)
+    {
+      echo "bidding \n";
+      // TODO: broadcast to client new price
+      $obj=json_decode($data);
+      $res=json_encode(array("price"=>$obj->price,"timestamp"=>$obj->timestamp,"name"=>$obj->name));
+      $socket->broadcast->emit("update",$res);
+
+
+    });
+});
+
+Worker::runAll();

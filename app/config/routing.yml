@@ -74,6 +74,7 @@ ad_box_action:
     resource: "@AdBoxBundle/Controller/ActionController.php"
     type:     annotation
 
+
 ad_box:
     resource: "@AdBoxBundle/Resources/config/routing.yml"
     prefix:   /
@@ -81,7 +82,7 @@ ad_box:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-    
+
 user_one_registration:
     path:  /register/user-one
     defaults: { _controller: AdBoxBundle:RegistrationUserOne:register }
@@ -89,7 +90,7 @@ user_one_registration:
 user_two_registration:
     path:  /register/user-two
     defaults: { _controller: AdBoxBundle:RegistrationUserTwo:register }
-    
+
 user_client_registration:
     path:  /register/Client
     defaults: { _controller: AdBoxBundle:RegistrationUserClient:register }
@@ -101,11 +102,11 @@ user_admin_registration:
 user_zeus_registration:
     path:  /register/Zeus
     defaults: { _controller: AdBoxBundle:RegistrationUserZeus:register }
- 
+
 user_shopowner_registration:
     path:  /register/ShopOwner
     defaults: { _controller: AdBoxBundle:RegistrationUserShopOwner:register }
-    
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -124,4 +125,3 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
-    

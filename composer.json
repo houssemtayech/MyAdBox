@@ -4,6 +4,7 @@
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
+        "psr-0": { "BidManager": "src/AdBoxBundle/Controller" },
         "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -23,7 +24,8 @@
         "symfony/serializer": "^2.8",
         "cboden/ratchet": "^0.3.5",
         "react/react": "^0.4.2",
-        "react/zmq": "^0.3.0"
+        "react/zmq": "^0.3.0",
+        "workerman/phpsocket.io": "^1.0"
 
     },
     "require-dev": {

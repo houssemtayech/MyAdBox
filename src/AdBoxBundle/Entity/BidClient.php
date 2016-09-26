@@ -40,13 +40,23 @@ class BidClient
      * })
      */
     private $idClient;
-
-
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $price;
+ /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
+    private $timestamp ;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +79,7 @@ class BidClient
     /**
      * Get idBid
      *
-     * @return \AdBoxBundle\Entity\Bid 
+     * @return \AdBoxBundle\Entity\Bid
      */
     public function getIdBid()
     {
@@ -92,10 +102,32 @@ class BidClient
     /**
      * Get idClient
      *
-     * @return \AdBoxBundle\Entity\Client 
+     * @return \AdBoxBundle\Entity\Client
      */
     public function getIdClient()
     {
         return $this->idClient;
     }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    public function getTimestamp() {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(\DateTime $timestamp) {
+        $this->timestamp = $timestamp;
+    }
+
+
 }
